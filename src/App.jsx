@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
+import SpecialPricing from "./Admin/CustomerListing";
 import Store from "./Customer/StoreFront";
 import Error404 from "./Error404";
 
@@ -12,6 +13,7 @@ export default function App() {
         <Route index element={<p>Home page</p>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/special-pricing" element={<SpecialPricing />} />
         <Route path="/products" element={<Store />} />
 
         <Route path="*" element={<Error404 />}></Route>
