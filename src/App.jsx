@@ -3,6 +3,8 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import SpecialPricing from "./Admin/CustomerListing";
+import Store from "./Customer/StoreFront";
+import Error404 from "./Error404";
 
 export default function App() {
   return (
@@ -12,6 +14,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/special-pricing" element={<SpecialPricing />} />
+        <Route path="/products" element={<Store />} />
+
+        <Route path="*" element={<Error404 />}></Route>
       </Route>
     </Routes>
   );
