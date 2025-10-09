@@ -1,0 +1,38 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.sticky-header {
+  background-color: #3a3030;
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+.sticky-header {
+  cursor: default;
+}
+.sticky-header p {
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+.sticky-header nav {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.sticky-header a {
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+}
