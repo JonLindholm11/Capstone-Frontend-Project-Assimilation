@@ -1,0 +1,185 @@
+html {
+  height: 100%;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  background-color: #2e2e2e;
+}
+
+main {
+  padding: 20px;
+}
+/* black and edgy */
+
+/* body {
+  background: linear-gradient(to bottom, #0d0d0d, #1c1c1c);
+  color: #f5f5f5;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #d4af37;
+  color: #0d0d0d;
+}
+button:hover {
+  background-color: #c0c0c0;
+} */
+
+/* apricot (warm and friendly) */
+
+/* body {
+  background: linear-gradient(to bottom, #fff1e6, #ffd6a5);
+  color: #2e2e2e;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #ff9770;
+  color: white;
+}
+button:hover {
+  background-color: #ffb385;
+} */
+
+/* slate and blue modern */
+
+/* body {
+  background: linear-gradient(to bottom, #1e293b, #0f172a);
+  color: #f8fafc;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #38bdf8;
+  color: #0f172a;
+}
+button:hover {
+  background-color: #0ea5e9;
+} */
+
+/* pastel lime/mint (current) */
+/* body {
+  background: linear-gradient(to bottom, #f6fdc3, #cdf2ca);
+  color: #2e2e2e;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #a2d2ff;
+  color: #2e2e2e;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #80c4e9;
+} */
+
+/* deep ocean */
+body {
+  background: linear-gradient(to bottom, #0a1128, #1b263b);
+  color: #e0e1dd;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #06ffc4;
+  color: #0a1128;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #04d9a8;
+}
+
+/* sunset vibes */
+/* body {
+  background: linear-gradient(to bottom, #ff6b35, #f7931e);
+  color: #ffffff;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #ffffff;
+  color: #ff6b35;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #ffe5d9;
+  color: #ff6b35;
+} */
+
+/* lavender dream */
+/* body {
+  background: linear-gradient(to bottom, #e0c3fc, #8ec5fc);
+  color: #2d3142;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #9d4edd;
+  color: #ffffff;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #7209b7;
+} */
+
+/* forest green */
+/* body {
+  background: linear-gradient(to bottom, #2d6a4f, #1b4332);
+  color: #d8f3dc;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #95d5b2;
+  color: #1b4332;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #74c69d;
+} */
+
+/* cyberpunk neon */
+/* body {
+  background: linear-gradient(to bottom, #0d0221, #240046);
+  color: #e0aaff;
+  font-family: "Courier New", Courier, monospace;
+
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+}
+button {
+  background-color: #ff006e;
+  color: #ffffff;
+  border-radius: 5pt;
+}
+button:hover {
+  background-color: #fb5607; 
+  }
+   */
