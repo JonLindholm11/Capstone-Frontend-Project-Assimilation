@@ -8,3 +8,46 @@ React Router layout with a navbar and an `AuthContext` with login and register p
 1. Change the name of the package in `package.json`.
 2. Update the environment variables in `example.env` and rename the file to `.env`.
 3. Build components and add routes to them in `App.jsx`.
+
+## Project Board Assignments
+- Navbars
+- [ ] add navbar for home, store, salesman, customer service, admin
+- [ ] add navbar for user related things login, register, account
+- [ ] add a on click method to our company logo that brings the user to the home page
+- [ ] add protected routes for the navbar - Jon
+- Home Page
+- [ ] add our company moto
+- [ ] add our company product categories
+- [ ] add brief discription about our company
+- Store
+- [ ] add area that shows all current specials
+- [ ] add area that shows all categorie menus with a drop down method
+- [ ] add area of products that shows after the drop down menu has been clicked
+- [ ] add cart that includes items, qty or items, price for specific items, and total price
+- Salesman
+- [ ] add area that shows all customers for that salesman
+- [ ] add area that when they click on a customer a drop down menu that shows details
+- [ ] add area that lets salesman change price category for specific product categorys
+- Customer Service
+- [ ] add date selector to show all orders from that day
+- [ ] add all orders from that specific date
+- [ ] add a drop down menu that shows order details when the order is clicked
+- [ ] add a drop down menu of statuses that are changable that include active, pending, canceled, and one more for a issue with the order
+- Admin
+- [ ] add area of all users
+- [ ] add drop down next to user to change role
+- [ ] add date selector to special menu that includes start and end date
+- [ ] add product drop down with search functinality to special menu
+- [ ] add price to the special menu
+- [ ] add a menu of all customers with a drop down menu next to them to assign a salesman to them
+- Login / Register
+- [ ] basic log in page
+- [ ] basic register page
+- Account
+- [ ] add an area to show user details
+- [ ] add an area to show past and active orders
+- [ ] add an area to cancel an active order  
+- Basic design elements
+- [ ] css styling to follow for background and nav bars
+- [ ] css styling to follow for all menus
+- [ ] design our company logo
