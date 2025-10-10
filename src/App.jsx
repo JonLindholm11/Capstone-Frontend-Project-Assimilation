@@ -14,6 +14,9 @@ export default function App() {
         <Route index element={<p>Home page</p>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/products" element={<Store />}>
+          <Route path="sewing" element={<Sewing />} />
+        </Route>
         <Route path="/products" element={<Store />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/sewing" element={<Sewing />} />
