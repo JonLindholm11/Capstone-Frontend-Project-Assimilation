@@ -9,6 +9,15 @@ React Router layout with a navbar and an `AuthContext` with login and register p
 2. Update the environment variables in `example.env` and rename the file to `.env`.
 3. Build components and add routes to them in `App.jsx`.
 
+## Time Frames for our project
+1. Demo up and running by 10/17/2025
+2. Bug testing and polishing our demo 10/24/2025
+3. Finial project done with all bugs worked out 10/30/2025
+4. Write script for our video 10/30/2025
+5. Film our video 11/4/2025
+6. Edit our video 10/6/2025
+7. Submit project 10/6/2025
+
 ## Project Board Assignments
 - Navbars
 - [ ] add navbar for home, store, salesman, customer service, admin
