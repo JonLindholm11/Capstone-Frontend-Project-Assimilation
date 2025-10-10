@@ -10,7 +10,7 @@ React Router layout with a navbar and an `AuthContext` with login and register p
 3. Build components and add routes to them in `App.jsx`.
 
 ## Time Frames for our project
-1. Demo up and running by 10/17/2025
+1. Demo up and running by 10/21/2025
 2. Bug testing and polishing our demo 10/24/2025
 3. Finial project done with all bugs worked out 10/30/2025
 4. Write script for our video 10/30/2025
