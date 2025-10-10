@@ -1,14 +1,22 @@
-import React from 'react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 function SpecialPricing() {
     const [prices, setPrices] = useState([]);
     const [formData, setFormData] = useState({
         productName: '',
         regularPrice: '',
-        validPrice: '',
+        specialPrice: '',
         validDate: ''
     });
-};
+
+    return (
+        <div>
+            <h2>Special Pricing</h2>
+            {/* Add your component UI here */}
+        </div>
+    );
+}
+
+export default SpecialPricing;
 
 
