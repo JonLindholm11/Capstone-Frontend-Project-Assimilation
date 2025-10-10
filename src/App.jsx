@@ -4,7 +4,7 @@ import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
 import Error404 from "./Error404";
-
+import SalesForm from "./Sales/SalesPage";
 export default function App() {
   return (
     <Routes>
@@ -13,7 +13,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />} />
-
+        <Route path="/SalesPage" element={<Store />} />
         <Route path="*" element={<Error404 />}></Route>
       </Route>
     </Routes>
