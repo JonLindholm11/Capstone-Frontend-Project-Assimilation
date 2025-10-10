@@ -51,7 +51,7 @@ button:hover {
 
 /* slate and blue modern */
 
-/* body {
+body {
   background: linear-gradient(to bottom, #1e293b, #0f172a);
   color: #f8fafc;
   font-family: "Courier New", Courier, monospace;
@@ -66,7 +66,7 @@ button {
 }
 button:hover {
   background-color: #0ea5e9;
-} */
+}
 
 /* pastel lime/mint (current) */
 /* body {
@@ -88,7 +88,7 @@ button:hover {
 } */
 
 /* deep ocean */
-body {
+/* body {
   background: linear-gradient(to bottom, #0a1128, #1b263b);
   color: #e0e1dd;
   font-family: "Courier New", Courier, monospace;
@@ -104,7 +104,7 @@ button {
 }
 button:hover {
   background-color: #04d9a8;
-}
+} */
 
 /* sunset vibes */
 /* body {
