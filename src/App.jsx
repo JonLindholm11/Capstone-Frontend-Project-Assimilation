@@ -6,6 +6,11 @@ import Store from "./Customer/StoreFront";
 import Admin from "./Admin/AdminPage";
 import Error404 from "./Error404";
 import Sewing from "./Customer/pages/sewing";
+import Electronics from "./Customer/pages/electronics";
+import Cars from "./Customer/pages/cars";
+import Food from "./Customer/pages/food";
+import Tools from "./Customer/pages/tools";
+import Cart from "./Customer/pages/Cart";
 
 export default function App() {
   return (
@@ -16,10 +21,13 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />}>
           <Route path="sewing" element={<Sewing />} />
+          <Route path="electronics" element={<Electronics />} />
+          <Route path="cars" element={<Cars />} />
+          <Route path="food" element={<Food />} />
+          <Route path="tools" element={<Tools />} />
+          <Route path="cart" element={<Cart />} />
         </Route>
-        <Route path="/products" element={<Store />} />
         <Route path="/Admin" element={<Admin />} />
-        <Route path="/sewing" element={<Sewing />} />
 
         <Route path="*" element={<Error404 />}></Route>
       </Route>

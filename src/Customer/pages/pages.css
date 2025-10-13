@@ -10,4 +10,17 @@
   display: block;
   object-fit: cover;
   border-radius: 10px;
-} 
+}
+.subNav {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 10px solid antiquewhite;
+}
+.subNav a {
+  text-decoration: none;
+}
+
+.subNav h3 {
+  color: antiquewhite;
+  text-decoration: none;
+}
