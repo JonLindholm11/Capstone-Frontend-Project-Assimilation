@@ -6,7 +6,7 @@
 
 .hero-image {
   width: 100%;
-  height: auto;
+  height: 300px;
   display: block;
   object-fit: cover;
   border-radius: 10px;
@@ -23,4 +23,9 @@
 .subNav h3 {
   color: antiquewhite;
   text-decoration: none;
+}
+.head{
+    display: flex;
+    margin: auto;
+    margin-left: 45%;
 }

@@ -1,16 +1,13 @@
 import Products from "./GetAllProducts";
+import { FaCartShopping } from "react-icons/fa6";
 import { NavLink, Outlet } from "react-router";
 
 export default function Store() {
   return (
     <div>
-      <h1> Shop </h1>
       <nav className="subNav">
         <NavLink to="/products/sewing">
           <h3>Sewing Notions</h3>
-        </NavLink>
-        <NavLink to="/products/cars">
-          <h3>Cars</h3>
         </NavLink>
         <NavLink to="/products/electronics">
           <h3>Electronics</h3>
@@ -25,11 +22,12 @@ export default function Store() {
           <h3>Food</h3>
         </NavLink>
         <NavLink to="/products/cart">
-          <h3>Cart</h3>
+          <h3>
+            <FaCartShopping /> Cart
+          </h3>
         </NavLink>
       </nav>
       <Products />
-      <button>Click me!</button>
       <Outlet />
     </div>
   );
