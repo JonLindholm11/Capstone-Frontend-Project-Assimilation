@@ -1,10 +1,10 @@
-import Products from "./GetAllProducts";
+import { Outlet } from "react-router";
+import SubNav from "./SubNav";
 export default function Store() {
   return (
     <div>
-      <h1> Shop </h1>
-      <Products />
-      <button>Click me!</button>
+      <SubNav />
+      <Outlet />
     </div>
   );
 }
