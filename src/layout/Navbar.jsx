@@ -1,19 +1,27 @@
 import { NavLink } from "react-router";
-
 import { useAuth } from "../auth/AuthContext";
+import "./Navbar.css";
 
 export default function Navbar() {
-  const { token, logout } = useAuth();
+  const { token, role, logout } = useAuth();
+
   return (
-    <header id="navbar">
-      <NavLink id="brand" to="/">
-        <p>Frontend Template</p>
-      </NavLink>
+    <header className="sticky-header">
+      <NavLink to="/">Frontend Template</NavLink>
       <nav>
         {token ? (
-          <button onClick={logout}>Log out</button>
+          <>
+            <button onClick={logout}>Log out</button>
+            <NavLink to="/products">Products</NavLink>
+            {role === 1 && <NavLink to="/sales">Sales</NavLink>}
+          </>
         ) : (
-          <NavLink to="/login">Log in</NavLink>
+          <>
+            <NavLink to="/login">Log in</NavLink>
+            <NavLink to="/register">Register</NavLink>
+            <NavLink to="/products"> Products </NavLink>
+            <NavLink to="/admin"> Admin Page </NavLink>
+          </>
         )}
       </nav>
     </header>
