@@ -7,8 +7,6 @@ import SalesPage from "./Sales/SalesPage";
 import OrderConfirmation from "./Sales/OrderConfirmation";
 import Error404 from "./Error404";
 import Admin from "./Admin/AdminPage";
-import Error404 from "./Error404";
-import SalesForm from "./Sales/SalesPage";
 import Sewing from "./Customer/pages/sewing";
 import Electronics from "./Customer/pages/electronics";
 import Cars from "./Customer/pages/cars";
@@ -34,6 +32,8 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/Admin" element={<Admin />} />
+        <Route path="/sales" element={<SalesPage />} />
+        <Route path ="/order-confirmation" element={<OrderConfirmation />} />
 
         <Route path="*" element={<Error404 />}></Route>
       </Route>
