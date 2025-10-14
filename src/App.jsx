@@ -3,7 +3,8 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
-// import SalesPage from "./Sales/SalesPage";
+import SalesPage from "./Sales/SalesPage";
+import OrderConfirmation from "./Sales/OrderConfirmation";
 import Error404 from "./Error404";
 
 export default function App() {
@@ -14,8 +15,9 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />} />
-        <Route path="/SalesPage" element={<Store />} />
-        <Route path="*" element={<Error404 />}></Route>
+        <Route path="/SalesPage" element={<SalesPage/>} />
+        <Route path="/OrderConfirmation" element={<OrderConfirmation/>} />
+        <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
   );

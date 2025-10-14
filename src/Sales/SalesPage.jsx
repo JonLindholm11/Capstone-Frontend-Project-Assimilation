@@ -41,7 +41,7 @@ function SalesPage() {
               setPriceCategory(""); 
             }}
           >
-            <option value="">-- Select a product --</option>
+            <option value=""> Select a product </option>
             <option value="Smartphone">Smartphone</option>
             <option value="Laptop">Laptop</option>
             <option value="Headphones">Headphones</option>

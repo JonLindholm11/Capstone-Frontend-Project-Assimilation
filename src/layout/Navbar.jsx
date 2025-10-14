@@ -19,6 +19,7 @@ export default function Navbar() {
             <NavLink to="/register">Register</NavLink>
             <NavLink to="/products"> Products </NavLink>
             <NavLink to="/SalesPage">Sales</NavLink>
+            
           </>
         )}
       </nav>
