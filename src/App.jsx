@@ -3,8 +3,9 @@ import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
+// import SalesPage from "./Sales/SalesPage";
 import Error404 from "./Error404";
-import SalesForm from "./Sales/SalesPage";
+
 export default function App() {
   return (
     <Routes>
