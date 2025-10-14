@@ -1,8 +1,11 @@
-import { Route, Routes } from "react-router";
+import { Routes, Route} from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
+import SalesPage from "./Sales/SalesPage";
+import OrderConfirmation from "./Sales/OrderConfirmation";
+import Error404 from "./Error404";
 import Admin from "./Admin/AdminPage";
 import Error404 from "./Error404";
 import SalesForm from "./Sales/SalesPage";
