@@ -6,8 +6,33 @@
 
 .hero-image {
   width: 100%;
-  height: auto;
+  height: 300px;
   display: block;
   object-fit: cover;
   border-radius: 10px;
-} 
+}
+.subNav {
+  display: flex;
+  justify-content: space-evenly;
+  border-bottom: 10px solid antiquewhite;
+}
+.subNav a {
+  text-decoration: none;
+}
+
+.subNav h3 {
+  color: antiquewhite;
+  text-decoration: none;
+}
+.head {
+  display: flex;
+  margin: auto;
+  margin-left: 45%;
+}
+
+.landing {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+  gap: 40px;
+}
