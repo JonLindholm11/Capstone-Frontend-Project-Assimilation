@@ -8,9 +8,8 @@ export default function Sewing() {
       <div className="hero-section">
         <img
           className="hero-image"
-          src="https://images.pexels.com/photos/1409217/pexels-photo-1409217.jpeg"
-          // src="https://images.pexels.com/photos/2817554/pexels-photo-2817554.jpeg"
-          alt="image of a sewing machine"
+          src="https://images.pexels.com/photos/1232131/pexels-photo-1232131.jpeg"
+          alt="image of a sewing notions"
         />
       </div>
     </div>

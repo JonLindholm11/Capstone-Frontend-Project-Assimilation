@@ -8,7 +8,7 @@ export default function Tools() {
         <img
           className="hero-image"
           src="https://images.pexels.com/photos/4480453/pexels-photo-4480453.jpeg"
-          alt="image of a sewing machine"
+          alt="image of tools"
         />
       </div>
     </div>

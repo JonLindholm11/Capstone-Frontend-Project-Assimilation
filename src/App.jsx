@@ -11,6 +11,7 @@ import Cars from "./Customer/pages/cars";
 import Food from "./Customer/pages/food";
 import Tools from "./Customer/pages/tools";
 import Cart from "./Customer/pages/Cart";
+import ProductLanding from "./Customer/pages/ProductLanding";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />}>
+          <Route index element={<ProductLanding />} />
           <Route path="sewing" element={<Sewing />} />
           <Route path="electronics" element={<Electronics />} />
           <Route path="cars" element={<Cars />} />

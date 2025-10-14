@@ -7,8 +7,8 @@ export default function Food() {
       <div className="hero-section">
         <img
           className="hero-image"
-          src="https://images.pexels.com/photos/1128678/pexels-photo-1128678.jpeg"
-          alt="image of a sewing machine"
+          src="https://images.pexels.com/photos/3756523/pexels-photo-3756523.jpeg"
+          alt="image of food"
         />
       </div>
     </div>

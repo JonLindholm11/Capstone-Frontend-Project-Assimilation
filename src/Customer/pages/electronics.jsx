@@ -5,8 +5,8 @@ export default function Electronics() {
       <h1 className="head"> Electronics </h1>
       <img
         className="hero-image"
-        src="https://images.pexels.com/photos/1983037/pexels-photo-1983037.jpeg"
-        alt=""
+        src="https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg"
+        alt="picture of electronics on a table"
       />
     </div>
   );

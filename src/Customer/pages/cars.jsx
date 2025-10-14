@@ -8,7 +8,7 @@ export default function Cars() {
         <img
           className="hero-image"
           src="https://images.pexels.com/photos/136872/pexels-photo-136872.jpeg"
-          alt="image of a sewing machine"
+          alt="image of a car"
         />
       </div>
     </div>
