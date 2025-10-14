@@ -5,6 +5,7 @@ import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
 import Admin from "./Admin/AdminPage";
 import Error404 from "./Error404";
+import SalesForm from "./Sales/SalesPage";
 import Sewing from "./Customer/pages/sewing";
 
 export default function App() {
