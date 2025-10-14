@@ -1,47 +1,77 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useAuth } from "../auth/AuthContext";
 import PriceCategory from "../Sales/PriceCategory";
-import "./SalesPage.css"; 
+import "./SalesPage.css";
 
-function SalesPage() {
+export default function SalesPage(navigate) {
+  const { token, role } = useAuth(); // Auth context
   const [product, setProduct] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [priceCategory, setPriceCategory] = useState("");
-  const navigate = useNavigate();
+
+  const [clientOrders, setClientOrders] = useState([]); // mock client orders
+
+  // Mock fetch client orders
+  useEffect(() => {
+    if (role === "admin") {
+      setClientOrders([
+        { name: "John Doe", product: "Laptop", quantity: 2, payment: "Credit Card" },
+        { name: "Jane Smith", product: "Smartphone", quantity: 1, payment: "Bank Transfer" },
+      ]);
+    }
+  }, [role]);
+
+  // Block non-admin users
+  if (!token || role !== "admin") {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
+        ⚠️ Access Denied — Admins Only
+        <br />
+        <button onClick={() => navigate("/")}>Back to Home</button>
+      </div>
+    );
+  }
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (!product || !paymentMethod || !priceCategory) {
-      alert("Please complete all fields before submitting your order.");
+      alert("Please fill all fields");
       return;
     }
 
-    alert(
-      `Order placed: ${quantity} x ${product} (${priceCategory}) via ${paymentMethod}.`
-    );
+    const order = {
+      client: "Test Client",
+      product,
+      quantity,
+      paymentMethod,
+      priceCategory,
+      date: new Date().toLocaleString(),
+    };
 
-    // Navigate to a confirmation page (example route)
-    navigate("/order-confirmation");
+    // For demo, just add to local state
+    setClientOrders((prev) => [order, ...prev]);
+
+    // Optionally navigate to OrderConfirmation page
+    navigate("/order-confirmation", order);
   };
 
   return (
     <div className="sales-container">
-      <h2 className="sales-title">🛍️ Place Your Order</h2>
+      <h2>🛍️ Admin Sales Dashboard</h2>
 
       <form onSubmit={handleSubmit} className="sales-form">
         <div className="form-group">
-          <label htmlFor="product">Product</label>
+          <label>Product:</label>
           <select
-            id="product"
             value={product}
             onChange={(e) => {
               setProduct(e.target.value);
-              setPriceCategory(""); 
+              setPriceCategory("");
             }}
           >
-            <option value=""> Select a product </option>
+            <option value="">-- Select a product --</option>
             <option value="Smartphone">Smartphone</option>
             <option value="Laptop">Laptop</option>
             <option value="Headphones">Headphones</option>
@@ -50,51 +80,52 @@ function SalesPage() {
 
         {product && (
           <div className="form-group">
-            <label htmlFor="priceCategory">Price Category</label>
+            <label>Price Category:</label>
             <PriceCategory
               product={product}
               value={priceCategory}
-              onChange={(val) => setPriceCategory(val)}
+              onChange={setPriceCategory}
             />
           </div>
         )}
 
         <div className="form-group">
-          <label htmlFor="quantity">Quantity</label>
-          <select
-            id="quantity"
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-          >
+          <label>Quantity:</label>
+          <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
             {[1, 2, 3, 4, 5].map((num) => (
-              <option key={num} value={num}>
-                {num}
-              </option>
+              <option key={num} value={num}>{num}</option>
             ))}
           </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="paymentMethod">Payment Method</label>
-          <select
-            id="paymentMethod"
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          >
-            <option value="">-- Select payment method --</option>
+          <label>Payment Method:</label>
+          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+            <option value="">-- Select payment --</option>
             <option value="Credit Card">Credit Card</option>
             <option value="Bank Transfer">Bank Transfer</option>
           </select>
         </div>
 
-        <button type="submit" className="submit-btn">
-          🛒 Submit Order
-        </button>
+        <button type="submit">🛒 Place Order</button>
       </form>
+
+      <h3 style={{ marginTop: "2rem" }}>📋 Client Orders</h3>
+      {clientOrders.length === 0 ? (
+        <p>No orders yet.</p>
+      ) : (
+        clientOrders.map((order, index) => (
+          <div key={index} className="client-order">
+            <p><strong>Client:</strong> {order.client || order.name}</p>
+            <p><strong>Product:</strong> {order.product}</p>
+            <p><strong>Category:</strong> {order.priceCategory}</p>
+            <p><strong>Quantity:</strong> {order.quantity}</p>
+            <p><strong>Payment:</strong> {order.paymentMethod || order.payment}</p>
+            <p><strong>Date:</strong> {order.date || "N/A"}</p>
+            <hr />
+          </div>
+        ))
+      )}
     </div>
   );
 }
-
-export default SalesPage;
-
-

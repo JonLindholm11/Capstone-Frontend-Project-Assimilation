@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router";
+import { Routes, Route} from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -15,8 +15,8 @@ export default function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />} />
-        <Route path="/SalesPage" element={<SalesPage/>} />
-        <Route path="/OrderConfirmation" element={<OrderConfirmation/>} />
+        <Route path="/sales" element={<SalesPage />} />
+        <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="*" element={<Error404 />} />
       </Route>
     </Routes>
