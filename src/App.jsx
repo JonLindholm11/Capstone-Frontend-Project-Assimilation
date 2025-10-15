@@ -6,7 +6,7 @@ import Store from "./Customer/StoreFront";
 import SalesPage from "./Sales/SalesPage";
 import OrderConfirmation from "./Sales/OrderConfirmation";
 import Error404 from "./Error404";
-import Admin from "./Admin/AdminPage";
+import AdminPage from "./Admin/AdminPage";
 import Error404 from "./Error404";
 import SalesForm from "./Sales/SalesPage";
 import Sewing from "./Customer/pages/sewing";
@@ -34,6 +34,7 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/Admin" element={<Admin />} />
+        <Route path="/admin" element={<AdminPage />} />
 
         <Route path="*" element={<Error404 />}></Route>
       </Route>
