@@ -4,7 +4,6 @@ import { useState } from 'react';
 function RoleSelection() {
   // keeping track of users - will eventually pull from database
   const [users, setUsers] = useState([
-  
     { id: 1, name: 'John Doe', email: 'john@example.com', role: 'user', password: '********' },
     { id: 2, name: 'Jane Smith', email: 'jane@example.com', role: 'user', password: '********' },
     { id: 3, name: 'Jodson Cadet', email: 'jodson@example.com', role: 'manager', password: '********' },
@@ -12,10 +11,13 @@ function RoleSelection() {
     { id: 5, name: 'Jacob Sonsini', email: 'jacob@example.com', role: 'salesman', password: '********' },
     { id: 6, name: 'Jose Pando', email: 'jose@example.com', role: 'salesman', password: '********' },
     { id: 7, name: 'Daniel Bistel', email: 'daniel@example.com', role: 'salesman', password: '********' }
-
   ]);
 
   const availableRoles = ['user', 'admin', 'manager', 'salesman', 'customer'];
+  
+  // hardcoded current user role for now - will get from auth context later
+  // replace with useAuth() when backend is ready
+  const currentUserRole = 'admin'; // change this to test different permissions
   
   // The password reset modal
   const [showPasswordModal, setShowPasswordModal]=useState(false);
@@ -108,7 +110,7 @@ function RoleSelection() {
       return;
     }
     
-    // update password in state / would send to backend eventually
+    // update password in state | would send to backend eventually
     const updatedUsers=users.map(user=> {
       if(user.id==selectedUser.id){
         return {...user, password: '********'}; // keep it masked
@@ -132,21 +134,41 @@ function RoleSelection() {
     setConfirmPassword('');
   }
 
-  // function to delete user
+  // function to delete user - only admin and manager 
+  // added permission check for security
   const deleteUser = (userId) => {
+    // check if current user has permission to delete
+    if (currentUserRole !== 'admin' && currentUserRole !== 'manager') {
+      alert('Access Denied! Only admins and managers can delete users.');
+      console.log('delete attempt blocked for role:', currentUserRole);
+      return;
+    }
+    
     const confirmDelete = window.confirm('Are you sure you want to delete this user?');
     if(confirmDelete) {
       const filtered = users.filter(u => u.id !== userId);
       setUsers(filtered);
       console.log('deleted user:', userId);
+      alert('User deleted successfully!');
     }
+  }
+
+  // helper function to check if delete button should show
+  
+  const canDelete = () => {
+    return currentUserRole === 'admin' || currentUserRole === 'manager';
   }
 
   return (
     <div className="role-container">
       <h2>User Role Management</h2>
       
-      {/* The Registration form - create new users */}
+      {/* Show current user role */}
+      <p style={{color:'#666',marginBottom:'10px',fontSize:'14px'}}>
+        Logged in as: <strong>{currentUserRole}</strong>
+      </p>
+      
+      {/* The Registration form  */}
       <div style={{
         backgroundColor:'#f8f9fa',
         padding:'20px',
@@ -303,19 +325,30 @@ function RoleSelection() {
                   >
                     Reset Password
                   </button>
-                  <button 
-                    onClick={()=>deleteUser(user.id)}
-                    style={{
-                      padding:'6px 12px',
-                      backgroundColor:'#dc3545',
-                      color:'white',
-                      border:'none',
-                      borderRadius:'4px',
-                      cursor:'pointer'
-                    }}
-                  >
-                    Delete
-                  </button>
+                  
+                  {/* Only show delete button for admin and manager */}
+                  {canDelete() && (
+                    <button 
+                      onClick={()=>deleteUser(user.id)}
+                      style={{
+                        padding:'6px 12px',
+                        backgroundColor:'#dc3545',
+                        color:'white',
+                        border:'none',
+                        borderRadius:'4px',
+                        cursor:'pointer'
+                      }}
+                    >
+                      Delete
+                    </button>
+                  )}
+                  
+                  {/* Show message if user can't delete */}
+                  {!canDelete() && (
+                    <span style={{fontSize:'12px',color:'#999',fontStyle:'italic'}}>
+                      (No delete permission)
+                    </span>
+                  )}
                 </td>
               </tr>
             );
@@ -420,4 +453,3 @@ function RoleSelection() {
 }
 
 export default RoleSelection;
-

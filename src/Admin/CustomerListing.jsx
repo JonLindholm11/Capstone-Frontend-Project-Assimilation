@@ -5,9 +5,9 @@ import { useState } from "react";
 function CustomerListing() {
   // sample customer data - eventually from API
   const [customers, setCustomers] = useState([
-    { id: 1, name: 'ABC Corp', contact: 'Mike Johnson', email: 'mike@abc.com', phone: '555-0101', salesmanId: 1 },
-    { id: 2, name: 'XYZ Inc', contact: 'Sarah Williams', email: 'sarah@xyz.com', phone: '555-0102', salesmanId: 1 },
-    {id:3,name:'Tech Solutions', contact: 'David Brown',email:'david@tech.com',phone: '555-0103', salesmanId: 2}
+    { id: 1, name: 'Cargo Shipping Industries', contact: 'Mike Johnson', email: 'mike@abc.com', phone: '954-0101', salesmanId: 1 },
+    { id: 2, name: 'Automotive Solutions', contact: 'Sarah Williams', email: 'sarah@xyz.com', phone: '305-0102', salesmanId: 1 },
+    {id:3,name:'International Corp', contact: 'David Brown',email:'david@tech.com',phone: '754-0103', salesmanId: 2}
   ]);
 
   const [search,setSearch]=useState('');
@@ -15,9 +15,9 @@ function CustomerListing() {
   
   // salesman data - this will come from backend eventually
   const salesmen = [
-    {id:1,name:'Robert Garcia'},
-    { id: 2, name: 'Emily Davis' },
-    {id:3, name:'Michael Chen'}
+    {id:1,name:'Jacob Sonsini'},
+    { id: 2, name: 'Jose Pando' },
+    {id:3, name:'Daniel Bistel'}
   ];
 
   // filter customers based on search 
