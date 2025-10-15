@@ -6,13 +6,14 @@ import Store from "./Customer/StoreFront";
 import SalesPage from "./Sales/SalesPage";
 import OrderConfirmation from "./Sales/OrderConfirmation";
 import Error404 from "./Error404";
-import Admin from "./Admin/AdminPage";
+import AdminPage from "./Admin/AdminPage";
+import SalesForm from "./Sales/SalesPage";
 import Sewing from "./Customer/pages/sewing";
 import Electronics from "./Customer/pages/electronics";
 import Cars from "./Customer/pages/cars";
 import Food from "./Customer/pages/food";
 import Tools from "./Customer/pages/tools";
-import Cart from "./Customer/pages/Cart";
+import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
 
 export default function App() {
@@ -31,11 +32,11 @@ export default function App() {
           <Route path="tools" element={<Tools />} />
           <Route path="cart" element={<Cart />} />
         </Route>
-        <Route path="/Admin" element={<Admin />} />
-        <Route path="/sales" element={<SalesPage />} />
-        <Route path ="/order-confirmation" element={<OrderConfirmation />} />
+      
+        <Route path="/admin" element={<AdminPage />} />
 
         <Route path="*" element={<Error404 />}></Route>
+
       </Route>
     </Routes>
   );
