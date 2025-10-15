@@ -26,8 +26,9 @@
 }
 .head {
   display: flex;
-  margin: auto;
-  margin-left: 45%;
+  justify-content: center; /* centered horizontally */
+  align-items: center;
+  margin: 20px 0;
 }
 
 .landing {
@@ -35,4 +36,5 @@
   flex-direction: column;
   margin-top: 20px;
   gap: 40px;
+  padding: 0 20px; /* horizontal padding for mobile */
 }

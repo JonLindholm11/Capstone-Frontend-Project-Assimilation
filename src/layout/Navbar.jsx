@@ -23,6 +23,7 @@ export default function Navbar() {
             <NavLink to="/register">Register</NavLink>
             <NavLink to="/products"> Products </NavLink>
             <NavLink to="/admin"> Admin Page </NavLink>
+            <NavLink to="/sales"> Sales Page </NavLink>
           </>
         )}
       </nav>
