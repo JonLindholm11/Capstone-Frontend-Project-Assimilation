@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import PriceCategory from "../Sales/PriceCategory";
 import "./SalesPage.css";
+import { FaChartLine, FaMoneyBillWave } from "react-icons/fa";
+
 
 export default function SalesPage(navigate) {
   const { token, role } = useAuth(); // Auth context
