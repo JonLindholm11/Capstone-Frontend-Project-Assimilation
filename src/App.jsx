@@ -11,7 +11,7 @@ import Electronics from "./Customer/pages/electronics";
 import Cars from "./Customer/pages/cars";
 import Food from "./Customer/pages/food";
 import Tools from "./Customer/pages/tools";
-import Cart from "./Customer/pages/Cart";
+import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
 
 export default function App() {
