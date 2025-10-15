@@ -7,7 +7,7 @@
         align-items: center;
         min-height: 100vh;
         background: linear-gradient(135deg, #0a1d37, #283593);
-        background-image: url('/patterns/abstract-lines.svg'); /* optional subtle pattern */
+        background-image: url('/patterns/abstract-lines.svg'); 
         background-repeat: no-repeat;
         background-size: cover;
         font-family: "Poppins", sans-serif;
@@ -45,7 +45,7 @@
   
   .register-card input {
     width: 100%;
-    padding: 0.75rem 0.75rem 0.75rem 2.5rem; /* space for icon */
+    padding: 0.75rem 0.75rem 0.75rem 2.5rem; 
     border: 1px solid #ccc;
     border-radius: 6px;
     font-size: 1rem;

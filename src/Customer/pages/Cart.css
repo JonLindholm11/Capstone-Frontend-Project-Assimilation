@@ -1,4 +1,4 @@
-/* Cart page container */
+/* Cart page  */
 .cart-page {
     max-width: 700px;
     margin: 20px auto;
@@ -6,7 +6,7 @@
     font-family: Arial, sans-serif;
   }
   
-  /* Page heading */
+  
   .cart-page h2 {
     text-align: center;
     color: #1a237e;
@@ -29,18 +29,18 @@
     color: #333;
   }
   
-  /* Quantity and remove buttons container (aligned right) */
+  /* Quantity and remove buttons  */
   .quantity-controls {
     display: flex;
     align-items: center;
     gap: 10px;
-    justify-content: flex-end; /* move to right */
-    min-width: 200px; /* keep items together */
+    justify-content: flex-end; 
+    min-width: 200px; 
   }
   
   /* Plus/Minus buttons */
   .quantity-controls button {
-    min-width: 40px; /* bigger to fit text */
+    min-width: 40px; 
     height: 40px;
     background-color: #3949ab;
     color: white;
@@ -50,7 +50,7 @@
     cursor: pointer;
   }
   
-  /* Quantity number */
+  /* Quantity */
   .quantity-controls span {
     min-width: 25px;
     text-align: center;
@@ -59,7 +59,7 @@
   
   /* Remove button */
   .remove-btn {
-    min-width: 60px; /* fits text */
+    min-width: 60px; 
     height: 40px;
     background-color: #e74c3c;
     color: white;
@@ -73,7 +73,7 @@
     background-color: #c0392b;
   }
   
-  /* Total and checkout section */
+  /* Total and checkout  */
   .cart-total-container {
     display: flex;
     justify-content: space-between;
@@ -85,7 +85,7 @@
   
   /* Checkout button */
   .checkout-btn {
-    padding: 10px 20px; /* fits text nicely */
+    padding: 10px 20px; 
     background-color: #3949ab;
     color: white;
     border: none;
