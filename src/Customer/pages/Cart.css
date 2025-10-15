@@ -1,0 +1,100 @@
+/* Cart page container */
+.cart-page {
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Page heading */
+  .cart-page h2 {
+    text-align: center;
+    color: #1a237e;
+    margin-bottom: 20px;
+  }
+  
+  /* Each item in cart */
+  .cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Item name and price */
+  .cart-item p {
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  /* Quantity and remove buttons container (aligned right) */
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    justify-content: flex-end; /* move to right */
+    min-width: 200px; /* keep items together */
+  }
+  
+  /* Plus/Minus buttons */
+  .quantity-controls button {
+    min-width: 40px; /* bigger to fit text */
+    height: 40px;
+    background-color: #3949ab;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  /* Quantity number */
+  .quantity-controls span {
+    min-width: 25px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+  /* Remove button */
+  .remove-btn {
+    min-width: 60px; /* fits text */
+    height: 40px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .remove-btn:hover {
+    background-color: #c0392b;
+  }
+  
+  /* Total and checkout section */
+  .cart-total-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-weight: bold;
+    color: #1a237e;
+  }
+  
+  /* Checkout button */
+  .checkout-btn {
+    padding: 10px 20px; /* fits text nicely */
+    background-color: #3949ab;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .checkout-btn:hover {
+    background-color: #1a237e;
+  }
+  
