@@ -1,2 +1,2 @@
-import "./pages.css";
+import "../pages.css";
 export default function Cart() {}

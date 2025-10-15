@@ -15,7 +15,7 @@ export default function Navbar() {
           <>
             <button onClick={logout}>Log out</button>
             <NavLink to="/products">Products</NavLink>
-            {role === "admin" && <NavLink to="/sales">Sales</NavLink>}
+            {role === 1 && <NavLink to="/sales">Sales</NavLink>}
           </>
         ) : (
           <>
