@@ -1,17 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from "react";
+// import { FaClipboardList, FaTags, FaMoneyBill } from "react-icons/fa";
+import './Admin.css'; 
 import OrderManagement from './OrderManagement';
 import CustomerPricing from './CustomerPricing';
 import RoleSelection from './RoleSelection';
 import SpecialPricing from './SpecialPricing';
 import CustomerListing from './CustomerListing';
-import './AdminPage.css';
+
 
 // Admin dashboard component
 function AdminPage() {
   // keeping track of which section to show
   const [activeSection, setActiveSection] = useState('orders');
   
-  // const [currentSection, setCurrentSection] = useState('orders');  old way I tried
+  // const currentSection, setCurrentSection
 
   const renderSection = () => {
   

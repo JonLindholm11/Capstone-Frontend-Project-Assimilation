@@ -1,19 +1,21 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
+// import { FaDollarSign, FaTag } from "react-icons/fa";
+
 
 // component for managing customer price categories
 function CustomerPricing() {
-  // hardcoded data for now - TODO: fetch from API later
+  // hardcoded data for now - possibility fetch from API later
   const [salesmen]=useState([
-    {id:1,name:'Robert Garcia'},
-    { id: 2, name: 'Emily Davis' },
-    {id:3, name:'Michael Chen'}
+    {id:1,name:'Jacob Sonsini'},
+    { id: 2, name: 'Jose Pando' },
+    {id:3, name:'Daniel Bistel'}
   ]);
 
   const [customers] = useState([
-    {id:1,name:'ABC Corp',salesmanId:1,priceCategory:'standard'},
-    { id: 2, name: 'XYZ Inc', salesmanId: 1, priceCategory: 'premium' },
+    {id:1,name:'Cargo Shipping Industries',salesmanId:1,priceCategory:'standard'},
+    { id: 2, name: 'Automotive Solutions', salesmanId: 1, priceCategory: 'premium' },
     {id:3,name:'Tech Solutions', salesmanId:2,priceCategory:'standard'},
-    { id: 4, name: 'Global Trade', salesmanId: 2, priceCategory: 'wholesale' }
+    { id: 4, name: 'International Corp', salesmanId: 2, priceCategory: 'wholesale' }
   ]);
 
   const [selectedSalesman, setSelectedSalesman]=useState(null);

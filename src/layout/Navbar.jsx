@@ -1,6 +1,8 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import "./Navbar.css";
+// import { FaHome, FaUser, FaChartBar, FaCog } from "react-icons/fa";
+
 
 export default function Navbar() {
   const { token, role, logout } = useAuth();

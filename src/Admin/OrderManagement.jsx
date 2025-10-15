@@ -1,7 +1,9 @@
-import React, {useState} from 'react';
+import {useState} from 'react';
+// import { FaBox, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+
 
 function OrderManagement() {
-  // sample orders - will connect to backend eventually
+  // sample orders - wconnect to backend possibility
   const [orders,setOrders]=useState([
     {id:1, customer:'ABC Corp',date:'2025-10-14',status:'pending',total:1250.00},
     { id: 2, customer: 'XYZ Inc', date: '2025-10-14', status: 'active', total: 2800.50 },
@@ -19,7 +21,7 @@ function OrderManagement() {
   function changeOrderStatus(orderId, newStatus){
     console.log('updating order', orderId, 'to', newStatus);
     
-    //  map function 
+    // had to look up the map function 
     const updatedOrders=orders.map(order=> {
       if(order.id==orderId) {
         return {...order,status:newStatus};
@@ -41,7 +43,7 @@ function OrderManagement() {
     <div className="order-management">
       <h2>Order Management</h2>
       
-      {/* date selector dropdown*/}
+      {/* date selector dropdown  */}
       <div className="date-selector" style={{marginBottom:'20px'}}>
         <label style={{marginRight:'10px',fontWeight:'bold'}}>Select Date:</label>
         <div style={{position:'relative',display:'inline-block'}}>

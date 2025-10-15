@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+// import { FaDollarSign, FaTag } from "react-icons/fa";
+
 
 function SpecialPricing() {
   const [specials, setSpecials] = useState([
@@ -12,7 +14,7 @@ function SpecialPricing() {
   const [startDate, setStartDate] = useState('');
   const [endDate,setEndDate]=useState('');
   
-  // dropdown for product selection - hardcoded for now
+  // dropdown for product selection 
   const [availableProducts]=useState([
     'Product A','Product B','Product C','Product D','Product E'
   ]);
@@ -222,5 +224,3 @@ function SpecialPricing() {
 }
 
 export default SpecialPricing;
-
-
