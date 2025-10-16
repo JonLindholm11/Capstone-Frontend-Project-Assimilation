@@ -3,7 +3,7 @@ import {useState} from 'react';
 
 
 function OrderManagement() {
-  // sample orders - wconnect to backend possibility
+  // Just sample orders - will connect to backend possibility
   const [orders,setOrders]=useState([
     {id:1, customer:'ABC Corp',date:'2025-10-14',status:'pending',total:1250.00},
     { id: 2, customer: 'XYZ Inc', date: '2025-10-14', status: 'active', total: 2800.50 },
@@ -15,7 +15,6 @@ function OrderManagement() {
   const [showDatePicker,setShowDatePicker]=useState(false);
 
   // filter orders by the selected date
-  // figured out this was easier than creating a whole separate function
   const filteredOrders = orders.filter(order=> order.date == selectedDate);
 
   function changeOrderStatus(orderId, newStatus){
