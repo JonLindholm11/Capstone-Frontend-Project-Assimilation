@@ -2,13 +2,11 @@ import { useState } from "react";
 import "./Cart.css";
 
 export default function Cart() {
-  
   const [cartItems, setCartItems] = useState([
     { id: 1, name: "Smartphone", price: 699, quantity: 1 },
     { id: 2, name: "Laptop", price: 1299, quantity: 2 },
   ]);
 
-  
   const changeQuantity = (id, newQuantity) => {
     const newCart = cartItems.map((item) => {
       if (item.id === id) {
