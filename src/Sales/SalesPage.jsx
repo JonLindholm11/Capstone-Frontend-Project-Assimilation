@@ -2,27 +2,36 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import PriceCategory from "../Sales/PriceCategory";
 import "./SalesPage.css";
+import { useNavigate } from "react-router";
 
-export default function SalesPage(navigate) {
-  const { token, role } = useAuth(); // Auth context
+export default function SalesPage() {
+  const { token, role } = useAuth(); 
   const [product, setProduct] = useState("");
   const [quantity, setQuantity] = useState(1);
   const [paymentMethod, setPaymentMethod] = useState("");
   const [priceCategory, setPriceCategory] = useState("");
+  const [clientOrders, setClientOrders] = useState([]); 
+  const navigate = useNavigate();
 
-  const [clientOrders, setClientOrders] = useState([]); // mock client orders
-
-  // Mock fetch client orders
   useEffect(() => {
     if (role === "admin") {
       setClientOrders([
-        { name: "John Doe", product: "Laptop", quantity: 2, payment: "Credit Card" },
-        { name: "Jane Smith", product: "Smartphone", quantity: 1, payment: "Bank Transfer" },
+        {
+          name: "John Doe",
+          product: "Laptop",
+          quantity: 2,
+          payment: "Credit Card",
+        },
+        {
+          name: "Jane Smith",
+          product: "Smartphone",
+          quantity: 1,
+          payment: "Bank Transfer",
+        },
       ]);
     }
   }, [role]);
 
-  // Block non-admin users
   if (!token || role !== "admin") {
     return (
       <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
@@ -50,10 +59,7 @@ export default function SalesPage(navigate) {
       date: new Date().toLocaleString(),
     };
 
-    // For demo, just add to local state
     setClientOrders((prev) => [order, ...prev]);
-
-    // Optionally navigate to OrderConfirmation page
     navigate("/order-confirmation", order);
   };
 
@@ -91,16 +97,24 @@ export default function SalesPage(navigate) {
 
         <div className="form-group">
           <label>Quantity:</label>
-          <select value={quantity} onChange={(e) => setQuantity(Number(e.target.value))}>
+          <select
+            value={quantity}
+            onChange={(e) => setQuantity(Number(e.target.value))}
+          >
             {[1, 2, 3, 4, 5].map((num) => (
-              <option key={num} value={num}>{num}</option>
+              <option key={num} value={num}>
+                {num}
+              </option>
             ))}
           </select>
         </div>
 
         <div className="form-group">
           <label>Payment Method:</label>
-          <select value={paymentMethod} onChange={(e) => setPaymentMethod(e.target.value)}>
+          <select
+            value={paymentMethod}
+            onChange={(e) => setPaymentMethod(e.target.value)}
+          >
             <option value="">-- Select payment --</option>
             <option value="Credit Card">Credit Card</option>
             <option value="Bank Transfer">Bank Transfer</option>
@@ -116,12 +130,24 @@ export default function SalesPage(navigate) {
       ) : (
         clientOrders.map((order, index) => (
           <div key={index} className="client-order">
-            <p><strong>Client:</strong> {order.client || order.name}</p>
-            <p><strong>Product:</strong> {order.product}</p>
-            <p><strong>Category:</strong> {order.priceCategory}</p>
-            <p><strong>Quantity:</strong> {order.quantity}</p>
-            <p><strong>Payment:</strong> {order.paymentMethod || order.payment}</p>
-            <p><strong>Date:</strong> {order.date || "N/A"}</p>
+            <p>
+              <strong>Client:</strong> {order.client || order.name}
+            </p>
+            <p>
+              <strong>Product:</strong> {order.product}
+            </p>
+            <p>
+              <strong>Category:</strong> {order.priceCategory}
+            </p>
+            <p>
+              <strong>Quantity:</strong> {order.quantity}
+            </p>
+            <p>
+              <strong>Payment:</strong> {order.paymentMethod || order.payment}
+            </p>
+            <p>
+              <strong>Date:</strong> {order.date || "N/A"}
+            </p>
             <hr />
           </div>
         ))

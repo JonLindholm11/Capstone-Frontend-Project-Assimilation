@@ -1,18 +1,19 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-
 import { useAuth } from "./AuthContext";
+import "./Login.css"; 
 
-/** A form that allows users to log into an existing account. */
+//Jodson | I'll handle the login page to connect with Admin and Sales roles etc
+
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();
-
   const [error, setError] = useState(null);
 
   const onLogin = async (formData) => {
     const username = formData.get("username");
     const password = formData.get("password");
+
     try {
       await login({ username, password });
       navigate("/");
@@ -22,21 +23,37 @@ export default function Login() {
   };
 
   return (
-    <>
-      <h1>Log in to your account</h1>
-      <form action={onLogin}>
-        <label>
-          Username
-          <input type="username" name="username" required />
-        </label>
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-        <button>Login</button>
-        {error && <output>{error}</output>}
-      </form>
-      <Link to="/register">Need an account? Register here.</Link>
-    </>
+    <div className="login-page">
+      <div className="login-card">
+        <h1>Log in to your account</h1>
+        <form action={onLogin}>
+          <label>
+            Username
+            <input type="text" name="username" required />
+          </label>
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+
+          {/* <label>
+            Role
+            <select name="role" required>
+              <option value="">Select role...</option>
+              <option value="customer">Customer</option>
+              <option value="admin">Admin</option>
+            </select>
+          </label> */}
+
+          <button type="submit">Login</button>
+          {error && <output>{error}</output>}
+        </form>
+
+        <Link to="/register" className="register-link">
+          Need an account? Register here.
+        </Link>
+      </div>
+    </div>
   );
 }
+

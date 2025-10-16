@@ -10,7 +10,7 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
   }, [token]);
-
+  
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
       method: "POST",
@@ -47,3 +47,4 @@ export function useAuth() {
   if (!context) throw Error("useAuth must be used within an AuthProvider");
   return context;
 }
+
