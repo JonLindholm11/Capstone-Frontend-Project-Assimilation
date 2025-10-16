@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
 import "./Register.css"; 
 
+//Jodson | I'll handle the Register page to connect with Admin Page to create new users
+
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();

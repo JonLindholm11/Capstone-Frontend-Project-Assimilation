@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
 import "./Login.css"; 
 
+//Jodson | I'll handle the login page to connect with Admin and Sales roles etc
+
 export default function Login() {
   const { login } = useAuth();
   const navigate = useNavigate();

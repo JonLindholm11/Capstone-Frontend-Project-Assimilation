@@ -2,10 +2,6 @@ import { useState, useEffect } from "react";
 import { useAuth } from "../auth/AuthContext";
 import PriceCategory from "../Sales/PriceCategory";
 import "./SalesPage.css";
-<<<<<<< HEAD
-// import { FaChartLine, FaMoneyBillWave } from "react-icons/fa";
-
-=======
 import { useNavigate } from "react-router";
 >>>>>>> JacobsBranch
 
