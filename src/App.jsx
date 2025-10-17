@@ -14,6 +14,7 @@ import Food from "./Customer/pages/food";
 import Tools from "./Customer/pages/tools";
 import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
+import ServicePage from "./Service/ServicePage";
 
 export default function App() {
   return (
@@ -35,6 +36,8 @@ export default function App() {
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
+        <Route path="/ServicePage" element={<ServicePage />} />
+
         <Route path="*" element={<Error404 />}></Route>
 
       </Route>
