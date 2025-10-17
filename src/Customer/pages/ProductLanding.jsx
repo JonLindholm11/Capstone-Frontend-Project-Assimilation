@@ -1,4 +1,5 @@
 import "./pages.css";
+
 export default function ProductLanding() {
   return (
     <div className="landing">
