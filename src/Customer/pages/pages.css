@@ -14,14 +14,14 @@
 .subNav {
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 10px solid antiquewhite;
+  border-bottom: 10px solid white;
 }
 .subNav a {
   text-decoration: none;
 }
 
 .subNav h3 {
-  color: antiquewhite;
+  color: white;
   text-decoration: none;
 }
 .head {

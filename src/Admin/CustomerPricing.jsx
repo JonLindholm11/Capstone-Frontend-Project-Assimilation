@@ -54,7 +54,7 @@ function CustomerPricing() {
   return (
     <div className="customer-pricing">
       <h2>Customer Price Categories</h2>
-      <p style={{color:'#666',marginBottom:'20px'}}>
+      <p style={{color:'white',marginBottom:'20px'}}>
         Select a salesman to manage their customer pricing
       </p>
 

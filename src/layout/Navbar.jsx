@@ -1,15 +1,15 @@
 import { NavLink } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import "./Navbar.css";
+import Brand from "./Brand";
 // import { FaHome, FaUser, FaChartBar, FaCog } from "react-icons/fa";
-
 
 export default function Navbar() {
   const { token, role, logout } = useAuth();
 
   return (
     <header className="sticky-header">
-      <NavLink to="/">Frontend Template</NavLink>
+      <Brand />
       <nav>
         {token ? (
           <>
