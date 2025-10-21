@@ -21,7 +21,7 @@ body {
 .sticky-header p {
   margin: 0;
   font-weight: 700;
-  letter-spacing: 0.3px; 
+  letter-spacing: 0.3px;
 }
 
 .sticky-header nav {
@@ -36,6 +36,13 @@ body {
   cursor: pointer;
   padding: 6px 8px;
   border-radius: 6px;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  /* text-decoration: none; */
 }
 
 
@@ -60,7 +67,7 @@ body {
 /* deep ocean navbar */
 .sticky-header {
   background-color: #0a1128;
-  border-bottom: 2px solid #bfe7dd;
+  border-bottom: 2px solid white;
   color: #e0e1dd;
 }
 .sticky-header p {
