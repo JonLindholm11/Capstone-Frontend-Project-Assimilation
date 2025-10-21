@@ -15,7 +15,7 @@ export default function Register() {
     const password = formData.get("password");
 
     try {
-      await register({ username, password });
+      await register({ username, password, role_id: 4 });
       navigate("/login"); // redirect to login after successful registration
     } catch (e) {
       setError(e.message);

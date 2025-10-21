@@ -22,7 +22,8 @@ export default function Navbar() {
             <NavLink to="/login">Log in</NavLink>
             <NavLink to="/register">Register</NavLink>
             <NavLink to="/products"> Products </NavLink>
-            <NavLink to="/admin"> Admin Page </NavLink>
+            {/* <NavLink to="/admin"> Admin Page </NavLink> */}
+            <NavLink to="/admin">Admin Panel</NavLink>
             <NavLink to="/sales"> Sales Page </NavLink>
             <NavLink to="/ServicePage"> Customer Service </NavLink>
           </>
