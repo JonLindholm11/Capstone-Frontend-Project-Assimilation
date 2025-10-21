@@ -34,7 +34,7 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/admin/login" element={<AdminLogin />} /> {/*Shows the Admin login first*/} 
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/dashboard" element={<AdminPage />} />
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/ServicePage" element={<ServicePage />} />

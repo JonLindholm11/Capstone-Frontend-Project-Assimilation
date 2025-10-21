@@ -22,7 +22,7 @@ useEffect(() => {
   // check if user is logged in and has permission
   if (!token) {
     console.log('no token, redirecting to admin login');
-    navigate('/admin'); // Redirect to admin login page
+    navigate('/admin/login'); // Redirect to admin login page
     return;
   }
 
@@ -51,7 +51,7 @@ useEffect(() => {
   // helper functions to check user role
   const isAdmin = () => currentUser?.role_id === 1;
   const isSalesman = () => currentUser?.role_id === 2;
-  // const isCustomerService = () => currentUser?.role_id === 3;
+  const isCustomerService = () => currentUser?.role_id === 3;
   // get role name for display
   const getRoleName = () => {
     if (!currentUser) return '';

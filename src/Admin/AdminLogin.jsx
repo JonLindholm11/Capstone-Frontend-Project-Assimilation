@@ -85,12 +85,12 @@ export default function AdminLogin() {
         </div>
 
         {/* Test credentials - remove in production */}
-        <div className="test-credentials">
+        {/* <div className="test-credentials">
           <strong>Test Accounts:</strong><br/>
           Admin: admin@projectname.com / admin123<br/>
           Salesman: salesman@projectname.com / sales123<br/>
           Service: customerservice@projectname.com / service123
-        </div>
+        </div> */}
       </div>
     </div>
   );
