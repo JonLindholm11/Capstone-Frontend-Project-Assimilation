@@ -2,7 +2,7 @@ import { useState } from "react";
 // import { FaUsers, FaAddressCard } from "react-icons/fa";
 
 
-function CustomerListing() {
+function CustomerService() {
   // sample customer data - eventually from API
   const [customers, setCustomers] = useState([
     { id: 1, name: 'Cargo Shipping Industries', contact: 'Mike Johnson', email: 'mike@abc.com', phone: '954-0101', salesmanId: 1 },
@@ -286,4 +286,4 @@ function CustomerListing() {
   );
 }
 
-export default CustomerListing;
+export default CustomerService;
