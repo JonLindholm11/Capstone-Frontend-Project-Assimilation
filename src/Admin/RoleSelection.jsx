@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getUsers, updateUserRole, deleteUser as deleteUserAPI } from '../../utils/api';
+import { getUsers, updateUserRole, deleteUser as deleteUserAPI } from '/src/utils/api';
 
 function RoleSelection({ currentUser }) {
   const [users, setUsers] = useState([]);
