@@ -1,4 +1,4 @@
-import { Routes, Route} from "react-router";
+import { Routes, Route } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
@@ -15,6 +15,7 @@ import Tools from "./Customer/pages/tools";
 import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
 import ServicePage from "./Service/ServicePage";
+import ProductDetail from "./Customer/components/GetOneProduct";
 
 export default function App() {
   return (
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />}>
           <Route index element={<ProductLanding />} />
+          <Route path=":id" element={<ProductDetail />} />
           <Route path="sewing" element={<Sewing />} />
           <Route path="electronics" element={<Electronics />} />
           <Route path="cars" element={<Cars />} />
@@ -32,14 +34,13 @@ export default function App() {
           <Route path="tools" element={<Tools />} />
           <Route path="cart" element={<Cart />} />
         </Route>
-      
+
         <Route path="/admin" element={<AdminPage />} />
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/ServicePage" element={<ServicePage />} />
 
         <Route path="*" element={<Error404 />}></Route>
-
       </Route>
     </Routes>
   );
