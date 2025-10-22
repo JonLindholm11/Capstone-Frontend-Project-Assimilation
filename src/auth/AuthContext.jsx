@@ -10,16 +10,16 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     if (token) sessionStorage.setItem("token", token);
   }, [token]);
-  
+
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json();
+    if (!response.ok) throw Error(result.message || "Registration failed");
+    setToken(result.token);
   };
 
   const login = async (credentials) => {
@@ -28,9 +28,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text();
-    if (!response.ok) throw Error(result);
-    setToken(result);
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw Error(result.message || "Login failed");
+    if (!result.token) throw Error("No token received from server");
+    setToken(result.token);
   };
 
   const logout = () => {
@@ -47,4 +48,3 @@ export function useAuth() {
   if (!context) throw Error("useAuth must be used within an AuthProvider");
   return context;
 }
-

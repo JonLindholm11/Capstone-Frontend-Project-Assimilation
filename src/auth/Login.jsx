@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
-import "./Login.css"; 
+import "./Login.css";
 
 //Jodson | I'll handle the login page to connect with Admin and Sales roles etc
 
@@ -29,21 +29,12 @@ export default function Login() {
         <form action={onLogin}>
           <label>
             Username
-            <input type="text" name="username" required />
+            <input type="email" name="username" required />
           </label>
           <label>
             Password
             <input type="password" name="password" required />
           </label>
-
-          {/* <label>
-            Role
-            <select name="role" required>
-              <option value="">Select role...</option>
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
-            </select>
-          </label> */}
 
           <button type="submit">Login</button>
           {error && <output>{error}</output>}
@@ -56,4 +47,3 @@ export default function Login() {
     </div>
   );
 }
-

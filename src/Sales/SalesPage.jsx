@@ -1,157 +1,182 @@
-import { useState, useEffect } from "react";
-import { useAuth } from "../auth/AuthContext";
-import PriceCategory from "../Sales/PriceCategory";
+import { useEffect, useState } from "react";
 import "./SalesPage.css";
-import { useNavigate } from "react-router";
 
-export default function SalesPage() {
-  const { token, role } = useAuth(); 
-  const [product, setProduct] = useState("");
-  const [quantity, setQuantity] = useState(1);
-  const [paymentMethod, setPaymentMethod] = useState("");
-  const [priceCategory, setPriceCategory] = useState("");
-  const [clientOrders, setClientOrders] = useState([]); 
-  const navigate = useNavigate();
+function SalesmanPage({ salesman }) {
+  const [customers, setCustomers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  // const [error, setError] = useState(null);
 
-  useEffect(() => {
-    if (role === "admin") {
-      setClientOrders([
-        {
-          name: "John Doe",
-          product: "Laptop",
-          quantity: 2,
-          payment: "Credit Card",
-        },
-        {
-          name: "Jane Smith",
-          product: "Smartphone",
-          quantity: 1,
-          payment: "Bank Transfer",
-        },
-      ]);
-    }
-  }, [role]);
-
-  if (!token || role !== "admin") {
-    return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
-        ⚠️ Access Denied — Admins Only
-        <br />
-        <button onClick={() => navigate("/")}>Back to Home</button>
-      </div>
-    );
+  // 🧪 TEMP LOGIN (for testing)
+  if (!salesman) {
+    salesman = {
+      id: 1,
+      name: "Test Salesman",
+      email: "salesman@test.com",
+      region: "Midwest Sales Division",
+    };
   }
 
-  const handleSubmit = (e) => {
+  // Product Categories
+  const productCategories = ["Cars", "Electronics", "Food", "Sewing", "Tools"];
+
+  // Simulated customers
+  useEffect(() => {
+    const mockCustomers = [
+      {
+        user_id: 4,
+        company_name: "Test Company",
+        email: "customer1@email.com",
+        account_status: "active",
+        location: "Chicago, IL",
+        phone: "(312) 555-0147",
+      },
+      {
+        user_id: 5,
+        company_name: "BuildCo Inc",
+        email: "customer2@email.com",
+        account_status: "active",
+        location: "St. Louis, MO",
+        phone: "(636) 555-0098",
+      },
+    ];
+    setTimeout(() => {
+      setCustomers(mockCustomers);
+      setLoading(false);
+    }, 600);
+  }, [salesman]);
+
+  const handleSave = (e, customerId) => {
     e.preventDefault();
+    const form = e.target;
+    const category = form.category.value;
+    const product = form.product.value;
+    const tier = form.priceTier.value;
 
-    if (!product || !paymentMethod || !priceCategory) {
-      alert("Please fill all fields");
-      return;
-    }
-
-    const order = {
-      client: "Test Client",
-      product,
-      quantity,
-      paymentMethod,
-      priceCategory,
-      date: new Date().toLocaleString(),
+    const payload = {
+      customer_id: customerId,
+      product_category: category,
+      product_name: product,
+      price_tier_id: parseInt(tier),
     };
 
-    setClientOrders((prev) => [order, ...prev]);
-    navigate("/order-confirmation", order);
+    console.log("Saving payload:", payload);
+    alert(`Saved pricing for ${product} to customer #${customerId}`);
   };
 
+  if (loading) return <p className="loading">Loading customers...</p>;
+
   return (
-    <div className="sales-container">
-      <h2>🛍️ Admin Sales Dashboard</h2>
-
-      <form onSubmit={handleSubmit} className="sales-form">
-        <div className="form-group">
-          <label>Product:</label>
-          <select
-            value={product}
-            onChange={(e) => {
-              setProduct(e.target.value);
-              setPriceCategory("");
-            }}
-          >
-            <option value="">-- Select a product --</option>
-            <option value="Smartphone">Smartphone</option>
-            <option value="Laptop">Laptop</option>
-            <option value="Headphones">Headphones</option>
-          </select>
+    <div className="salesman-container">
+      {/*  SALESMAN INFO SECTION */}
+      <section className="salesman-info">
+        <h1 className="page-title">Salesman Dashboard</h1>
+        <div className="salesman-card">
+          <h2>{salesman.name}</h2>
+          <p>
+            <strong>ID:</strong> {salesman.id}
+          </p>
+          <p>
+            <strong>Email:</strong> {salesman.email}
+          </p>
+          <p>
+            <strong>Region:</strong> {salesman.region}
+          </p>
         </div>
+      </section>
 
-        {product && (
-          <div className="form-group">
-            <label>Price Category:</label>
-            <PriceCategory
-              product={product}
-              value={priceCategory}
-              onChange={setPriceCategory}
-            />
-          </div>
-        )}
+      {/*  CUSTOMER MANAGEMENT SECTION  */}
+      <section className="customer-section">
+        <h2 className="section-title">Client Management</h2>
+        <p className="section-description">
+          Manage your assigned customers and update their pricing categories.
+        </p>
 
-        <div className="form-group">
-          <label>Quantity:</label>
-          <select
-            value={quantity}
-            onChange={(e) => setQuantity(Number(e.target.value))}
-          >
-            {[1, 2, 3, 4, 5].map((num) => (
-              <option key={num} value={num}>
-                {num}
-              </option>
-            ))}
-          </select>
+        <div className="customer-list">
+          {customers.map((customer) => (
+            <div className="customer-card" key={customer.user_id}>
+              {/* CLIENT INFO BLOCK */}
+              <div className="client-info">
+                <h3>{customer.company_name}</h3>
+                <p>
+                  <strong>Email:</strong> {customer.email}
+                </p>
+                <p>
+                  <strong>Phone:</strong> {customer.phone}
+                </p>
+                <p>
+                  <strong>Location:</strong> {customer.location}
+                </p>
+                <p>
+                  <strong>Status:</strong>{" "}
+                  <span className="status">{customer.account_status}</span>
+                </p>
+              </div>
+
+              {/* PRICE ASSIGNMENT FORM */}
+              <form
+                className="price-form"
+                onSubmit={(e) => handleSave(e, customer.user_id)}
+              >
+                <label>
+                  Product Category:
+                  <select
+                    name="category"
+                    required
+                    onChange={(e) => {
+                      const selected = e.target.value;
+                      const form = e.target.closest("form");
+                      const productSelect = form.querySelector(
+                        'select[name="product"]'
+                      );
+                      if (productSelect) {
+                        productSelect.innerHTML = "";
+                        if (productsByCategory[selected]) {
+                          productsByCategory[selected].forEach((prod) => {
+                            const option = document.createElement("option");
+                            option.value = prod;
+                            option.textContent = prod;
+                            productSelect.appendChild(option);
+                          });
+                        }
+                      }
+                    }}
+                  >
+                    <option value="">Select a category</option>
+                    {productCategories.map((category, index) => (
+                      <option key={index} value={category}>
+                        {category}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
+                <label>
+                  Product:
+                  <select name="product" required>
+                    <option value="">Select a product</option>
+                  </select>
+                </label>
+
+                <label>
+                  Price Tier:
+                  <select name="priceTier" required>
+                    <option value="1">Standard</option>
+                    <option value="2">Preferred</option>
+                    <option value="3">Bulk</option>
+                    <option value="4">Wholesale</option>
+                  </select>
+                </label>
+
+                <button type="submit" className="save-btn">
+                  Save
+                </button>
+              </form>
+            </div>
+          ))}
         </div>
-
-        <div className="form-group">
-          <label>Payment Method:</label>
-          <select
-            value={paymentMethod}
-            onChange={(e) => setPaymentMethod(e.target.value)}
-          >
-            <option value="">-- Select payment --</option>
-            <option value="Credit Card">Credit Card</option>
-            <option value="Bank Transfer">Bank Transfer</option>
-          </select>
-        </div>
-
-        <button type="submit">🛒 Place Order</button>
-      </form>
-
-      <h3 style={{ marginTop: "2rem" }}>📋 Client Orders</h3>
-      {clientOrders.length === 0 ? (
-        <p>No orders yet.</p>
-      ) : (
-        clientOrders.map((order, index) => (
-          <div key={index} className="client-order">
-            <p>
-              <strong>Client:</strong> {order.client || order.name}
-            </p>
-            <p>
-              <strong>Product:</strong> {order.product}
-            </p>
-            <p>
-              <strong>Category:</strong> {order.priceCategory}
-            </p>
-            <p>
-              <strong>Quantity:</strong> {order.quantity}
-            </p>
-            <p>
-              <strong>Payment:</strong> {order.paymentMethod || order.payment}
-            </p>
-            <p>
-              <strong>Date:</strong> {order.date || "N/A"}
-            </p>
-            <hr />
-          </div>
-        ))
-      )}
+      </section>
     </div>
   );
 }
+
+export default SalesmanPage;
