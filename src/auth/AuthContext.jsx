@@ -17,7 +17,7 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text(); //  CHANGED from .json() to .text() to match backend
+    const result = await response.text(); //  Jodson CHANGED from .json() to .text() to match backend
     if (!response.ok) throw Error(result);
     setToken(result); //  CHANGED from result.token to result to match backend
   };
