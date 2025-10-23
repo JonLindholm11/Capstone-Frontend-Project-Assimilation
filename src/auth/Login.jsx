@@ -17,7 +17,7 @@ export default function Login() {
 
     try {
       await login({ username, password });
-      
+      // Jodson - Login and Redirect based on role_id and working
       // Waiting a moment for state to update
       setTimeout(() => {
         const token = sessionStorage.getItem('token');
