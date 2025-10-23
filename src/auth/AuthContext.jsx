@@ -17,9 +17,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json();
-    if (!response.ok) throw Error(result.message || "Registration failed");
-    setToken(result.token);
+    const result = await response.text(); //  CHANGED from .json() to .text() to match backend
+    if (!response.ok) throw Error(result);
+    setToken(result); //  CHANGED from result.token to result to match backend
   };
 
   const login = async (credentials) => {
@@ -28,10 +28,8 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw Error(result.message || "Login failed");
-    if (!result.token) throw Error("No token received from server");
-    setToken(result.token);
+    const result = await response.text(); //  CHANGED from .json() to .text() to match backend
+    setToken(result); //  CHANGED from result.token to result to match backend
   };
 
   const logout = () => {
