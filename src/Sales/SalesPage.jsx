@@ -12,35 +12,70 @@ export default function SalesPage() {
   const [priceCategory, setPriceCategory] = useState("");
   const [clientOrders, setClientOrders] = useState([]); 
   const navigate = useNavigate();
+   // Jodson -  Don't need this admin role check below. Rerouted sales page via token role_id
+  // useEffect(() => {
+  //   if (role === "admin") {
+  //     setClientOrders([
+  //       {
+  //         name: "John Doe",
+  //         product: "Laptop",
+  //         quantity: 2,
+  //         payment: "Credit Card",
+  //       },
+  //       {
+  //         name: "Jane Smith",
+  //         product: "Smartphone",
+  //         quantity: 1,
+  //         payment: "Bank Transfer",
+  //       },
+  //     ]);
+  //   }
+  // }, [role]);
 
-  useEffect(() => {
-    if (role === "admin") {
-      setClientOrders([
-        {
-          name: "John Doe",
-          product: "Laptop",
-          quantity: 2,
-          payment: "Credit Card",
-        },
-        {
-          name: "Jane Smith",
-          product: "Smartphone",
-          quantity: 1,
-          payment: "Bank Transfer",
-        },
-      ]);
-    }
-  }, [role]);
-
-  if (!token || role !== "admin") {
-    return (
-      <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
-        ⚠️ Access Denied — Admins Only
-        <br />
-        <button onClick={() => navigate("/")}>Back to Home</button>
-      </div>
-    );
+  // if (!token || role !== "admin") {
+  //   return (
+  //     <div style={{ padding: "2rem", textAlign: "center", color: "red" }}>
+  //       ⚠️ Access Denied — Admins Only
+  //       <br />
+  //       <button onClick={() => navigate("/")}>Back to Home</button>
+  //     </div>
+  //   );
+  // }
+   // Jodson - Added token based salesmen access control and incorporated it with and role selection via token
+useEffect(() => {
+  if (!token) {
+    navigate('/login');
+    return;
   }
+
+  // Decode token to check role_id
+  const payload = JSON.parse(atob(token.split('.')[1]));
+  
+  // Only salesmen (role_id = 2) can access
+  if (payload.role_id !== 2) {
+    alert('Access Denied! Only salesmen can access this page.');
+    navigate('/');
+    return;
+  }
+
+  // Load sample orders for salesmen
+  setClientOrders([
+    {
+      name: "John Doe",
+      product: "Laptop",
+      quantity: 2,
+      payment: "Credit Card",
+    },
+    {
+      name: "Jane Smith",
+      product: "Smartphone",
+      quantity: 1,
+      payment: "Bank Transfer",
+    },
+  ]);
+}, [token, navigate]);
+  
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -65,7 +100,7 @@ export default function SalesPage() {
 
   return (
     <div className="sales-container">
-      <h2>🛍️ Admin Sales Dashboard</h2>
+      <h2>🛍️  Salesman Dashboard</h2>
 
       <form onSubmit={handleSubmit} className="sales-form">
         <div className="form-group">

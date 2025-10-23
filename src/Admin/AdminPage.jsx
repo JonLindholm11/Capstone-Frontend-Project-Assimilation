@@ -1,95 +1,153 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useAuth } from "../auth/AuthContext";
+import { useAuth } from '../auth/AuthContext';
 import './Admin.css'; 
-import OrderManagement from './OrderManagement';
-import CustomerPricing from './CustomerPricing';
 import RoleSelection from './RoleSelection';
 import SpecialPricing from './SpecialPricing';
-import CustomerService from './CustomerService';
+import SalesmanSelection from './SalesmanSelection';
 
-//Jodson Branch | Connected to backend with role-based permissions
+const API = import.meta.env.VITE_API;
 
-// Admin dashboard component
 function AdminPage() {
   const { token } = useAuth();
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('orders');
+  const [activeSection, setActiveSection] = useState('register');
   const [currentUser, setCurrentUser] = useState(null);
-const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  
+  // Register Employee form states
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
-useEffect(() => {
-  // check if user is logged in and has permission
-  if (!token) {
-    console.log('no token, redirecting to admin login');
-    navigate('/admin/login'); // Redirect to admin login page
-    return;
-  }
-
-  // decode JWT token to get user info
-  try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log('decoded token payload:', payload);
-    
-    // check if user has admin access
-    const allowedRoles = [1, 2, 3]; // admin, salesman, customer service
-    
-    if (!allowedRoles.includes(payload.role_id)) {
-      alert('Access Denied! Only staff members can access the admin panel.');
-      navigate('/');
+  useEffect(() => {
+    // Redirect to login if no token
+    if (!token) {
+      console.log('No token found, redirecting to login');
+      navigate('/login');
       return;
     }
 
-    setCurrentUser(payload);
-    setLoading(false);
-  } catch (error) {
-    console.error('error decoding token:', error);
-    navigate('/admin'); // Redirect to admin login page
-  }
-}, [token, navigate]);
+    // Decode token and verify admin access
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log('Decoded token payload:', payload);
+      
+      // Only admin (role_id = 1) can access admin panel
+      if (payload.role_id !== 1) {
+        alert('Access Denied! Only administrators can access this panel.');
+        navigate('/');
+        return;
+      }
 
-  // helper functions to check user role
-  const isAdmin = () => currentUser?.role_id === 1;
-  const isSalesman = () => currentUser?.role_id === 2;
-  const isCustomerService = () => currentUser?.role_id === 3;
-  // get role name for display
-  const getRoleName = () => {
-    if (!currentUser) return '';
-    switch(currentUser.role_id) {
-      case 1: return 'Admin';
-      case 2: return 'Salesman';
-      case 3: return 'Customer Service';
-      default: return 'User';
+      setCurrentUser(payload);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      navigate('/login');
+    }
+  }, [token, navigate]);
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setError("");
+
+    const formData = new FormData(e.target);
+    const email = formData.get("email");
+    const password = formData.get("password");
+    const role_id = formData.get("role_id");
+
+    try {
+      const response = await fetch(`${API}/users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: email,
+          password: password,
+          role_id: parseInt(role_id)
+        })
+      });
+
+      if (response.ok) {
+        setMessage("User registered successfully!");
+        e.target.reset();
+      } else {
+        const errorText = await response.text();
+        setError(errorText || "Failed to register user");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
     }
   };
 
   const renderSection = () => {
-    if(activeSection == 'orders') {
-      return <OrderManagement currentUser={currentUser} />;
-    }
-    else if(activeSection == 'customer-pricing') {
-      return <CustomerPricing currentUser={currentUser} />;
-    }
-    else if(activeSection == 'roles') {
-      return <RoleSelection currentUser={currentUser} />;
-    }
-    else if(activeSection == 'specials') {
-      return <SpecialPricing currentUser={currentUser} />;
-    }
-    else if(activeSection == 'customers') {
-      return <CustomerService currentUser={currentUser} />;
-    }
-    else {
-      return <OrderManagement currentUser={currentUser} />;
+    if (activeSection === 'register') {
+      return (
+        <div className="register-employee-section">
+          <h2>Register New Employee</h2>
+          <p>Add a new employee to the system</p>
+
+          <form onSubmit={handleRegisterSubmit} className="admin-form">
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input 
+                type="email" 
+                id="email" 
+                name="email" 
+                required 
+                placeholder="employee@company.com"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="password">Password</label>
+              <input 
+                type="password" 
+                id="password" 
+                name="password" 
+                required 
+                placeholder="Enter password"
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="role_id">Role</label>
+              <select id="role_id" name="role_id" required>
+                <option value="">Select a role...</option>
+                <option value="1">Admin</option>
+                <option value="2">Salesman</option>
+                <option value="3">Customer Service</option>
+                <option value="4">Customer</option>
+              </select>
+            </div>
+
+            <button type="submit" className="submit-btn">Register Employee</button>
+
+            {message && <div className="success-message">{message}</div>}
+            {error && <div className="error-message">{error}</div>}
+          </form>
+        </div>
+      );
+    } else if (activeSection === 'roles') {
+      return <RoleSelection token={token} />;
+    } else if (activeSection === 'specials') {
+      return <SpecialPricing token={token} currentUser={currentUser} />;
+    } else if (activeSection === 'salesmen') {
+      return <SalesmanSelection token={token} />;
     }
   };
 
   const handleSectionChange = (section) => {
-    console.log('switching to:', section);
+    console.log('Switching to:', section);
     setActiveSection(section);
-  }
+    setMessage("");
+    setError("");
+  };
 
-  // show loading screen while checking permissions
   if (loading) {
     return (
       <div className="admin-loading">
@@ -102,60 +160,39 @@ useEffect(() => {
     <div className="admin-page">
       <div className="admin-header">
         <h1>Admin Dashboard</h1>
-        <p>Manage orders, customers, and pricing</p>
+        <p>Manage employees, customers, and pricing</p>
         <p className="user-info">
-          Logged in as: <strong>{getRoleName()}</strong>
+          Logged in as: <strong>Admin</strong>
         </p>
       </div>
 
-      {/* navigation buttons - different tabs based on role */}
       <div className="admin-navigation">
-        {/* Everyone can see Order Management */}
         <button 
-          className={activeSection=='orders'?'nav-active':''}
-          onClick={()=>handleSectionChange('orders')}
+          className={activeSection === 'register' ? 'nav-active' : ''}
+          onClick={() => handleSectionChange('register')}
         >
-          Order Management
+          Register Employee
         </button>
 
-        {/* Only Admin and Salesman see Customer Pricing */}
-        {(isAdmin() || isSalesman()) && (
-          <button 
-            className={activeSection == 'customer-pricing' ? 'nav-active' : ''}
-            onClick={() => {
-              handleSectionChange('customer-pricing')
-            }}
-          >
-            Customer Pricing
-          </button>
-        )}
-
-        {/* Only Admin sees User Roles */}
-        {isAdmin() && (
-          <button 
-            className={activeSection=='roles' ? 'nav-active':''}
-            onClick={()=> handleSectionChange('roles')}
-          >
-            User Roles
-          </button>
-        )}
-
-        {/* Only Admin sees Special Pricing */}
-        {isAdmin() && (
-          <button 
-            className={activeSection == 'specials'?'nav-active':''}
-            onClick={()=>{handleSectionChange('specials')}}
-          >
-            Special Pricing
-          </button>
-        )}
-
-        {/* Everyone can see Customer Management */}
         <button 
-          className={activeSection=='customers'?'nav-active':''}
-          onClick={() => handleSectionChange('customers')}
+          className={activeSection === 'roles' ? 'nav-active' : ''}
+          onClick={() => handleSectionChange('roles')}
         >
-          Customer Management
+          Role Management
+        </button>
+
+        <button 
+          className={activeSection === 'specials' ? 'nav-active' : ''}
+          onClick={() => handleSectionChange('specials')}
+        >
+          Special Pricing
+        </button>
+
+        <button 
+          className={activeSection === 'salesmen' ? 'nav-active' : ''}
+          onClick={() => handleSectionChange('salesmen')}
+        >
+          Salesman Selection
         </button>
       </div>
 

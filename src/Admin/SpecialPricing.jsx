@@ -1,296 +1,228 @@
-import { useState } from "react";
-// import { FaDollarSign, FaTag } from "react-icons/fa";
+import { useState, useEffect } from "react";
 
-function SpecialPricing() {
-  const [specials, setSpecials] = useState([
-    {
-      id: 1,
-      productName: "Product A",
-      price: 99.99,
-      startDate: "2025-10-01",
-      endDate: "2025-10-31",
-    },
-    {
-      id: 2,
-      productName: "Product B",
-      price: 149.99,
-      startDate: "2025-10-15",
-      endDate: "2025-11-15",
-    },
-  ]);
+const API = import.meta.env.VITE_API;
 
-  // form for adding new special
-  const [productName, setProductName] = useState("");
-  const [specialPrice, setSpecialPrice] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+function SpecialPricing({ token, currentUser }) {
+  const [products, setProducts] = useState([]);
+  const [specialPricing, setSpecialPricing] = useState([]);
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  // dropdown for product selection
-  const [availableProducts] = useState([
-    "Product A",
-    "Product B",
-    "Product C",
-    "Product D",
-    "Product E",
-  ]);
+  useEffect(() => {
+    fetchProducts();
+    fetchSpecialPricing();
+  }, []);
 
-  const addSpecial = (e) => {
-    e.preventDefault();
+  const fetchProducts = async () => {
+    try {
+      const response = await fetch(`${API}/products`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
 
-    // basic validation
-    if (!productName || !specialPrice || !startDate || !endDate) {
-      alert("Please fill in all fields");
-      return;
+      if (response.ok) {
+        const data = await response.json();
+        setProducts(data);
+      } else {
+        setError("Failed to fetch products");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
     }
-
-    if (parseFloat(specialPrice) <= 0) {
-      alert("Price must be greater than 0");
-      return;
-    }
-
-    const newSpecial = {
-      id: Date.now(),
-      productName: productName,
-      price: parseFloat(specialPrice),
-      startDate: startDate,
-      endDate: endDate,
-    };
-
-    setSpecials([...specials, newSpecial]);
-    console.log("added new special:", newSpecial);
-
-    // reset form
-    setProductName("");
-    setSpecialPrice("");
-    setStartDate("");
-    setEndDate("");
   };
 
-  function removeSpecial(id) {
-    const confirmDelete = window.confirm("Remove this special pricing?");
-    if (confirmDelete) {
-      const updated = specials.filter((s) => s.id !== id);
-      setSpecials(updated);
+  const fetchSpecialPricing = async () => {
+    try {
+      const response = await fetch(`${API}/special_pricing`, {
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setSpecialPricing(data);
+      } else {
+        setError("Failed to fetch special pricing");
+      }
+      setLoading(false);
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
+      setLoading(false);
     }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setMessage("");
+    setError("");
+
+    const formData = new FormData(e.target);
+    const product_id = formData.get("product_id");
+    const special_price = formData.get("special_price");
+    const start_date = formData.get("start_date");
+    const end_date = formData.get("end_date");
+
+    try {
+      const response = await fetch(`${API}/special_pricing`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          product_id: parseInt(product_id),
+          special_price: parseFloat(special_price),
+          start_date: new Date(start_date).toISOString(),
+          end_date: new Date(end_date).toISOString(),
+          is_active: true,
+          created_by_user_id: currentUser.id
+        })
+      });
+
+      if (response.ok) {
+        setMessage("Special pricing created successfully!");
+        e.target.reset();
+        fetchSpecialPricing();
+      } else {
+        const errorText = await response.text();
+        setError(errorText || "Failed to create special pricing");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
+    }
+  };
+
+  const handleDelete = async (pricingId) => {
+    if (!window.confirm("Are you sure you want to delete this special pricing?")) {
+      return;
+    }
+
+    setMessage("");
+    setError("");
+
+    try {
+      const response = await fetch(`${API}/special_pricing/${pricingId}`, {
+        method: "DELETE",
+        headers: {
+          "Authorization": `Bearer ${token}`
+        }
+      });
+
+      if (response.ok) {
+        setMessage("Special pricing deleted successfully!");
+        fetchSpecialPricing();
+      } else {
+        const errorText = await response.text();
+        setError(errorText || "Failed to delete special pricing");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
+    }
+  };
+
+  if (loading) {
+    return <div>Loading special pricing...</div>;
   }
 
   return (
-    <div className="special-pricing">
+    <div className="special-pricing-section">
       <h2>Special Pricing Management</h2>
-      <p style={{ color: "white", marginBottom: "20px" }}>
-        Create and manage special pricing for products
-      </p>
+      <p>Create and manage special pricing for products</p>
 
-      <form
-        onSubmit={addSpecial}
-        style={{
-          backgroundColor: "#f8f9fa",
-          padding: "20px",
-          borderRadius: "8px",
-          marginBottom: "30px",
-        }}
-      >
-        <h3 style={{ color: "black" }}>Add New Special</h3>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "15px",
-            marginTop: "15px",
-          }}
-        >
-          <div>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "500",
-                color: "black",
-              }}
-            >
-              Product:
-            </label>
-            <select
-              value={productName}
-              onChange={(e) => setProductName(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
-              required
-            >
-              <option value="">Select a product...</option>
-              {availableProducts.map((product) => (
-                <option key={product} value={product}>
-                  {product}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "500",
-                color: "black",
-              }}
-            >
-              Special Price:
-            </label>
-            <input
-              type="number"
-              step="0.01"
-              placeholder="$99.99"
-              value={specialPrice}
-              onChange={(e) => {
-                setSpecialPrice(e.target.value);
-              }}
-              style={{
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "500",
-                color: "black",
-              }}
-            >
-              Start Date:
-            </label>
-            <input
-              type="date"
-              value={startDate}
-              onChange={(e) => setStartDate(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
-              required
-            />
-          </div>
-
-          <div>
-            <label
-              style={{
-                display: "block",
-                marginBottom: "5px",
-                fontWeight: "500",
-                color: "black",
-              }}
-            >
-              End Date:
-            </label>
-            <input
-              type="date"
-              value={endDate}
-              onChange={(e) => setEndDate(e.target.value)}
-              style={{
-                width: "100%",
-                padding: "8px",
-                border: "1px solid #ccc",
-                borderRadius: "4px",
-              }}
-              required
-            />
-          </div>
+      <form onSubmit={handleSubmit} className="admin-form">
+        <div className="form-group">
+          <label htmlFor="product_id">Product</label>
+          <select id="product_id" name="product_id" required>
+            <option value="">Select a product...</option>
+            {products.map(product => (
+              <option key={product.id} value={product.id}>
+                {product.product_name}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <button
-          type="submit"
-          style={{
-            marginTop: "15px",
-            padding: "10px 20px",
-            backgroundColor: "#007bff",
-            color: "white",
-            border: "none",
-            borderRadius: "4px",
-            cursor: "pointer",
-            fontSize: "16px",
-          }}
-        >
-          Add Special Pricing
-        </button>
+        <div className="form-group">
+          <label htmlFor="special_price">Special Price</label>
+          <input 
+            type="number" 
+            step="0.01"
+            id="special_price" 
+            name="special_price" 
+            required 
+            placeholder="15.99"
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="start_date">Start Date</label>
+          <input 
+            type="date" 
+            id="start_date" 
+            name="start_date" 
+            required 
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="end_date">End Date</label>
+          <input 
+            type="date" 
+            id="end_date" 
+            name="end_date" 
+            required 
+          />
+        </div>
+
+        <button type="submit" className="submit-btn">Add Special Pricing</button>
+
+        {message && <div className="success-message">{message}</div>}
+        {error && <div className="error-message">{error}</div>}
       </form>
 
-      <div className="specials-list">
-        <h3 style={{ color: "white" }}>Current Active Specials</h3>
-
-        {specials.length > 0 ? (
-          <div style={{ display: "grid", gap: "15px", marginTop: "15px" }}>
-            {specials.map((special) => {
-              return (
-                <div
-                  key={special.id}
-                  style={{
-                    border: "1px solid #ddd",
-                    padding: "15px",
-                    borderRadius: "5px",
-                    backgroundColor: "white",
-                  }}
-                >
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "start",
-                    }}
-                  >
-                    <div>
-                      <h4
-                        style={{
-                          marginTop: 0,
-                          marginBottom: "10px",
-                          color: "black",
-                        }}
-                      >
-                        {special.productName}
-                      </h4>
-                      <p style={{ margin: "5px 0", color: "black" }}>
-                        <strong>Special Price:</strong> $
-                        {special.price.toFixed(2)}
-                      </p>
-                      <p style={{ margin: "5px 0", color: "#666" }}>
-                        Valid from {special.startDate} to {special.endDate}
-                      </p>
-                    </div>
-                    <button
-                      onClick={() => removeSpecial(special.id)}
-                      style={{
-                        padding: "6px 12px",
-                        backgroundColor: "#dc3545",
-                        color: "white",
-                        border: "none",
-                        borderRadius: "4px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Remove
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+      <div className="special-pricing-list">
+        <h3>Current Active Specials</h3>
+        {specialPricing.length === 0 ? (
+          <p>No active special pricing found.</p>
         ) : (
-          <p style={{ color: "white", marginTop: "15px" }}>
-            No active specials
-          </p>
+          <table className="pricing-table">
+            <thead>
+              <tr>
+                <th>Product ID</th>
+                <th>Special Price</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {specialPricing.map(pricing => (
+                <tr key={pricing.id}>
+                  <td>{pricing.product_id}</td>
+                  <td>${parseFloat(pricing.special_price).toFixed(2)}</td>
+                  <td>{new Date(pricing.start_date).toLocaleDateString()}</td>
+                  <td>{new Date(pricing.end_date).toLocaleDateString()}</td>
+                  <td>{pricing.is_active ? "Active" : "Inactive"}</td>
+                  <td>
+                    <button 
+                      onClick={() => handleDelete(pricing.id)}
+                      className="delete-btn"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         )}
       </div>
     </div>
