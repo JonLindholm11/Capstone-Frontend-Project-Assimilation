@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
-import "./Login.css"; 
+import "./Login.css";
 
 export default function Login() {
   const { login } = useAuth();
@@ -18,7 +18,7 @@ export default function Login() {
     try {
       await login({ username, password });
       
-      // Wait a tiny moment for state to update
+      // Waiting a moment for state to update
       setTimeout(() => {
         const token = sessionStorage.getItem('token');
         
@@ -26,11 +26,11 @@ export default function Login() {
           setError('Login failed - no token received');
           return;
         }
-        
-        // Decode token to get role_id
+
+        // This decodes the token to get role_id
         const payload = JSON.parse(atob(token.split('.')[1]));
-        
-        // Route based on role_id
+
+        // The Routes are based on role_id
         if (payload.role_id === 1) {
           navigate("/admin");
         } else if (payload.role_id === 2) {
@@ -46,7 +46,7 @@ export default function Login() {
       setError(err.message);
     }
   };
-
+ // JSX for the login form
   return (
     <div className="login-page">
       <div className="login-card">

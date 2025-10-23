@@ -1,10 +1,10 @@
-import { Routes, Route} from "react-router";
+import { Routes, Route } from "react-router";
 import Layout from "./layout/Layout";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
 import SalesPage from "./Sales/SalesPage";
-import OrderConfirmation from "./Sales/OrderConfirmation";
+import OrderConfirmation from "./Service/OrderConfirmation";
 import Error404 from "./Error404";
 import AdminPage from "./Admin/AdminPage";
 import Sewing from "./Customer/pages/sewing";
@@ -32,13 +32,11 @@ export default function App() {
           <Route path="tools" element={<Tools />} />
           <Route path="cart" element={<Cart />} />
         </Route>
-        <Route path="/admin" element={<AdminPage />} />
+        <Route path="/admin/dashboard" element={<AdminPage />} />
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/order-confirmation" element={<OrderConfirmation />} />
         <Route path="/ServicePage" element={<ServicePage />} />
-
         <Route path="*" element={<Error404 />}></Route>
-
       </Route>
     </Routes>
   );
