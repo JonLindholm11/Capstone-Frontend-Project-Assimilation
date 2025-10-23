@@ -1,10 +1,36 @@
 import { useEffect, useState } from "react";
+import { useAuth } from "../auth/AuthContext"; // ADDED
+import { useNavigate } from "react-router"; // ADDED
 import "./SalesPage.css";
 
 function SalesmanPage({ salesman }) {
+  const { token } = useAuth(); //  ADDED
+  const navigate = useNavigate(); // ADDED
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
+
+  // Jodson - AUTHENTICATION CHECK - ADDED
+  useEffect(() => {
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      
+      if (payload.role_id !== 2) {
+        alert('Access Denied! Only salesmen can access this page.');
+        navigate('/');
+        return;
+      }
+    } catch (error) {
+      console.error('Error decoding token:', error);
+      navigate('/login');
+    }
+  }, [token, navigate]);
+  // END OF AUTHENTICATION CHECK 
 
   // 🧪 TEMP LOGIN (for testing)
   if (!salesman) {
