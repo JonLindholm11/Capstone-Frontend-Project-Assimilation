@@ -8,7 +8,7 @@ function SalesmanPage({ salesman }) {
   const navigate = useNavigate(); // ADDED
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   // Jodson - AUTHENTICATION CHECK - ADDED
   useEffect(() => {
@@ -32,11 +32,11 @@ function SalesmanPage({ salesman }) {
   }, [token, navigate]);
   // END OF AUTHENTICATION CHECK 
 
-  // 🧪 TEMP LOGIN (for testing)
+  //  TEMP LOGIN (for testing)
   if (!salesman) {
     salesman = {
       id: 1,
-      name: "Test Salesman",
+      name: "Salesman",
       email: "salesman@test.com",
       region: "Midwest Sales Division",
     };
@@ -164,8 +164,8 @@ function SalesmanPage({ salesman }) {
                             productSelect.appendChild(option);
                           });
                         }
-                      }
-                    }}
+                      }}}
+                    
                   >
                     <option value="">Select a category</option>
                     {productCategories.map((category, index) => (
@@ -176,12 +176,12 @@ function SalesmanPage({ salesman }) {
                   </select>
                 </label>
 
-                <label>
+                {/* <label>
                   Product:
                   <select name="product" required>
                     <option value="">Select a product</option>
                   </select>
-                </label>
+                </label> */}
 
                 <label>
                   Price Tier:
