@@ -8,7 +8,7 @@ function SalesmanPage({ salesman }) {
   const navigate = useNavigate(); // ADDED
   const [customers, setCustomers] = useState([]);
   const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  const [error, setError] = useState(null);
 
   // Jodson - AUTHENTICATION CHECK - ADDED
   useEffect(() => {
@@ -32,11 +32,11 @@ function SalesmanPage({ salesman }) {
   }, [token, navigate]);
   // END OF AUTHENTICATION CHECK 
 
-  // 🧪 TEMP LOGIN (for testing)
+  //  TEMP LOGIN (for testing)
   if (!salesman) {
     salesman = {
       id: 1,
-      name: "Test Salesman",
+      name: "Salesman",
       email: "salesman@test.com",
       region: "Midwest Sales Division",
     };

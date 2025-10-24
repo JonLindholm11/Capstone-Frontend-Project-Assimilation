@@ -10,25 +10,25 @@ export default function Login() {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData(e.target);
-    const username = formData.get("username");
+    const email = formData.get("email");
     const password = formData.get("password");
 
     try {
-      await login({ username, password });
+      await login({ email, password });
       // Jodson - Login and Redirect based on role_id and working
       // Waiting a moment for state to update
       setTimeout(() => {
-        const token = sessionStorage.getItem('token');
-        
+        const token = sessionStorage.getItem("token");
+
         if (!token) {
-          setError('Login failed - no token received');
+          setError("Login failed - no token received");
           return;
         }
 
         // This decodes the token to get role_id
-        const payload = JSON.parse(atob(token.split('.')[1]));
+        const payload = JSON.parse(atob(token.split(".")[1]));
 
         // The Routes are based on role_id
         if (payload.role_id === 1) {
@@ -41,12 +41,11 @@ export default function Login() {
           navigate("/");
         }
       }, 100); // 100ms delay to let state update
-      
     } catch (err) {
       setError(err.message);
     }
   };
- // JSX for the login form
+  // JSX for the login form
   return (
     <div className="login-page">
       <div className="login-card">
@@ -54,7 +53,7 @@ export default function Login() {
         <form onSubmit={onLogin}>
           <label>
             Username
-            <input type="email" name="username" required />
+            <input type="email" name="email" required />
           </label>
           <label>
             Password
