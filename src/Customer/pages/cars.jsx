@@ -1,3 +1,4 @@
+import ProductsGrid from "../components/ProductGrid";
 import "./pages.css";
 export default function Cars() {
   return (
@@ -11,6 +12,7 @@ export default function Cars() {
           alt="image of a car"
         />
       </div>
+      <ProductsGrid category="vehicles" />
     </div>
   );
 }

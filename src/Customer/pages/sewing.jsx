@@ -1,4 +1,4 @@
-import ProductsGrid from "../components/ProductGrid";
+import ProductsGrid from "../components/ProductGrid.jsx";
 import "./pages.css";
 
 export default function Sewing() {

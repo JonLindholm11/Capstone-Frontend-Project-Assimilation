@@ -9,20 +9,20 @@ export default function ProductsGrid({ category }) {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
+    async function fetchProducts() {
       try {
+        setLoading(true);
         const data = await ProductQueryHandler(category);
-        if (!cancelled) setProducts(data);
-      } catch (e) {
-        if (!cancelled) setError(e.message || "Failed to load");
+        setProducts(data);
+        setError("");
+      } catch (error) {
+        setError(error.message || "Failed to load");
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    }
+
+    fetchProducts();
   }, [category]);
 
   if (loading || !products) return <p>Loading…</p>;

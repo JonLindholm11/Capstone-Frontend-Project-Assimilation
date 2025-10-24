@@ -1,10 +1,11 @@
 const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
 
 export default async function ProductQueryHandler(category) {
-  const url = new URL(`${API}/products`);
-  if (category) url.searchParams.set("category", category);
+  const path = category
+    ? `/products/category/${encodeURIComponent(category)}`
+    : `/products`;
 
-  const res = await fetch(url.toString());
+  const res = await fetch(`${API}${path}`);
   if (!res.ok) throw new Error(`Failed: ${res.status}`);
   return res.json();
 }
