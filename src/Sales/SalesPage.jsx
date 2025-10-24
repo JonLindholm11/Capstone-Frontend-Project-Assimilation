@@ -164,8 +164,8 @@ function SalesmanPage({ salesman }) {
                             productSelect.appendChild(option);
                           });
                         }
-                      }
-                    }}
+                      }}}
+                    
                   >
                     <option value="">Select a category</option>
                     {productCategories.map((category, index) => (
@@ -176,12 +176,12 @@ function SalesmanPage({ salesman }) {
                   </select>
                 </label>
 
-                <label>
+                {/* <label>
                   Product:
                   <select name="product" required>
                     <option value="">Select a product</option>
                   </select>
-                </label>
+                </label> */}
 
                 <label>
                   Price Tier:
