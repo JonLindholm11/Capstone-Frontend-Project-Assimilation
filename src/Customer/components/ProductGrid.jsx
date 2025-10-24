@@ -1,35 +1,31 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ProductQueryHandler from "./ProductQueryHandler";
-import "../pages/pages.css"
 
-export default function Products() {
+export default function ProductsGrid({ category }) {
   const navigate = useNavigate();
-
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     let cancelled = false;
-
     (async () => {
       try {
-        const data = await ProductQueryHandler();
+        const data = await ProductQueryHandler(category);
         if (!cancelled) setProducts(data);
-      } catch (err) {
-        if (!cancelled) setError(err.message || "Failed to load products");
+      } catch (e) {
+        if (!cancelled) setError(e.message || "Failed to load");
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
-
     return () => {
       cancelled = true;
     };
-  }, []);
+  }, [category]);
 
-  if (loading || !products) return <p>Loading...</p>;
+  if (loading || !products) return <p>Loading…</p>;
   if (error) return <p role="alert">{error}</p>;
 
   return (
@@ -40,11 +36,7 @@ export default function Products() {
           className="product-card"
           onClick={() => navigate(`/products/${p.id}`)}
         >
-          <img
-            className="productImg"
-            src={p.product_img}
-            alt={p.product_name}
-          />
+          <img src={p.product_img} alt={p.product_name} />
           <h3>{p.product_name}</h3>
           <p className="price">
             $
@@ -58,4 +50,3 @@ export default function Products() {
     </ul>
   );
 }
-
