@@ -1,11 +1,14 @@
 // import React from 'react'
-import SearchBar from "./Search"
+import OrderStatus from "./OrderStatus"
+// import SearchBar from "./Search"
+// import OrderConfirmation from "./OrderConfirmation"
 export default function ServicePage() {
   return (
     <div>
         <h1>Customer Service </h1>
         <h2>How can we be of service?</h2>
-        <SearchBar /> 
+        {/* <SearchBar />  */}
+        <OrderStatus /> 
     </div>
   )
 }

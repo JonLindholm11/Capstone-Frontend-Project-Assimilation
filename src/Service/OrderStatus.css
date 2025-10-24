@@ -1,0 +1,82 @@
+.order-status-container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  
+  .search-box {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+  }
+  .search-box input {
+    flex: 1;
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+  }
+  
+  .search-box button {
+    padding: 12px 24px;
+    background-color: #3B82F6;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: 600;
+  }
+  .search-box button:hover {
+    background-color: #2563EB;
+  }
+  
+  .search-box button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  
+  .order-card {
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 24px;
+    background-color: white;
+  }
+  .status-badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-transform: capitalize;
+    color: white;
+  }
+  
+  .status-badge.pending {
+    background-color: #FCD34D;
+  }
+  
+  .status-badge.processing {
+    background-color: #60A5FA;
+  }
+  .status-badge.shipped {
+    background-color: #A78BFA;
+  }
+  
+  .status-badge.delivered {
+    background-color: #34D399;
+  }
+  
+  .order-info {
+    font-size: 16px;
+    line-height: 2;
+  }
+  
+  .order-info p {
+    margin: 8px 0;
+  }

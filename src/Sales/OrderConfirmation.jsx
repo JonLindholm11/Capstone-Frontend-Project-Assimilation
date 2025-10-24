@@ -10,7 +10,7 @@ function OrderConfirmation() {
     return (
       <div className="confirmation-container">
         <div className="confirmation-card">
-          <h2>⚠️ No Order Found</h2>
+          <h2>No Order Found</h2>
           <p>It looks like you didn’t place an order yet.</p>
           <button onClick={() => navigate("/")} className="back-btn">
             Go Back to Store
@@ -25,7 +25,7 @@ function OrderConfirmation() {
   return (
     <div className="confirmation-container">
       <div className="confirmation-card">
-        <h2>✅ Order Confirmed!</h2>
+        <h2>Order Confirmed!</h2>
         <p>Thank you for your purchase. Here are your order details:</p>
 
         <div className="order-details">
