@@ -16,11 +16,7 @@ function SpecialPricing({ token, currentUser }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${API}/products`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await fetch(`${API}/products`);
 
       if (response.ok) {
         const data = await response.json();
@@ -36,11 +32,7 @@ function SpecialPricing({ token, currentUser }) {
 
   const fetchSpecialPricing = async () => {
     try {
-      const response = await fetch(`${API}/special_pricing`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await fetch(`${API}/special_pricing`);
 
       if (response.ok) {
         const data = await response.json();
@@ -77,20 +69,20 @@ function SpecialPricing({ token, currentUser }) {
         body: JSON.stringify({
           product_id: parseInt(product_id),
           special_price: parseFloat(special_price),
-          start_date: new Date(start_date).toISOString(),
-          end_date: new Date(end_date).toISOString(),
-          is_active: true,
+          start_date: start_date,
+          end_date: end_date,
           created_by_user_id: currentUser.id
         })
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        setMessage("Special pricing created successfully!");
+        setMessage(result.message || "Special pricing created successfully!");
         e.target.reset();
         fetchSpecialPricing();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to create special pricing");
+        setError(result.message || result.error || "Failed to create special pricing");
       }
     } catch (err) {
       setError("Error connecting to server");
@@ -115,11 +107,12 @@ function SpecialPricing({ token, currentUser }) {
       });
 
       if (response.ok) {
-        setMessage("Special pricing deleted successfully!");
+        const result = await response.json();
+        setMessage(result.message || "Special pricing deleted successfully!");
         fetchSpecialPricing();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to delete special pricing");
+        const result = await response.json();
+        setError(result.message || result.error || "Failed to delete special pricing");
       }
     } catch (err) {
       setError("Error connecting to server");
@@ -158,6 +151,7 @@ function SpecialPricing({ token, currentUser }) {
             name="special_price" 
             required 
             placeholder="15.99"
+            min="0.01"
           />
         </div>
 
@@ -199,7 +193,7 @@ function SpecialPricing({ token, currentUser }) {
                 <th>Special Price</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Status</th>
+                <th>Created By</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -210,7 +204,7 @@ function SpecialPricing({ token, currentUser }) {
                   <td>${parseFloat(pricing.special_price).toFixed(2)}</td>
                   <td>{new Date(pricing.start_date).toLocaleDateString()}</td>
                   <td>{new Date(pricing.end_date).toLocaleDateString()}</td>
-                  <td>{pricing.is_active ? "Active" : "Inactive"}</td>
+                  <td>User #{pricing.created_by_user_id}</td>
                   <td>
                     <button 
                       onClick={() => handleDelete(pricing.id)}

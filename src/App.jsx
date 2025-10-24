@@ -34,6 +34,8 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/admin" element={<AdminPage />} />
+        
+
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/ServicePage" element={<ServicePage />} />
 
