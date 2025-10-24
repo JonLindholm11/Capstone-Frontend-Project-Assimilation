@@ -1,67 +1,334 @@
+/* Admin Page Main Styles */
 .admin-page {
-  max-width: 1200px;
-  margin: 0 auto;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 20px;
 }
 
+.admin-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: white;
+  font-size: 1.2rem;
+}
+
+/* Admin Header */
 .admin-header {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  padding: 30px;
+  border-radius: 15px;
   margin-bottom: 30px;
+  text-align: center;
+  color: white;
 }
 
 .admin-header h1 {
-  font-size: 32px;
-  margin-bottom: 8px;
-  color: white;
+  margin: 0 0 10px 0;
+  font-size: 2.5rem;
+  font-weight: 700;
 }
 
 .admin-header p {
-  color: white;
-  font-size: 16px;
-  font-style: italic;
+  margin: 5px 0;
+  font-size: 1.1rem;
+  opacity: 0.9;
 }
 
-.admin-tabs {
+.user-info {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 1rem;
+}
+
+/* Navigation */
+.admin-navigation {
   display: flex;
-  gap: 10px;
+  gap: 15px;
   margin-bottom: 30px;
-  border-bottom: 2px solid #e0e0e0;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.admin-tabs button {
+.admin-navigation button {
   padding: 12px 24px;
-  border: none;
-  background: none;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 16px;
-  color: #666;
-  border-bottom: 3px solid transparent;
-
-}
-
-.admin-tabs button:hover {
-  color: #333;
-  background-color: #f5f5f5;
-}
-
-.admin-tabs button.tab-active {
-  color: #007bff;
-  border-bottom-color: #007bff;
+  font-size: 1rem;
   font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.admin-content {
+.admin-navigation button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+}
+
+.admin-navigation button.nav-active {
   background: white;
-  padding: 24px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  color: #667eea;
+  border-color: white;
 }
 
+/* Content Area */
+.admin-content-area {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Section Styles */
+.register-employee-section,
+.role-selection-section,
+.special-pricing-section,
+.salesman-selection-section {
+  color: #333;
+}
+
+.register-employee-section h2,
+.role-selection-section h2,
+.special-pricing-section h2,
+.salesman-selection-section h2 {
+  margin: 0 0 10px 0;
+  color: #667eea;
+  font-size: 2rem;
+}
+
+.register-employee-section p,
+.role-selection-section p,
+.special-pricing-section p,
+.salesman-selection-section p {
+  margin: 0 0 30px 0;
+  color: #666;
+  font-size: 1rem;
+}
+
+/* Form Styles */
+.admin-form {
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.form-group input,
+.form-group select {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Buttons */
+.submit-btn,
+.save-btn {
+  padding: 12px 30px;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.submit-btn:hover,
+.save-btn:hover {
+  background: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.delete-btn {
+  padding: 8px 16px;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.delete-btn:hover {
+  background: #c82333;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+
+/* Messages */
+.success-message {
+  margin-top: 15px;
+  padding: 12px;
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.error-message {
+  margin-top: 15px;
+  padding: 12px;
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+/* Tables */
+.users-table,
+.customers-table,
+.pricing-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.users-table thead,
+.customers-table thead,
+.pricing-table thead {
+  background: #667eea;
+  color: white;
+}
+
+.users-table th,
+.customers-table th,
+.pricing-table th {
+  padding: 15px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.users-table td,
+.customers-table td,
+.pricing-table td {
+  padding: 15px;
+  border-bottom: 1px solid #f0f0f0;
+  color: #333;
+}
+
+.users-table tr:hover,
+.customers-table tr:hover,
+.pricing-table tr:hover {
+  background: #f8f9fa;
+}
+
+.users-table tbody tr:last-child td,
+.customers-table tbody tr:last-child td,
+.pricing-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+/* Select Dropdowns in Tables */
+.role-select,
+.salesman-select {
+  padding: 8px 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  width: auto;
+  min-width: 150px;
+}
+
+.role-select:focus,
+.salesman-select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+/* Special Pricing List */
+.special-pricing-list {
+  margin-top: 40px;
+}
+
+.special-pricing-list h3 {
+  color: #667eea;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .admin-tabs {
-    flex-wrap: wrap;
+  .admin-navigation {
+    flex-direction: column;
   }
   
-  .admin-tabs button {
-    flex: 1 1 45%;
+  .admin-navigation button {
+    width: 100%;
   }
+  
+  .admin-header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .users-table,
+  .customers-table,
+  .pricing-table {
+    font-size: 0.85rem;
+  }
+  
+  .users-table th,
+  .customers-table th,
+  .pricing-table th,
+  .users-table td,
+  .customers-table td,
+  .pricing-table td {
+    padding: 10px;
+  }
+}
+
+/* Loading States */
+.users-list,
+.customers-list,
+.special-pricing-list {
+  color: #333;
+}
+
+.users-list p,
+.customers-list p,
+.special-pricing-list p {
+  text-align: center;
+  color: #666;
+  font-size: 1rem;
+  padding: 20px;
 }
