@@ -42,7 +42,7 @@ function RoleSelection({ token }) {
 
     try {
       const response = await fetch(`${API}/users/${userId}/role`, {
-        method: "PUT",
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
@@ -51,7 +51,7 @@ function RoleSelection({ token }) {
           role_id: parseInt(newRoleId)
         })
       });
-
+      const result = await response.json();
       if (response.ok) {
         setMessage("Role updated successfully!");
         fetchUsers();
