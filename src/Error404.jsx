@@ -6,7 +6,7 @@ export default function Error404() {
       <section className="error-container">
         <h1>*404*</h1>
         <p>
-          Sorry... only ghost allowed at this party. Click on me and I'll take
+          Sorry... only ghost allowed at this party. Click on me and I&apos;ll take
           you Home
         </p>
       </section>
