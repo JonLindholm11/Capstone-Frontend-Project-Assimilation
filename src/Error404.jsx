@@ -7,7 +7,7 @@ export default function Error404() {
       <img
         className="error-image"
         src="https://images.pexels.com/photos/34375255/pexels-photo-34375255.jpeg"
-        alt="meme mike wizaski"
+        alt="meme of a ghost in sunglasses and a hat"
       />
     </div>
   );
