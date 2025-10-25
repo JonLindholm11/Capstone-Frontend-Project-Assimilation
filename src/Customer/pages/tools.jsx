@@ -1,3 +1,4 @@
+import ProductsGrid from "../components/ProductGrid";
 import "./pages.css";
 export default function Tools() {
   return (
@@ -11,6 +12,7 @@ export default function Tools() {
           alt="image of tools"
         />
       </div>
+      <ProductsGrid category="construction tools" />
     </div>
   );
 }

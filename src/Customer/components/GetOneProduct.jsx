@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useParams, useNavigate } from "react-router";
 import { getProductById } from "./ProductQueryHandler";
 import "../pages/pages.css";
 
@@ -8,25 +8,22 @@ export default function ProductDetail() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
+    async function fetchProduct() {
       try {
-        console.log('Fetching product with id:', id);
+        setLoading(true);
         const data = await getProductById(id);
-        console.log('Product data received:', data);
-        if (!cancelled) setProduct(Array.isArray(data) ? data[0] : data);
-      } catch (e) {
-        console.error('Error fetching product:', e);
-        if (!cancelled) setError(e.message || "Failed to load product");
+        setProduct(Array.isArray(data) ? data[0] : data);
+      } catch (error) {
+        setError(error.message || "Failed to load product");
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    }
+
+    fetchProduct();
   }, [id]);
 
   if (loading) return <p>Loading…</p>;
@@ -38,11 +35,15 @@ export default function ProductDetail() {
       <img src={product.product_img} alt={product.product_name} />
       <h2>{product.product_name}</h2>
       <p>
-        ${typeof product.basic_price === "number"
+        $
+        {typeof product.basic_price === "number"
           ? product.basic_price.toFixed(2)
           : product.basic_price}
       </p>
       <p>{product.product_description}</p>
+      <button className="backBtn" onClick={() => navigate(-1)}>
+        Back
+      </button>
     </div>
   );
 }

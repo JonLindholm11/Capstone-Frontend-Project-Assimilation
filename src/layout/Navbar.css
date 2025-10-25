@@ -46,24 +46,6 @@ body {
 }
 
 
-/* cyberpunk neon navbar */
-/* .sticky-header {
-  background-color: #0d0221;
-  border-bottom: 2px solid #ff006e;
-  color: #e0aaff;
-}
-.sticky-header p {
-  color: #ff006e;
-}
-.sticky-header a {
-  color: #e0aaff;
-  transition: all 0.3s ease;
-}
-.sticky-header a:hover {
-  background-color: #ff006e;
-  color: #0d0221;
-} */
-
 /* deep ocean navbar */
 .sticky-header {
   background-color: #0a1128;
@@ -81,63 +63,3 @@ body {
   background-color: #06ffc4;
   color: #0a1128;
 }
-
-/* sunset vibes navbar */
-/* .sticky-header {
-  background-color: #c44536;
-  color: #ffffff;
-}
-.sticky-header a {
-  color: #ffffff;
-  transition: all 0.3s ease;
-}
-.sticky-header a:hover {
-  background-color: #ffffff;
-  color: #ff6b35;
-} */
-
-/* lavender dream navbar */
-/* .sticky-header {
-  background-color: #9d4edd;
-  color: #ffffff;
-}
-.sticky-header a {
-  color: #ffffff;
-  transition: all 0.3s ease;
-}
-.sticky-header a:hover {
-  background-color: #e0c3fc;
-  color: #2d3142;
-} */
-
-/* forest green navbar */
-/* .sticky-header {
-  background-color: #1b4332;
-  border-bottom: 2px solid #95d5b2;
-  color: #d8f3dc;
-}
-.sticky-header p {
-  color: #95d5b2;
-}
-.sticky-header a {
-  color: #d8f3dc;
-  transition: all 0.3s ease;
-}
-.sticky-header a:hover {
-  background-color: #95d5b2;
-  color: #1b4332;
-} */
-
-/* pastel lime/mint navbar */
-/* .sticky-header {
-  background-color: #a2d2ff;
-  color: #2e2e2e;
-}
-.sticky-header a {
-  color: #2e2e2e;
-  transition: all 0.3s ease;
-}
-.sticky-header a:hover {
-  background-color: #2e2e2e;
-  color: #a2d2ff;
-} */

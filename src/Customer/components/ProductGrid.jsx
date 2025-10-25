@@ -2,35 +2,39 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ProductQueryHandler from "./ProductQueryHandler";
 
-export default function ProductsGrid({ category }) {
+export default function ProductsGrid({ category, limit, children }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
+    async function fetchProducts() {
       try {
+        setLoading(true);
         const data = await ProductQueryHandler(category);
-        if (!cancelled) setProducts(data);
-      } catch (e) {
-        if (!cancelled) setError(e.message || "Failed to load");
+        setProducts(data);
+        setError("");
+      } catch (error) {
+        setError(error.message || "Failed to load");
       } finally {
-        if (!cancelled) setLoading(false);
+        setLoading(false);
       }
-    })();
-    return () => {
-      cancelled = true;
-    };
+    }
+
+    fetchProducts();
   }, [category]);
 
   if (loading || !products) return <p>Loading…</p>;
   if (error) return <p role="alert">{error}</p>;
 
+  const list = limit ? products.slice(0, limit) : products;
+  //this si so i can limit the number of items
+  //<ProductsGrid category="sewing notions" limit={3} />
+
   return (
     <ul className="product-grid">
-      {products.map((p) => (
+      {list.map((p) => (
         <li
           key={p.id}
           className="product-card"
@@ -47,6 +51,8 @@ export default function ProductsGrid({ category }) {
           <p className="description">{p.product_description}</p>
         </li>
       ))}
+      {children}
+      {/* ^for the more card to show up and not break but also not show up on the page with the products */}
     </ul>
   );
 }
