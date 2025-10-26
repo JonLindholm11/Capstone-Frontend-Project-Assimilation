@@ -16,11 +16,7 @@ function SalesmanSelection({ token }) {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`${API}/customers`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await fetch(`${API}/customers`); // ✨ Removed auth header - backend doesn't require it
 
       if (response.ok) {
         const data = await response.json();
@@ -36,20 +32,15 @@ function SalesmanSelection({ token }) {
 
   const fetchSalesmen = async () => {
     try {
-      const response = await fetch(`${API}/users`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        const allUsers = await response.json();
-        // Filter users with role_id = 2 (Salesmen)
-        const salesmenOnly = allUsers.filter(user => user.role_id === 2);
-        setSalesmen(salesmenOnly);
-      } else {
-        setError("Failed to fetch salesmen");
-      }
+      // ✨ Backend has no GET /users endpoint yet
+      // Using mock data until backend adds GET /users/employees
+      setError("GET /users/employees endpoint not available - using mock data");
+      
+      setSalesmen([
+        { id: 1, email: "salesman1@company.com", role_id: 2 },
+        { id: 2, email: "salesman2@company.com", role_id: 2 }
+      ]);
+      
       setLoading(false);
     } catch (err) {
       setError("Error connecting to server");
@@ -69,6 +60,10 @@ function SalesmanSelection({ token }) {
       return;
     }
 
+    // We have to update Backend has no PUT /customers/:id endpoint yet
+    setError("PUT /customers/:id endpoint not available - cannot update customer");
+    
+    /* Uncomment this when backend adds the endpoint:
     try {
       const response = await fetch(`${API}/customers/${customerId}`, {
         method: "PUT",
@@ -81,17 +76,19 @@ function SalesmanSelection({ token }) {
         })
       });
 
+      const result = await response.json();
+
       if (response.ok) {
-        setMessage("Salesman assigned successfully!");
+        setMessage(result.message || "Salesman assigned successfully!");
         fetchCustomers();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to assign salesman");
+        setError(result.message || result.error || "Failed to assign salesman");
       }
     } catch (err) {
       setError("Error connecting to server");
       console.error(err);
     }
+    */
   };
 
   const getSalesmanName = (salesmanId) => {
