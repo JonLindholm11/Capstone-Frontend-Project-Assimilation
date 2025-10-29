@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ProductQueryHandler from "./ProductQueryHandler";
+import { useCart } from "../pages/Cart/CartContext";
 
 export default function ProductsGrid({ category, limit, children }) {
   const navigate = useNavigate();
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const { addToCart } = useCart;
 
   useEffect(() => {
     async function fetchProducts() {
@@ -49,6 +51,7 @@ export default function ProductsGrid({ category, limit, children }) {
               : p.basic_price}
           </p>
           <p className="description">{p.product_description}</p>
+          <button className="addToCart">Add to Cart</button>
         </li>
       ))}
       {children}
