@@ -70,7 +70,7 @@ export default function ProductLanding() {
         />
         <div className="product-grid-with-more">
           <ProductsGrid category="vehicles" limit={4} />
-          <NavLink to="/products/vehicles" className="product-card more-card">
+          <NavLink to="/products/cars" className="product-card more-card">
             <div className="more-content">
               <h3>View More</h3>
               <p>See all vehicles →</p>
