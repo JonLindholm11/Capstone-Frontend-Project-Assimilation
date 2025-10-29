@@ -8,7 +8,7 @@ export default function ProductsGrid({ category, limit, children }) {
   const [products, setProducts] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const { addToCart } = useCart;
+  const { addToCart } = useCart();
 
   useEffect(() => {
     async function fetchProducts() {
@@ -51,7 +51,23 @@ export default function ProductsGrid({ category, limit, children }) {
               : p.basic_price}
           </p>
           <p className="description">{p.product_description}</p>
-          <button className="addToCart">Add to Cart</button>
+          <button
+            className="addToCart"
+            onClick={(e) => {
+              e.stopPropagation();
+              {
+                /* DO NOT REMOVE stops navigation */
+              }
+              addToCart({
+                id: p.id,
+                name: p.product_name,
+                price: p.basic_price,
+                img: p.product_img,
+              });
+            }}
+          >
+            Add to Cart
+          </button>
         </li>
       ))}
       {children}
