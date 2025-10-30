@@ -27,7 +27,7 @@ export default function Register() {
         <h1>Create your account</h1>
         <form action={onRegister}>
           <label>
-            Email  {/* Changed label for clarity */}
+            Email  
             <input type="email" name="email" required placeholder="Enter email" />
             {/* Changed: type="email", name="email", placeholder */}
           </label>
