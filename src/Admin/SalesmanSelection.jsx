@@ -16,7 +16,7 @@ function SalesmanSelection({ token }) {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`${API}/customers`); // ✨ Removed auth header - backend doesn't require it
+      const response = await fetch(`${API}/customers`); //  Removed auth header - backend doesn't require it
 
       if (response.ok) {
         const data = await response.json();
@@ -32,7 +32,7 @@ function SalesmanSelection({ token }) {
 
   const fetchSalesmen = async () => {
     try {
-      // ✨ Backend has no GET /users endpoint yet
+      //  Backend has no GET /users endpoint yet
       // Using mock data until backend adds GET /users/employees
       setError("GET /users/employees endpoint not available - using mock data");
       
