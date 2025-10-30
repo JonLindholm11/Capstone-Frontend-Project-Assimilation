@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router";
 import Layout from "./layout/Layout";
+import Home from "./HomePage/Home";
 import Login from "./auth/Login";
 import Register from "./auth/Register";
 import Store from "./Customer/StoreFront";
@@ -20,7 +21,7 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<p>Home page</p>} />
+        <Route index element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/products" element={<Store />}>
@@ -34,7 +35,6 @@ export default function App() {
           <Route path="cart" element={<Cart />} />
         </Route>
         <Route path="/admin" element={<AdminPage />} />
-        
 
         <Route path="/sales" element={<SalesPage />} />
         <Route path="/ServicePage" element={<ServicePage />} />
