@@ -15,7 +15,9 @@ export default function Navbar() {
       <nav>
         {token ? (
           <>
-            <button onClick={logout}>Log out</button>
+            <button className="logoutBtn" onClick={logout}>
+              Log out
+            </button>
             <NavLink to="/products">Products</NavLink>
             {role === 1 && <NavLink to="/sales">Sales</NavLink>}
           </>
@@ -31,7 +33,7 @@ export default function Navbar() {
               <div className="dropdown-content">
                 <NavLink to="/login">Login</NavLink>
                 <NavLink to="/register">Register</NavLink>
-                <NavLink to="/admin"> Admin Login </NavLink>
+                {/* <NavLink to="/admin"> Admin Login </NavLink> */}
               </div>
             </div>
 
