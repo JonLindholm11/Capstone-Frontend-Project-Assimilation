@@ -7,9 +7,11 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
-  useEffect(() => {
-    if (token) sessionStorage.setItem("token", token);
-  }, [token]);
+  // useEffect(() => {
+  //   const temp = JSON.parse(token);
+  //   console.log(temp?.token);
+  //   if (token) sessionStorage.setItem("token", temp?.token);
+  // }, [token]);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
@@ -17,9 +19,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text(); //  Jodson CHANGED from .json() to .text() to match backend
+    const result = await response.json(); //  Jodson CHANGED from .json() to .text() to match backend
     if (!response.ok) throw Error(result);
-    setToken(result); //  CHANGED from result.token to result to match backend
+    sessionStorage.setItem("token", result.token);
+    setToken(result.token); //  CHANGED from result.token to result to match backend
   };
 
   const login = async (credentials) => {
@@ -28,8 +31,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text(); //  CHANGED from .json() to .text() to match backend
-    setToken(result); //  CHANGED from result.token to result to match backend
+    const result = await response.json(); //  CHANGED from .json() to .text() to match backend
+    sessionStorage.setItem("token", result.token);
+    setToken(result.token); //  CHANGED from result.token to result to match backend
   };
 
   const logout = () => {
