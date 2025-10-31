@@ -17,9 +17,11 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text(); //  Jodson CHANGED from .json() to .text() to match backend
-    if (!response.ok) throw Error(result);
-    setToken(result); //  CHANGED from result.token to result to match backend
+    // JODSON - CHANGED: .json() - Backend returns JSON: res.status(201).json({ token })
+    const result = await response.json();
+    if (!response.ok) throw Error(result.message || "Registration failed");
+    // JODSON - CHANGED: result.token - Extract token from JSON object { token: "..." }
+    setToken(result.token);
   };
 
   const login = async (credentials) => {
@@ -28,8 +30,12 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.text(); //  CHANGED from .json() to .text() to match backend
-    setToken(result); //  CHANGED from result.token to result to match backend
+    // I CHANGED: .json() - Backend returns JSON: res.json({ token })
+    const result = await response.json();
+    if (!response.ok) throw Error(result.message || "Login failed");
+    if (!result.token) throw Error("No token received from server");
+    // I CHANGED: result.token - Extract token from JSON object { token}
+    setToken(result.token);
   };
 
   const logout = () => {
