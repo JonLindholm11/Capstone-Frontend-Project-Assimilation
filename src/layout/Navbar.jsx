@@ -15,17 +15,25 @@ export default function Navbar() {
       <nav>
         {token ? (
           <>
+            <NavLink to="/products">Products</NavLink>
+            {role === 1 && <NavLink to="/sales">Sales</NavLink>}
             <button className="logoutBtn" onClick={logout}>
               Log out
             </button>
-            <NavLink to="/products">Products</NavLink>
-            {role === 1 && <NavLink to="/sales">Sales</NavLink>}
+            <NavLink to="/admin">
+              <GoPersonFill />
+            </NavLink>
           </>
         ) : (
           <>
             <NavLink to="/">
               <FaHome />
             </NavLink>
+
+            <NavLink to="/products"> Products </NavLink>
+
+            <NavLink to="/sales"> Sales Page </NavLink>
+            <NavLink to="/ServicePage"> Customer Service </NavLink>
             <div className="dropdown">
               <button className="dropbtn">
                 <GoPersonFill />
@@ -36,11 +44,6 @@ export default function Navbar() {
                 {/* <NavLink to="/admin"> Admin Login </NavLink> */}
               </div>
             </div>
-
-            <NavLink to="/products"> Products </NavLink>
-
-            <NavLink to="/sales"> Sales Page </NavLink>
-            <NavLink to="/ServicePage"> Customer Service </NavLink>
           </>
         )}
       </nav>
