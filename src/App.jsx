@@ -17,10 +17,12 @@ import ProductLanding from "./Customer/pages/ProductLanding";
 import ServicePage from "./Service/ServicePage";
 import ProductDetail from "./Customer/components/GetOneProduct";
 import { CartProvider } from "./Customer/pages/Cart/CartContext";
+import {Toaster} from 'react-hot-toast'
 
 export default function App() {
   return (
     <CartProvider>
+      <Toaster position= "top-right"/>
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
