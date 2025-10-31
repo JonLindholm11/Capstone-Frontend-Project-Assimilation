@@ -16,6 +16,8 @@ export default function Navbar() {
         {token ? (
           <>
             <NavLink to="/products">Products</NavLink>
+            <NavLink to="/sales">Sales Page</NavLink>
+            <NavLink to="/ServicePage">Customer Serviced</NavLink>
             {role === 1 && <NavLink to="/sales">Sales</NavLink>}
             <button className="logoutBtn" onClick={logout}>
               Log out

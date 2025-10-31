@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useState } from "react";
 
 const API = import.meta.env.VITE_API;
 
@@ -7,21 +7,16 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
-  useEffect(() => {
-    if (token) sessionStorage.setItem("token", token);
-  }, [token]);
-
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    // JODSON - CHANGED: .json() - Backend returns JSON: res.status(201).json({ token })
-    const result = await response.json();
-    if (!response.ok) throw Error(result.message || "Registration failed");
-    // JODSON - CHANGED: result.token - Extract token from JSON object { token: "..." }
-    setToken(result.token);
+    const result = await response.json(); //  Jodson CHANGED from .json() to .text() to match backend
+    if (!response.ok) throw Error(result);
+    sessionStorage.setItem("token", result.token);
+    setToken(result.token); //  CHANGED from result.token to result to match backend
   };
 
   const login = async (credentials) => {
@@ -30,12 +25,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    // I CHANGED: .json() - Backend returns JSON: res.json({ token })
-    const result = await response.json();
-    if (!response.ok) throw Error(result.message || "Login failed");
-    if (!result.token) throw Error("No token received from server");
-    // I CHANGED: result.token - Extract token from JSON object { token}
-    setToken(result.token);
+    const result = await response.json(); //  CHANGED from .json() to .text() to match backend
+    sessionStorage.setItem("token", result.token);
+    setToken(result.token); //  CHANGED from result.token to result to match backend
   };
 
   const logout = () => {
