@@ -219,18 +219,6 @@ function SalesmanPage() {
                   </label>
 
                   <label>
-                    Product:
-                    <select name="product" required>
-                      <option value="">Select a product</option>
-                      {selectedProducts[customer.user_id]?.map((prod, i) => (
-                        <option key={i} value={prod}>
-                          {prod}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-
-                  <label>
                     Price Tier:
                     <select name="priceTier" required>
                       <option value="1">Standard</option>
