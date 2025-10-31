@@ -16,6 +16,7 @@ import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
 import ServicePage from "./Service/ServicePage";
 import ProductDetail from "./Customer/components/GetOneProduct";
+import { CartProvider } from "./Customer/pages/Cart/CartContext";
 
 export default function App() {
   return (
@@ -36,11 +37,12 @@ export default function App() {
         </Route>
         <Route path="/admin" element={<AdminPage />} />
 
-        <Route path="/sales" element={<SalesPage />} />
-        <Route path="/ServicePage" element={<ServicePage />} />
+          <Route path="/sales" element={<SalesPage />} />
+          <Route path="/ServicePage" element={<ServicePage />} />
 
-        <Route path="*" element={<Error404 />}></Route>
-      </Route>
-    </Routes>
+          <Route path="*" element={<Error404 />}></Route>
+        </Route>
+      </Routes>
+    </CartProvider>
   );
 }

@@ -196,3 +196,21 @@
   transform: translateX(-3px);
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
+.addToCart {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  margin: 20px 0;
+  background-color: #2c5f2d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
