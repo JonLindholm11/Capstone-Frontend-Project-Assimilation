@@ -7,12 +7,6 @@ const AuthContext = createContext();
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
-  // useEffect(() => {
-  //   const temp = JSON.parse(token);
-  //   console.log(temp?.token);
-  //   if (token) sessionStorage.setItem("token", temp?.token);
-  // }, [token]);
-
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
       method: "POST",

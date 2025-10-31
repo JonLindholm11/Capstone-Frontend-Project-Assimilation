@@ -16,11 +16,7 @@ function SpecialPricing({ token, currentUser }) {
 
   const fetchProducts = async () => {
     try {
-      const response = await fetch(`${API}/products`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await fetch(`${API}/products`);
 
       if (response.ok) {
         const data = await response.json();
@@ -36,11 +32,7 @@ function SpecialPricing({ token, currentUser }) {
 
   const fetchSpecialPricing = async () => {
     try {
-      const response = await fetch(`${API}/special_pricing`, {
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
+      const response = await fetch(`${API}/special_pricing`);
 
       if (response.ok) {
         const data = await response.json();
@@ -60,15 +52,21 @@ function SpecialPricing({ token, currentUser }) {
     e.preventDefault();
     setMessage("");
     setError("");
-
+    
     const formData = new FormData(e.target);
     const product_id = formData.get("product_id");
     const special_price = formData.get("special_price");
     const start_date = formData.get("start_date");
     const end_date = formData.get("end_date");
 
+    if (!currentUser || !currentUser.id) {
+      setError("User information not available. Please log out and log back in.");
+      return;
+    }
+
     try {
-      const response = await fetch(`${API}/special_pricing`, {
+
+        const response = await fetch(`${API}/special_pricing`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,49 +75,29 @@ function SpecialPricing({ token, currentUser }) {
         body: JSON.stringify({
           product_id: parseInt(product_id),
           special_price: parseFloat(special_price),
-          start_date: new Date(start_date).toISOString(),
-          end_date: new Date(end_date).toISOString(),
-          is_active: true,
+          start_date: start_date,
+          end_date: end_date,
           created_by_user_id: currentUser.id
         })
       });
+      // change here to handle both JSON and text responses
+      const contentType = response.headers.get("content-type");
+      let result;
+      
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        result = { message: text, error: text };
+      }
 
       if (response.ok) {
-        setMessage("Special pricing created successfully!");
+        setMessage(result.message || "Special pricing created successfully!");
         e.target.reset();
         fetchSpecialPricing();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to create special pricing");
-      }
-    } catch (err) {
-      setError("Error connecting to server");
-      console.error(err);
-    }
-  };
-
-  const handleDelete = async (pricingId) => {
-    if (!window.confirm("Are you sure you want to delete this special pricing?")) {
-      return;
-    }
-
-    setMessage("");
-    setError("");
-
-    try {
-      const response = await fetch(`${API}/special_pricing/${pricingId}`, {
-        method: "DELETE",
-        headers: {
-          "Authorization": `Bearer ${token}`
-        }
-      });
-
-      if (response.ok) {
-        setMessage("Special pricing deleted successfully!");
-        fetchSpecialPricing();
-      } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to delete special pricing");
+        //this line changed to handle both text and json error messages
+        setError(result.error || result.message || "Failed to create special pricing");
       }
     } catch (err) {
       setError("Error connecting to server");
@@ -158,6 +136,7 @@ function SpecialPricing({ token, currentUser }) {
             name="special_price" 
             required 
             placeholder="15.99"
+            min="0.01"
           />
         </div>
 
@@ -199,8 +178,7 @@ function SpecialPricing({ token, currentUser }) {
                 <th>Special Price</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Status</th>
-                <th>Action</th>
+                <th>Created By</th>
               </tr>
             </thead>
             <tbody>
@@ -210,15 +188,7 @@ function SpecialPricing({ token, currentUser }) {
                   <td>${parseFloat(pricing.special_price).toFixed(2)}</td>
                   <td>{new Date(pricing.start_date).toLocaleDateString()}</td>
                   <td>{new Date(pricing.end_date).toLocaleDateString()}</td>
-                  <td>{pricing.is_active ? "Active" : "Inactive"}</td>
-                  <td>
-                    <button 
-                      onClick={() => handleDelete(pricing.id)}
-                      className="delete-btn"
-                    >
-                      Delete
-                    </button>
-                  </td>
+                  <td>User #{pricing.created_by_user_id}</td>
                 </tr>
               ))}
             </tbody>

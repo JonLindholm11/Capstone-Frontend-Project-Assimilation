@@ -1,0 +1,24 @@
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+}
+.container img {
+  width: 95%;
+  height: auto;
+  border-radius: 5%;
+  margin: 0 auto;
+}
+.top-left {
+  position: absolute;
+  top: 16px;
+  left: 32px;
+  color: darkblue;
+  font-size: 100px;
+  text-align: left;
+  font-weight: 700;
+}
+.top-left p {
+  font-weight: normal;
+  font-size: 40px;
+}

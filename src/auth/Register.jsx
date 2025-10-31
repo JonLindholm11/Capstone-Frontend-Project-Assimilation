@@ -3,20 +3,19 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "./AuthContext";
 import "./Register.css"; 
 
-//Jodson | I'll handle the Register page to connect with Admin Page to create new users
-
+// Jodson - Changed Register to use email instead of username for registration
 export default function Register() {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [error, setError] = useState(null);
 
   const onRegister = async (formData) => {
-    const username = formData.get("username");
+    const email = formData.get("email");  // Changed from "username"
     const password = formData.get("password");
 
     try {
-      await register({ username, password, role_id: 4 });
-      navigate("/login"); // redirect to login after successful registration
+      await register({ email, password, role_id: 4 });  // Changed to 'email'
+      navigate("/login");
     } catch (e) {
       setError(e.message);
     }
@@ -28,8 +27,9 @@ export default function Register() {
         <h1>Create your account</h1>
         <form action={onRegister}>
           <label>
-            Username
-            <input type="text" name="username" required placeholder="Enter username" />
+            Email  
+            <input type="email" name="email" required placeholder="Enter email" />
+            {/* Changed: type="email", name="email", placeholder */}
           </label>
           <label>
             Password

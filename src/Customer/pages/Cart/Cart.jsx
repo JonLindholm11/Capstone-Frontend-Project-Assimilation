@@ -1,28 +1,10 @@
 import { useState } from "react";
+import { useCart } from "./CartContext";
 import "./Cart.css";
 
 export default function Cart() {
-  const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Smartphone", price: 699, quantity: 1 },
-    { id: 2, name: "Laptop", price: 1299, quantity: 2 },
-  ]);
+  const { cartItems, removeFromCart, changeQuantity } = useCart();
 
-  const changeQuantity = (id, newQuantity) => {
-    const newCart = cartItems.map((item) => {
-      if (item.id === id) {
-        return { ...item, quantity: newQuantity };
-      }
-      return item;
-    });
-    setCartItems(newCart);
-  };
-
-  const removeItem = (id) => {
-    const newCart = cartItems.filter((item) => item.id !== id);
-    setCartItems(newCart);
-  };
-
-  // Step 4: Calculate total
   let total = 0;
   cartItems.forEach((item) => {
     total += item.price * item.quantity;
@@ -38,6 +20,7 @@ export default function Cart() {
         <div>
           {cartItems.map((item) => (
             <div key={item.id} className="cart-item">
+              <img src={item.img} alt={item.name} className="cart-item-img" />
               <p>
                 {item.name} - ${item.price}
               </p>
@@ -55,13 +38,18 @@ export default function Cart() {
                 >
                   +
                 </button>
-                <button onClick={() => removeItem(item.id)}>Remove</button>
+                <button
+                  className="remove-btn"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  Remove
+                </button>
               </div>
             </div>
           ))}
 
           <div className="cart-total-container">
-            <span>Total: ${total}</span>
+            <span>Total: ${total.toFixed(2)}</span>
             <button className="checkout-btn">Checkout</button>
           </div>
         </div>

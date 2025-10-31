@@ -1,5 +1,6 @@
-// import Products from "./GetAllProducts";
+import ProductsGrid from "../components/ProductGrid.jsx";
 import "./pages.css";
+
 export default function Sewing() {
   return (
     <div>
@@ -12,6 +13,7 @@ export default function Sewing() {
           alt="image of a sewing notions"
         />
       </div>
+      <ProductsGrid category="sewing notions" />
     </div>
   );
 }

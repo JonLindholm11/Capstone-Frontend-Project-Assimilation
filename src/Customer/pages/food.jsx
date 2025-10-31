@@ -1,3 +1,4 @@
+import ProductsGrid from "../components/ProductGrid";
 import "./pages.css";
 export default function Food() {
   return (
@@ -11,6 +12,7 @@ export default function Food() {
           alt="image of food"
         />
       </div>
+       <ProductsGrid category="food" />
     </div>
   );
 }
