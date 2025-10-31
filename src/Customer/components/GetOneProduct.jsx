@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getProductById } from "./ProductQueryHandler";
 import { useCart } from "../pages/Cart/CartContext";
+import toast from "react-hot-toast";
 import "../pages/pages.css";
 
 export default function ProductDetail() {
@@ -56,6 +57,7 @@ export default function ProductDetail() {
             price: product.basic_price,
             img: product.product_img,
           });
+          toast.success('Added to cart!')
         }}
       >
         Add to Cart

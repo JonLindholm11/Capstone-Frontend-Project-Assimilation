@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import ProductQueryHandler from "./ProductQueryHandler";
 import { useCart } from "../pages/Cart/CartContext";
+import toast from "react-hot-toast";
 
 export default function ProductsGrid({ category, limit, children }) {
   const navigate = useNavigate();
@@ -64,6 +65,7 @@ export default function ProductsGrid({ category, limit, children }) {
                 price: p.basic_price,
                 img: p.product_img,
               });
+              toast.success("Added to cart!");
             }}
           >
             Add to Cart
