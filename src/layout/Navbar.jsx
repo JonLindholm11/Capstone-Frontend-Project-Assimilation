@@ -15,6 +15,9 @@ export default function Navbar() {
       <nav>
         {token ? (
           <>
+            <NavLink to="/">
+              <FaHome />
+            </NavLink>
             <NavLink to="/products">Products</NavLink>
             <NavLink to="/sales">Sales Page</NavLink>
             <NavLink to="/ServicePage">Customer Serviced</NavLink>
