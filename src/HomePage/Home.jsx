@@ -10,12 +10,13 @@ export default function ProductLanding() {
         is a noble one.
       </p> */}
       <img
-        src="https://images.pexels.com/photos/375889/pexels-photo-375889.jpeg"
-        alt="market with many items for sale"
+        src="https://images.pexels.com/photos/14716179/pexels-photo-14716179.jpeg"
+        // src="https://images.pexels.com/photos/375889/pexels-photo-375889.jpeg"
+        alt="two people hiking along the mountain side overlooking a beach"
       />
       <div className="top-left">
         Noble Market
-        <p>-Where every venture is a noble one</p>
+        <p>-Where every adventure is a noble one</p>
       </div>
     </div>
   );

@@ -5,20 +5,26 @@
 }
 .container img {
   width: 95%;
-  height: auto;
+  height: 500px;
   border-radius: 5%;
   margin: 0 auto;
+  object-fit: cover;
+  object-position: center;
 }
 .top-left {
   position: absolute;
   top: 16px;
   left: 32px;
-  color: darkblue;
+  color: #d4a055;
+  /* color: white; */
   font-size: 100px;
   text-align: left;
   font-weight: 700;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
 }
 .top-left p {
   font-weight: normal;
   font-size: 40px;
+  margin: 0;
+  margin-top: 10px;
 }
