@@ -169,15 +169,31 @@
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
-.single h2 {
-  font-size: 2rem;
-  margin: 15px 0;
+.single-content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex: 1;
 }
 
-.single p {
-  font-size: 1.1rem;
-  margin: 10px 0;
+.single-content h2 {
+  font-size: 2rem;
+  margin: 0;
+  font-weight: 600;
+}
+
+.single-content .price {
+  font-size: 1.8rem;
+  color: #2c5f2d;
+  font-weight: 700;
+  margin: 0;
+}
+
+.single-content p {
+  font-size: 1rem;
+  margin: 0;
   line-height: 1.6;
+  color: #333;
 }
 
 /* .backBtn {
