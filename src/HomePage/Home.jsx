@@ -47,6 +47,12 @@ export default function ProductLanding() {
           <button>Learn More</button>
         </div>
       </div>
+      <div className="featured-products">
+        <h2>Featured Products</h2>
+        <div className="products-grid">{/* 3-4 product cards */}</div>
+      </div>
+
+      <div className="testimonial"></div>
     </div>
   );
 }
