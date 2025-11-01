@@ -1,5 +1,7 @@
 import "./Home.css";
+import "../Customer/pages/pages.css";
 import { NavLink } from "react-router";
+import GetRandom from "../Customer/components/GetRandom.jsx";
 
 export default function ProductLanding() {
   return (
@@ -47,10 +49,7 @@ export default function ProductLanding() {
           <button>Learn More</button>
         </div>
       </div>
-      <div className="featured-products">
-        <h2>Featured Products</h2>
-        <div className="products-grid">{/* 3-4 product cards */}</div>
-      </div>
+      <GetRandom limit={4} />
 
       <div className="testimonial"></div>
     </div>
