@@ -41,9 +41,10 @@ export default function GetRandom({ limit = 4 }) {
             <h3>{product.product_name}</h3>
             <p className="price">
               $
-              {typeof product.basic_price === "number"
-                ? product.basic_price.toFixed(2)
-                : product.basic_price}
+              {Number(product.basic_price).toLocaleString("en-US", {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2,
+              })}
             </p>
             <p className="description">{product.product_description}</p>
             <button

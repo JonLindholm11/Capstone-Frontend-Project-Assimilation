@@ -37,11 +37,12 @@ export default function ProductDetail() {
     <div className="single">
       <img src={product.product_img} alt={product.product_name} />
       <h2>{product.product_name}</h2>
-      <p>
+      <p className="price">
         $
-        {typeof product.basic_price === "number"
-          ? product.basic_price.toFixed(2)
-          : product.basic_price}
+        {Number(product.basic_price).toLocaleString("en-US", {
+          minimumFractionDigits: 2,
+          maximumFractionDigits: 2,
+        })}
       </p>
       <p>{product.product_description}</p>
       <button
@@ -57,7 +58,7 @@ export default function ProductDetail() {
             price: product.basic_price,
             img: product.product_img,
           });
-          toast.success('Added to cart!')
+          toast.success("Added to cart!");
         }}
       >
         Add to Cart

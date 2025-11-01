@@ -46,10 +46,7 @@ export default function ProductsGrid({ category, limit, children }) {
           <img src={p.product_img} alt={p.product_name} />
           <h3>{p.product_name}</h3>
           <p className="price">
-            $
-            {typeof p.basic_price === "number"
-              ? p.basic_price.toFixed(2)
-              : p.basic_price}
+            ${Number(p.basic_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
           </p>
           <p className="description">{p.product_description}</p>
           <button
