@@ -14,7 +14,8 @@ function RoleSelection({ token }) {
 
   const fetchUsers = async () => {
     try {
-      const response = await fetch(`${API}/users`, {
+      // Backend: GET /users/employees ( admin only)
+      const response = await fetch(`${API}/users/employees`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }
@@ -22,7 +23,7 @@ function RoleSelection({ token }) {
 
       if (response.ok) {
         const allUsers = await response.json();
-        // Filter users with role_id 3 or above
+        // Filter users with role_id 3 or above (Customer Service and Customers)
         const filteredUsers = allUsers.filter(user => user.role_id >= 3);
         setUsers(filteredUsers);
       } else {
@@ -41,6 +42,7 @@ function RoleSelection({ token }) {
     setError("");
 
     try {
+      // Backend: PATCH /users/:id/role ( admin only)
       const response = await fetch(`${API}/users/${userId}/role`, {
         method: "PATCH",
         headers: {
@@ -51,13 +53,23 @@ function RoleSelection({ token }) {
           role_id: parseInt(newRoleId)
         })
       });
-      const result = await response.json();
+
+      //  Handle response properly
+      const contentType = response.headers.get("content-type");
+      let result;
+      
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        result = { message: text, error: text };
+      }
+
       if (response.ok) {
-        setMessage("Role updated successfully!");
+        setMessage(result.message || "Role updated successfully!");
         fetchUsers();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to update role");
+        setError(result.error || result.message || "Failed to update role");
       }
     } catch (err) {
       setError("Error connecting to server");
