@@ -14,6 +14,7 @@ function AdminPage() {
   const [activeSection, setActiveSection] = useState('register');
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [refreshTrigger, setRefreshTrigger] = useState(0); //  Add refresh trigger
   
   // Register Employee form states
   const [message, setMessage] = useState("");
@@ -58,7 +59,7 @@ function AdminPage() {
     const role_id = formData.get("role_id");
 
     try {
-      // Backend: POST /users/register/admin (requires auth, admin only)
+      // Backend: POST /users/register/admin () admin only)
       const response = await fetch(`${API}/users/register/admin`, {
         method: "POST",
         headers: {
@@ -86,6 +87,7 @@ function AdminPage() {
       if (response.ok) {
         setMessage(result.message || "User registered successfully!");
         e.target.reset();
+        setRefreshTrigger(prev => prev + 1); //Trigger refresh in child components
       } else {
         setError(result.error || result.message || "Failed to register user");
       }
@@ -144,11 +146,11 @@ function AdminPage() {
         </div>
       );
     } else if (activeSection === 'roles') {
-      return <RoleSelection token={token} />;
+      return <RoleSelection token={token} refreshTrigger={refreshTrigger} />;
     } else if (activeSection === 'specials') {
       return <SpecialPricing token={token} currentUser={currentUser} />;
     } else if (activeSection === 'salesmen') {
-      return <SalesmanSelection token={token} />;
+      return <SalesmanSelection token={token} refreshTrigger={refreshTrigger} />;
     }
   };
 
