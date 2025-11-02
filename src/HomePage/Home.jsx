@@ -57,12 +57,12 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Sarah Mitchell</span> Adventure Enthusiast
+          <span>Sarah Mitchell</span> Small Business Owner
         </p>
         <p>
-          Amazing selection and fast shipping! Got my camping gear in 2 days and
+          Amazing selection and fast shipping! Got my sewing supplies in 2 days and
           the quality exceeded my expectations. The customer service team was
-          incredibly helpful in choosing the right equipment.
+          incredibly helpful in choosing the right materials for my projects.
         </p>
       </div>
 
@@ -72,12 +72,12 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Marcus Chen</span> Outdoor Guide
+          <span>Marcus Chen</span> DIY Enthusiast
         </p>
         <p>
-          Noble Market has everything I need for my expeditions. Their staff
-          really knows their products and helped me find exactly what I was
-          looking for. Fast, friendly service every time!
+          Noble Market has everything I need for my home projects. From construction
+          tools to electronics, their staff really knows their products and helped me
+          find exactly what I was looking for. Fast, friendly service every time!
         </p>
       </div>
       <div className="testimonial">
@@ -86,12 +86,13 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Emily Rodriguez</span> Weekend Hiker
+          <span>Emily Rodriguez</span> Professional Contractor
         </p>
         <p>
-          Best outdoor marketplace I&apos;ve found! The prices are fair, the
-          selection is huge, and the people behind Noble Market are genuinely
-          passionate about helping you find the right gear for your adventure.
+          Best online marketplace I&apos;ve found! Whether I need construction tools,
+          electronics, or auto parts, the prices are fair, the selection is huge,
+          and the people behind Noble Market are genuinely passionate about helping
+          you find what you need.
         </p>
       </div>
     </div>
