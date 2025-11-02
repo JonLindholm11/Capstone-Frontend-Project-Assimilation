@@ -58,25 +58,36 @@ function AdminPage() {
     const role_id = formData.get("role_id");
 
     try {
-      const response = await fetch(`${API}/users/register`, {
+      // Backend: POST /users/register/admin (requires auth, admin only)
+      const response = await fetch(`${API}/users/register/admin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
-          username: email,
+          email: email,
           password: password,
           role_id: parseInt(role_id)
         })
       });
 
+      // Handle both JSON and text responses
+      const contentType = response.headers.get("content-type");
+      let result;
+      
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        result = { message: text, error: text };
+      }
+
       if (response.ok) {
-        setMessage("User registered successfully!");
+        setMessage(result.message || "User registered successfully!");
         e.target.reset();
       } else {
-        const errorText = await response.text();
-        setError(errorText || "Failed to register user");
+        setError(result.error || result.message || "Failed to register user");
       }
     } catch (err) {
       setError("Error connecting to server");
