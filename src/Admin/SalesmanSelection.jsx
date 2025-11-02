@@ -16,7 +16,8 @@ function SalesmanSelection({ token }) {
 
   const fetchCustomers = async () => {
     try {
-      const response = await fetch(`${API}/customers`); //  Removed auth header - backend doesn't require it
+      // Backend: GET /customers (no auth required)
+      const response = await fetch(`${API}/customers`);
 
       if (response.ok) {
         const data = await response.json();
@@ -32,63 +33,27 @@ function SalesmanSelection({ token }) {
 
   const fetchSalesmen = async () => {
     try {
-      //  Backend has no GET /users endpoint yet
-      // Using mock data until backend adds GET /users/employees
-      setError("GET /users/employees endpoint not available - using mock data");
-      
-      setSalesmen([
-        { id: 1, email: "salesman1@company.com", role_id: 2 },
-        { id: 2, email: "salesman2@company.com", role_id: 2 }
-      ]);
-      
-      setLoading(false);
-    } catch (err) {
-      setError("Error connecting to server");
-      console.error(err);
-      setLoading(false);
-    }
-  };
-
-  const handleSalesmanAssignment = async (customerId) => {
-    setMessage("");
-    setError("");
-
-    const selectedSalesmanId = document.getElementById(`salesman-${customerId}`).value;
-
-    if (!selectedSalesmanId) {
-      setError("Please select a salesman");
-      return;
-    }
-
-    // We have to update Backend has no PUT /customers/:id endpoint yet
-    setError("PUT /customers/:id endpoint not available - cannot update customer");
-    
-    /* Uncomment this when backend adds the endpoint:
-    try {
-      const response = await fetch(`${API}/customers/${customerId}`, {
-        method: "PUT",
+      // Backend: GET /users/employees (requires auth, admin only)
+      const response = await fetch(`${API}/users/employees`, {
         headers: {
-          "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          assigned_salesman_id: parseInt(selectedSalesmanId)
-        })
+        }
       });
 
-      const result = await response.json();
-
       if (response.ok) {
-        setMessage(result.message || "Salesman assigned successfully!");
-        fetchCustomers();
+        const data = await response.json();
+        // Filter for salesmen only (role_id = 2)
+        const salesmenOnly = data.filter(user => user.role_id === 2);
+        setSalesmen(salesmenOnly);
       } else {
-        setError(result.message || result.error || "Failed to assign salesman");
+        setError("Failed to fetch salesmen");
       }
+      setLoading(false);
     } catch (err) {
       setError("Error connecting to server");
       console.error(err);
+      setLoading(false);
     }
-    */
   };
 
   const getSalesmanName = (salesmanId) => {
@@ -103,7 +68,7 @@ function SalesmanSelection({ token }) {
   return (
     <div className="salesman-selection-section">
       <h2>Salesman Selection for Customers</h2>
-      <p>Assign salesmen to manage customer accounts</p>
+      <p>View customer-salesman assignments</p>
 
       {message && <div className="success-message">{message}</div>}
       {error && <div className="error-message">{error}</div>}
@@ -119,8 +84,6 @@ function SalesmanSelection({ token }) {
                 <th>Contact Name</th>
                 <th>Email</th>
                 <th>Current Salesman</th>
-                <th>Assign Salesman</th>
-                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -130,28 +93,6 @@ function SalesmanSelection({ token }) {
                   <td>{customer.contact_name || "N/A"}</td>
                   <td>{customer.email}</td>
                   <td>{getSalesmanName(customer.assigned_salesman_id)}</td>
-                  <td>
-                    <select 
-                      id={`salesman-${customer.id}`}
-                      defaultValue={customer.assigned_salesman_id || ""}
-                      className="salesman-select"
-                    >
-                      <option value="">Select a salesman...</option>
-                      {salesmen.map(salesman => (
-                        <option key={salesman.id} value={salesman.id}>
-                          {salesman.email}
-                        </option>
-                      ))}
-                    </select>
-                  </td>
-                  <td>
-                    <button 
-                      onClick={() => handleSalesmanAssignment(customer.id)}
-                      className="save-btn"
-                    >
-                      Save
-                    </button>
-                  </td>
                 </tr>
               ))}
             </tbody>
