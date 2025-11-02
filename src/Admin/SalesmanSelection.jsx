@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
-function SalesmanSelection({ token }) {
+function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger prop
   const [customers, setCustomers] = useState([]);
   const [salesmen, setSalesmen] = useState([]);
   const [message, setMessage] = useState("");
@@ -12,11 +12,11 @@ function SalesmanSelection({ token }) {
   useEffect(() => {
     fetchCustomers();
     fetchSalesmen();
-  }, []);
+  }, [refreshTrigger]); // Re-fetch when refreshTrigger changes
 
   const fetchCustomers = async () => {
     try {
-      // Backend: GET /customers (no auth required)
+      // Backend: GET /customers (admin only)
       const response = await fetch(`${API}/customers`);
 
       if (response.ok) {
@@ -33,7 +33,7 @@ function SalesmanSelection({ token }) {
 
   const fetchSalesmen = async () => {
     try {
-      // Backend: GET /users/employees (requires auth, admin only)
+      // Backend: GET /users/employees (admin only)
       const response = await fetch(`${API}/users/employees`, {
         headers: {
           "Authorization": `Bearer ${token}`

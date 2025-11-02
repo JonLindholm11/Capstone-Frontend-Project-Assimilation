@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
-function RoleSelection({ token }) {
+function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -10,11 +10,11 @@ function RoleSelection({ token }) {
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [refreshTrigger]); //  Re-fetch when refreshTrigger changes
 
   const fetchUsers = async () => {
     try {
-      // Backend: GET /users/employees ( admin only)
+      // Backend: GET /users/employees (admin only)
       const response = await fetch(`${API}/users/employees`, {
         headers: {
           "Authorization": `Bearer ${token}`
@@ -42,7 +42,7 @@ function RoleSelection({ token }) {
     setError("");
 
     try {
-      // Backend: PATCH /users/:id/role ( admin only)
+      // Backend: PATCH /users/:id/role (admin only)
       const response = await fetch(`${API}/users/${userId}/role`, {
         method: "PATCH",
         headers: {
@@ -54,7 +54,6 @@ function RoleSelection({ token }) {
         })
       });
 
-      //  Handle response properly
       const contentType = response.headers.get("content-type");
       let result;
       
