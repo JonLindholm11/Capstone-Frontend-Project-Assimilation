@@ -186,7 +186,7 @@
   padding: 20px;
   border: 2px solid #a67c38;
   border-radius: 10px;
-  
+
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
 }
 .membership-card-gold {
@@ -197,3 +197,33 @@
   border-radius: 10px;
 }
 
+/* testimonial block */
+
+.testimonial {
+  border: 2px solid #ccc;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px 0;
+  color: black;
+}
+
+.testimonial::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.testimonial img {
+  float: left;
+  margin-right: 20px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.testimonial span {
+  font-size: 20px;
+  margin-right: 15px;
+}

@@ -51,7 +51,49 @@ export default function ProductLanding() {
       </div>
       <GetRandom limit={4} />
 
-      <div className="testimonial"></div>
+      <div className="testimonial">
+        <img
+          src="https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg"
+          alt="user avatar"
+        />
+        <p>
+          <span>Sarah Mitchell</span> Adventure Enthusiast
+        </p>
+        <p>
+          Amazing selection and fast shipping! Got my camping gear in 2 days and
+          the quality exceeded my expectations. The customer service team was
+          incredibly helpful in choosing the right equipment.
+        </p>
+      </div>
+
+      <div className="testimonial">
+        <img
+          src="https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg"
+          alt="user avatar"
+        />
+        <p>
+          <span>Marcus Chen</span> Outdoor Guide
+        </p>
+        <p>
+          Noble Market has everything I need for my expeditions. Their staff
+          really knows their products and helped me find exactly what I was
+          looking for. Fast, friendly service every time!
+        </p>
+      </div>
+      <div className="testimonial">
+        <img
+          src="https://images.pexels.com/photos/1602726/pexels-photo-1602726.jpeg"
+          alt="user avatar"
+        />
+        <p>
+          <span>Emily Rodriguez</span> Weekend Hiker
+        </p>
+        <p>
+          Best outdoor marketplace I&apos;ve found! The prices are fair, the
+          selection is huge, and the people behind Noble Market are genuinely
+          passionate about helping you find the right gear for your adventure.
+        </p>
+      </div>
     </div>
   );
 }
