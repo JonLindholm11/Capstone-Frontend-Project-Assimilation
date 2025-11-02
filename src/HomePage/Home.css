@@ -3,22 +3,227 @@
   text-align: center;
   color: white;
 }
+
 .container img {
-  width: 95%;
-  height: auto;
+  width: 98%;
+  height: 500px;
   border-radius: 5%;
   margin: 0 auto;
+  object-fit: cover;
+  object-position: center;
 }
+
 .top-left {
   position: absolute;
   top: 16px;
   left: 32px;
-  color: darkblue;
+  color: #d4a055;
+  /* color: white; */
   font-size: 100px;
   text-align: left;
   font-weight: 700;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.8);
 }
+
 .top-left p {
   font-weight: normal;
   font-size: 40px;
+  margin: 0;
+  margin-top: 10px;
+}
+
+.top-left button {
+  color: white;
+  background-color: #d4a055;
+  margin: 0;
+  margin-top: 15px;
+  margin-left: 80px;
+  border-radius: 10px;
+  padding: 15px 30px;
+  font-size: 24px;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.top-left button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+  background-color: #d4a055;
+}
+
+.top-left button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  background-color: #a67c38;
+}
+
+.membership-container {
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+  padding: 40px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.membership-card-copper,
+.membership-card-silver,
+.membership-card-gold {
+  flex: 1;
+  max-width: 350px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.membership-card-copper {
+  background: linear-gradient(135deg, #b87333, #d4935a);
+  border: 3px solid #945a28;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.membership-card-silver {
+  background: linear-gradient(135deg, #c0c0c0, #e8e8e8);
+  border: 3px solid #a8a8a8;
+  color: #333;
+}
+
+.membership-card-gold {
+  background: linear-gradient(135deg, #d4a055, #f4d77e);
+  border: 3px solid #b8853d;
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.membership-card-copper:hover,
+.membership-card-silver:hover,
+.membership-card-gold:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.membership-card-copper h3,
+.membership-card-silver h3,
+.membership-card-gold h3 {
+  font-size: 36px;
+  margin: 0 0 15px 0;
+  font-weight: 700;
+}
+
+.price {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 10px 0 20px 0;
+}
+
+.membership-card-copper p,
+.membership-card-silver p,
+.membership-card-gold p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.membership-card-copper button,
+.membership-card-silver button,
+.membership-card-gold button {
+  padding: 12px 25px;
+  font-size: 18px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}
+
+.membership-card-copper button {
+  background-color: #945a28;
+  color: white;
+}
+
+.membership-card-silver button {
+  background-color: #a8a8a8;
+  color: white;
+}
+
+.membership-card-gold button {
+  background-color: #b8853d;
+  color: white;
+}
+
+.membership-card-copper button:hover,
+.membership-card-silver button:hover,
+.membership-card-gold button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+}
+
+.membership-card-copper button:active,
+.membership-card-silver button:active,
+.membership-card-gold button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.membership-container {
+  display: flex;
+  margin-top: 20px;
+  gap: 20px;
+  justify-content: center;
+}
+
+.membership-card-silver {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  border: 2px solid #a67c38;
+  border-radius: 10px;
+
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+.membership-card-gold {
+  flex: 1;
+  max-width: 300px;
+  padding: 20px;
+  border: 2px solid #d4a055;
+  border-radius: 10px;
+}
+
+/* testimonial block */
+
+.testimonial {
+  border: 2px solid #ccc;
+  background-color: #eee;
+  border-radius: 5px;
+  padding: 16px;
+  margin: 16px 0;
+  color: black;
+}
+
+.testimonial::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.testimonial img {
+  float: left;
+  margin-right: 20px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+}
+
+.testimonial span {
+  font-size: 20px;
+  margin-right: 15px;
 }
