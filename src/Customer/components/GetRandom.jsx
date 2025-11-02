@@ -29,7 +29,6 @@ export default function GetRandom({ limit = 4 }) {
 
   return (
     <div className="landing">
-      <h2>Featured Products</h2>
       <div className="product-grid">
         {featuredProducts.map((product) => (
           <div

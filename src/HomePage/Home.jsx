@@ -26,30 +26,52 @@ export default function ProductLanding() {
           </NavLink>
         </div>
       </div>
-      <h2>Membership options and pricing</h2>
-      <div className="membership-container">
+
+      <section className="membership-section">
+        <h2>Membership Options & Pricing</h2>
+        <p className="section-subtitle">Choose the plan that fits your needs</p>
+        <div className="membership-container">
         <div className="membership-card-copper">
           <h3>Copper</h3>
           <p className="price">$9.99/month</p>
-          <p>Basic benefits description</p>
+          <p>Free shipping on orders over $50</p>
+          <p>5% back in rewards</p>
+          <p>Early access to sales</p>
           <button>Learn More</button>
         </div>
 
         <div className="membership-card-silver">
           <h3>Silver</h3>
           <p className="price">$19.99/month</p>
-          <p>Premium benefits description</p>
+          <p>Free shipping on all orders</p>
+          <p>10% back in rewards</p>
+          <p>Priority customer support</p>
+          <p>Exclusive member deals</p>
           <button>Learn More</button>
         </div>
 
         <div className="membership-card-gold">
           <h3>Gold</h3>
           <p className="price">$29.99/month</p>
-          <p>Elite benefits description</p>
+          <p>Free 2-day shipping</p>
+          <p>15% back in rewards</p>
+          <p>24/7 priority support</p>
+          <p>Access to premium products</p>
+          <p>Member-only events</p>
           <button>Learn More</button>
         </div>
-      </div>
-      <GetRandom limit={4} />
+        </div>
+      </section>
+
+      <section className="featured-section">
+        <h2>Featured Products</h2>
+        <p className="section-subtitle">Handpicked items for your next project</p>
+        <GetRandom limit={4} />
+      </section>
+
+      <section className="testimonials-section">
+        <h2>What Our Customers Say</h2>
+        <p className="section-subtitle">Real feedback from real makers and builders</p>
 
       <div className="testimonial">
         <img
@@ -57,12 +79,12 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Sarah Mitchell</span> Adventure Enthusiast
+          <span>Sarah Mitchell</span> Small Business Owner
         </p>
         <p>
-          Amazing selection and fast shipping! Got my camping gear in 2 days and
+          Amazing selection and fast shipping! Got my sewing supplies in 2 days and
           the quality exceeded my expectations. The customer service team was
-          incredibly helpful in choosing the right equipment.
+          incredibly helpful in choosing the right materials for my projects.
         </p>
       </div>
 
@@ -72,12 +94,12 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Marcus Chen</span> Outdoor Guide
+          <span>Marcus Chen</span> DIY Enthusiast
         </p>
         <p>
-          Noble Market has everything I need for my expeditions. Their staff
-          really knows their products and helped me find exactly what I was
-          looking for. Fast, friendly service every time!
+          Noble Market has everything I need for my home projects. From construction
+          tools to electronics, their staff really knows their products and helped me
+          find exactly what I was looking for. Fast, friendly service every time!
         </p>
       </div>
       <div className="testimonial">
@@ -86,14 +108,16 @@ export default function ProductLanding() {
           alt="user avatar"
         />
         <p>
-          <span>Emily Rodriguez</span> Weekend Hiker
+          <span>Emily Rodriguez</span> Professional Contractor
         </p>
         <p>
-          Best outdoor marketplace I&apos;ve found! The prices are fair, the
-          selection is huge, and the people behind Noble Market are genuinely
-          passionate about helping you find the right gear for your adventure.
+          Best online marketplace I&apos;ve found! Whether I need construction tools,
+          electronics, or auto parts, the prices are fair, the selection is huge,
+          and the people behind Noble Market are genuinely passionate about helping
+          you find what you need.
         </p>
       </div>
+      </section>
     </div>
   );
 }
