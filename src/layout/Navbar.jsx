@@ -20,7 +20,8 @@ export default function Navbar() {
             </NavLink>
             <NavLink to="/products">Products</NavLink>
             <NavLink to="/sales">Sales Page</NavLink>
-            <NavLink to="/ServicePage">Customer Serviced</NavLink>
+            <NavLink to="/ServicePage">Customer Service</NavLink>
+            <NavLink to="/profile">Profile</NavLink>
             {role === 1 && <NavLink to="/sales">Sales</NavLink>}
             <button className="logoutBtn" onClick={logout}>
               Log out
