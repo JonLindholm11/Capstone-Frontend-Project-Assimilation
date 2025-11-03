@@ -3,7 +3,7 @@ import "./pages.css";
 export default function Tools() {
   return (
     <div>
-      <h1 className="head"> Tools </h1>
+      {/* <h1 className="head"> Tools </h1> */}
 
       <div className="hero-section">
         <img
