@@ -29,7 +29,10 @@ export default function ProductLanding() {
 
       <section className="membership-section">
         <h2>Membership Options & Pricing</h2>
-        <p className="section-subtitle">Choose the plan that fits your needs</p>
+        {/* <p className="section-subtitle">Choose the plan that fits your needs</p> */}
+        <div className="bulk-pricing-banner">
+          All members receive special pricing on bulk orders!
+        </div>
         <div className="membership-container">
         <div className="membership-card-copper">
           <h3>Copper</h3>
