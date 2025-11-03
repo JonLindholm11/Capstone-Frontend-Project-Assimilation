@@ -13,10 +13,10 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json(); //  Jodson CHANGED from .json() to .text() to match backend
+    const result = await response.json();
     if (!response.ok) throw Error(result);
     sessionStorage.setItem("token", result.token);
-    setToken(result.token); //  CHANGED from result.token to result to match backend
+    setToken(result.token);
   };
 
   const login = async (credentials) => {
@@ -25,9 +25,9 @@ export function AuthProvider({ children }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
     });
-    const result = await response.json(); //  CHANGED from .json() to .text() to match backend
+    const result = await response.json();
     sessionStorage.setItem("token", result.token);
-    setToken(result.token); //  CHANGED from result.token to result to match backend
+    setToken(result.token);
   };
 
   const logout = () => {
