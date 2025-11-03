@@ -42,7 +42,7 @@ export default function ProductDetail() {
           <h2>{product.product_name}</h2>
           <p className="price">
             $
-            {Number(product.basic_price).toLocaleString("en-US", {
+            {Number(product.basic_price ?? product.customer_price).toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}

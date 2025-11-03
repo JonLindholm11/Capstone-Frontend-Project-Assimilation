@@ -74,14 +74,19 @@ export default function ProductLanding() {
         <p className="section-subtitle">Real feedback from real makers and builders</p>
 
       <div className="testimonial">
-        <img
-          src="https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg"
-          alt="user avatar"
-        />
-        <p>
-          <span>Sarah Mitchell</span> Small Business Owner
-        </p>
-        <p>
+        <div className="testimonial-header">
+          <img
+            src="https://images.pexels.com/photos/1097456/pexels-photo-1097456.jpeg"
+            alt="user avatar"
+          />
+          <div className="testimonial-info">
+            <p>
+              <span>Sarah Mitchell</span> Small Business Owner
+            </p>
+          </div>
+          <div className="stars">★★★★★</div>
+        </div>
+        <p className="testimonial-text">
           Amazing selection and fast shipping! Got my sewing supplies in 2 days and
           the quality exceeded my expectations. The customer service team was
           incredibly helpful in choosing the right materials for my projects.
@@ -89,28 +94,38 @@ export default function ProductLanding() {
       </div>
 
       <div className="testimonial">
-        <img
-          src="https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg"
-          alt="user avatar"
-        />
-        <p>
-          <span>Marcus Chen</span> DIY Enthusiast
-        </p>
-        <p>
+        <div className="testimonial-header">
+          <img
+            src="https://images.pexels.com/photos/845457/pexels-photo-845457.jpeg"
+            alt="user avatar"
+          />
+          <div className="testimonial-info">
+            <p>
+              <span>Marcus Chen</span> DIY Enthusiast
+            </p>
+          </div>
+          <div className="stars">★★★★★</div>
+        </div>
+        <p className="testimonial-text">
           Noble Market has everything I need for my home projects. From construction
           tools to electronics, their staff really knows their products and helped me
           find exactly what I was looking for. Fast, friendly service every time!
         </p>
       </div>
       <div className="testimonial">
-        <img
-          src="https://images.pexels.com/photos/1602726/pexels-photo-1602726.jpeg"
-          alt="user avatar"
-        />
-        <p>
-          <span>Emily Rodriguez</span> Professional Contractor
-        </p>
-        <p>
+        <div className="testimonial-header">
+          <img
+            src="https://images.pexels.com/photos/1602726/pexels-photo-1602726.jpeg"
+            alt="user avatar"
+          />
+          <div className="testimonial-info">
+            <p>
+              <span>Emily Rodriguez</span> Professional Contractor
+            </p>
+          </div>
+          <div className="stars">★★★★★</div>
+        </div>
+        <p className="testimonial-text">
           Best online marketplace I&apos;ve found! Whether I need construction tools,
           electronics, or auto parts, the prices are fair, the selection is huge,
           and the people behind Noble Market are genuinely passionate about helping
