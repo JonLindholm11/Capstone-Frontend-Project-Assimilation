@@ -19,6 +19,7 @@ import ProductDetail from "./Customer/components/GetOneProduct";
 import ComingSoon from "./Customer/pages/ComingSoon";
 import { CartProvider } from "./Customer/pages/Cart/CartContext";
 import { Toaster } from "react-hot-toast";
+import Profile from "./auth/account/profile"
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
           <Route index element={<Home />} />
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />}></Route>
           <Route path="/products" element={<Store />}>
             <Route index element={<ProductLanding />} />
             <Route path=":id" element={<ProductDetail />} />
