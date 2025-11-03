@@ -16,13 +16,14 @@ import Cart from "./Customer/pages/Cart/Cart";
 import ProductLanding from "./Customer/pages/ProductLanding";
 import ServicePage from "./Service/ServicePage";
 import ProductDetail from "./Customer/components/GetOneProduct";
+import ComingSoon from "./Customer/pages/ComingSoon";
 import { CartProvider } from "./Customer/pages/Cart/CartContext";
-import {Toaster} from 'react-hot-toast'
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <CartProvider>
-      <Toaster position= "top-right"/>
+      <Toaster position="top-right" />
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
@@ -42,6 +43,8 @@ export default function App() {
 
           <Route path="/sales" element={<SalesPage />} />
           <Route path="/ServicePage" element={<ServicePage />} />
+
+          <Route path="/ComingSoon" element={<ComingSoon />} />
 
           <Route path="*" element={<Error404 />}></Route>
         </Route>
