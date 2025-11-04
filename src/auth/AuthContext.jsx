@@ -8,8 +8,7 @@ const AuthContext = createContext();
 function decodeToken(token) {
   if (!token) return null;
   try {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    console.log("Decoded token payload:", payload); // Debug log
+    const payload = JSON.parse(atob(token.split(".")[1]));
     return payload.role_id;
   } catch (error) {
     console.error("Error decoding token:", error);
@@ -19,12 +18,13 @@ function decodeToken(token) {
 
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
-  const [role, setRole] = useState(decodeToken(sessionStorage.getItem("token")));
+  const [role, setRole] = useState(
+    decodeToken(sessionStorage.getItem("token"))
+  );
 
   // Sync role whenever token changes
   useEffect(() => {
     const newRole = decodeToken(token);
-    console.log("Token changed, new role:", newRole); // Debug log
     setRole(newRole);
   }, [token]);
 
