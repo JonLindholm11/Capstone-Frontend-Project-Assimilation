@@ -4,7 +4,7 @@ export async function getApiDataForUsersMe() {
   const token = sessionStorage.getItem('token');;
 
   if (!token) {
-    throw new Error('No token found - please log in');
+    throw new Error('please log in');
   }
 
   const response = await fetch(`${API}/users/me`, {
@@ -34,6 +34,53 @@ export async function getApiDataForOrderItems(orderId) {
       'Content-Type': 'application/json'
     }
   });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data;
+}
+
+export async function postApiDataForCustomers(customerData) {
+  const token = sessionStorage.getItem('token');
+
+  const response = await fetch(`${API}/customers`, {
+    method: "POST",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(customerData)
+  })
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `HTTP error! status: ${response.status}`);
+  }
+
+  const data = await response.json();
+  return data
+}
+
+export async function putApiDataForCustomers(id, customerData) {
+  const token = sessionStorage.getItem('token');
+
+  const response = await fetch(`${API}/customers/update/${id}`, {
+    method: "PUT",
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(customerData)
+  })
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(text || `HTTP error! status: ${response.status}`);
+  }
 
   const data = await response.json();
   return data;
