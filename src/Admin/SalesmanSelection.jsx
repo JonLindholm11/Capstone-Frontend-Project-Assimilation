@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
-function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger prop
+function SalesmanSelection({ token, refreshTrigger }) {
   const [customers, setCustomers] = useState([]);
   const [salesmen, setSalesmen] = useState([]);
   const [message, setMessage] = useState("");
@@ -12,20 +12,31 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
   useEffect(() => {
     fetchCustomers();
     fetchSalesmen();
-  }, [refreshTrigger]); // Re-fetch when refreshTrigger changes
+    
+    const interval = setInterval(() => {
+      fetchCustomers();
+      fetchSalesmen();
+    }, 10000);
+    
+    return () => clearInterval(interval);
+  }, [refreshTrigger]);
 
   const fetchCustomers = async () => {
     try {
-      // Backend: GET /customers (admin only)
+      console.log('🔍 Fetching customers from:', `${API}/customers`);
       const response = await fetch(`${API}/customers`);
 
       if (response.ok) {
         const data = await response.json();
+        console.log(' Customers received:', data);
+        console.log(' Number of customers:', data.length);
         setCustomers(data);
       } else {
+        console.log('Failed response:', response.status);
         setError("Failed to fetch customers");
       }
     } catch (err) {
+      console.log('Error:', err);
       setError("Error connecting to server");
       console.error(err);
     }
@@ -33,7 +44,6 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
 
   const fetchSalesmen = async () => {
     try {
-      // Backend: GET /users/employees (admin only)
       const response = await fetch(`${API}/users/employees`, {
         headers: {
           "Authorization": `Bearer ${token}`
@@ -42,7 +52,6 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
 
       if (response.ok) {
         const data = await response.json();
-        // Filter for salesmen only (role_id = 2)
         const salesmenOnly = data.filter(user => user.role_id === 2);
         setSalesmen(salesmenOnly);
       } else {
@@ -53,6 +62,58 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
       setError("Error connecting to server");
       console.error(err);
       setLoading(false);
+    }
+  };
+
+  const handleManualRefresh = () => {
+    setMessage("Refreshing...");
+    fetchCustomers();
+    fetchSalesmen();
+    setTimeout(() => setMessage(""), 2000);
+  };
+
+  const handleSalesmanAssignment = async (customerId) => {
+    setMessage("");
+    setError("");
+
+    const selectedSalesmanId = document.getElementById(`salesman-${customerId}`).value;
+
+    if (!selectedSalesmanId) {
+      setError("Please select a salesman");
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API}/customers/${customerId}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          assigned_salesman_id: parseInt(selectedSalesmanId)
+        })
+      });
+
+      const contentType = response.headers.get("content-type");
+      let result;
+      
+      if (contentType && contentType.includes("application/json")) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        result = { message: text, error: text };
+      }
+
+      if (response.ok) {
+        setMessage(result.message || "Salesman assigned successfully!");
+        fetchCustomers();
+      } else {
+        setError(result.error || result.message || "Failed to assign salesman");
+      }
+    } catch (err) {
+      setError("Error connecting to server");
+      console.error(err);
     }
   };
 
@@ -68,7 +129,14 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
   return (
     <div className="salesman-selection-section">
       <h2>Salesman Selection for Customers</h2>
-      <p>View customer-salesman assignments</p>
+      <p>Assign salesmen to manage customer accounts</p>
+
+      <button 
+        onClick={handleManualRefresh}
+        className="refresh-btn"
+      >
+        Refresh List
+      </button>
 
       {message && <div className="success-message">{message}</div>}
       {error && <div className="error-message">{error}</div>}
@@ -82,8 +150,10 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
               <tr>
                 <th>Company Name</th>
                 <th>Contact Name</th>
-                <th>Email</th>
+                <th>Customer Email</th>
                 <th>Current Salesman</th>
+                <th>Assign Salesman</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -93,6 +163,28 @@ function SalesmanSelection({ token, refreshTrigger }) { // Add refreshTrigger pr
                   <td>{customer.contact_name || "N/A"}</td>
                   <td>{customer.email}</td>
                   <td>{getSalesmanName(customer.assigned_salesman_id)}</td>
+                  <td>
+                    <select 
+                      id={`salesman-${customer.id}`}
+                      defaultValue={customer.assigned_salesman_id || ""}
+                      className="salesman-select"
+                    >
+                      <option value="">Select a salesman...</option>
+                      {salesmen.map(salesman => (
+                        <option key={salesman.id} value={salesman.id}>
+                          {salesman.email}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+                  <td>
+                    <button 
+                      onClick={() => handleSalesmanAssignment(customer.id)}
+                      className="save-btn"
+                    >
+                      Save
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
