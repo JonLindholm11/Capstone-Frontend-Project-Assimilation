@@ -1,13 +1,62 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
+import { postApiDataForCustomers } from "./api";
 import "./Cart.css";
 
 export default function Cart() {
-  const { cartItems, removeFromCart, changeQuantity } = useCart();
+  const { cartItems, removeFromCart, changeQuantity, clearCart } = useCart();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const navigate = useNavigate();
 
   let total = 0;
   cartItems.forEach((item) => {
     total += item.price * item.quantity;
   });
+
+  const handleCheckout = async () => {
+    if (cartItems.length === 0) {
+      
+      return <p>Cart empty</p>
+    }
+
+    setIsProcessing(true);
+
+    try {
+      const token = sessionStorage.getItem('token');
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const customer_id = payload.customer_id || payload.id;
+
+      const cart = cartItems.map(item => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        unit_price: item.price
+      }));
+
+      const orderData = {
+        customer_id,
+        cart
+      };
+
+      const result = await postApiDataForCustomers(orderData);
+      console.log(result)
+
+      clearCart();
+
+
+      navigate("/");
+    } catch (error) {
+      console.error("❌ Checkout error:", error);
+      alert(`Failed to create order: ${error.message}`);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
 
   return (
     <div className="cart-page">
@@ -49,7 +98,13 @@ export default function Cart() {
 
           <div className="cart-total-container">
             <span>Total: ${total.toFixed(2)}</span>
-            <button className="checkout-btn">Checkout</button>
+            <button 
+              className="checkout-btn" 
+              onClick={handleCheckout}
+              disabled={isProcessing}
+            >
+              {isProcessing ? "Processing..." : "Checkout"}
+            </button>
           </div>
         </div>
       )}
