@@ -25,7 +25,7 @@ export default function Navbar() {
               <FaHome />
             </NavLink>
             <NavLink to="/products">Products</NavLink>
-            {(role === 1 || role === 3) && (
+            {(role === 1 || role === 2 || role === 3) && (
               <NavLink to="/sales">Sales Page</NavLink>
             )}
             {(role === 1 || role === 2 || role === 3) && (
