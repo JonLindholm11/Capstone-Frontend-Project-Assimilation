@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { GoPersonFill } from "react-icons/go";
 import { FaHome } from "react-icons/fa";
@@ -8,6 +8,12 @@ import Brand from "./Brand";
 
 export default function Navbar() {
   const { token, role, logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
 
   return (
     <header className="sticky-header">
@@ -21,14 +27,18 @@ export default function Navbar() {
             <NavLink to="/products">Products</NavLink>
             <NavLink to="/sales">Sales Page</NavLink>
             <NavLink to="/ServicePage">Customer Service</NavLink>
-            <NavLink to="/profile">Profile</NavLink>
             {role === 1 && <NavLink to="/sales">Sales</NavLink>}
-            <button className="logoutBtn" onClick={logout}>
-              Log out
-            </button>
-            <NavLink to="/admin">
-              <GoPersonFill />
-            </NavLink>
+            <div className="dropdown">
+              <button className="dropbtn">
+                <GoPersonFill />
+              </button>
+              <div className="dropdown-content">
+                <NavLink to="/profile">Profile</NavLink>
+                <button className="logoutBtn" onClick={handleLogout}>
+                  Log out
+                </button>
+              </div>
+            </div>
           </>
         ) : (
           <>
