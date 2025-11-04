@@ -1,11 +1,32 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
 const AuthContext = createContext();
 
+// Helper function to decode JWT and extract role
+function decodeToken(token) {
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    console.log("Decoded token payload:", payload); // Debug log
+    return payload.role_id;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return null;
+  }
+}
+
 export function AuthProvider({ children }) {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [role, setRole] = useState(decodeToken(sessionStorage.getItem("token")));
+
+  // Sync role whenever token changes
+  useEffect(() => {
+    const newRole = decodeToken(token);
+    console.log("Token changed, new role:", newRole); // Debug log
+    setRole(newRole);
+  }, [token]);
 
   const register = async (credentials) => {
     const response = await fetch(API + "/users/register", {
@@ -17,6 +38,7 @@ export function AuthProvider({ children }) {
     if (!response.ok) throw Error(result);
     sessionStorage.setItem("token", result.token);
     setToken(result.token);
+    setRole(decodeToken(result.token));
   };
 
   const login = async (credentials) => {
@@ -28,14 +50,16 @@ export function AuthProvider({ children }) {
     const result = await response.json();
     sessionStorage.setItem("token", result.token);
     setToken(result.token);
+    setRole(decodeToken(result.token));
   };
 
   const logout = () => {
     setToken(null);
+    setRole(null);
     sessionStorage.removeItem("token");
   };
 
-  const value = { token, register, login, logout };
+  const value = { token, role, register, login, logout };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
 

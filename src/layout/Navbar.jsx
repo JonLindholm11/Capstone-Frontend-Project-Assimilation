@@ -25,15 +25,16 @@ export default function Navbar() {
               <FaHome />
             </NavLink>
             <NavLink to="/products">Products</NavLink>
-            <NavLink to="/sales">Sales Page</NavLink>
-            <NavLink to="/ServicePage">Customer Service</NavLink>
-            {role === 1 && <NavLink to="/sales">Sales</NavLink>}
+            {/* Sales Page - visible to Admin (1) and Sales (3) */}
+            {(role === 1 || role === 3) && <NavLink to="/sales">Sales Page</NavLink>}
+            {/* Customer Service - visible to Admin (1) and Customer Service (2) */}
+            {(role === 1 || role === 2) && <NavLink to="/ServicePage">Customer Service</NavLink>}
             <div className="dropdown">
               <button className="dropbtn">
                 <GoPersonFill />
               </button>
               <div className="dropdown-content">
-                <NavLink to="/profile">Profile</NavLink>
+                <NavLink to={role === 1 ? "/admin" : "/profile"}>Profile</NavLink>
                 <button className="logoutBtn" onClick={handleLogout}>
                   Log out
                 </button>
@@ -45,11 +46,7 @@ export default function Navbar() {
             <NavLink to="/">
               <FaHome />
             </NavLink>
-
-            <NavLink to="/products"> Products </NavLink>
-
-            <NavLink to="/sales"> Sales Page </NavLink>
-            <NavLink to="/ServicePage"> Customer Service </NavLink>
+            <NavLink to="/products">Products</NavLink>
             <div className="dropdown">
               <button className="dropbtn">
                 <GoPersonFill />
