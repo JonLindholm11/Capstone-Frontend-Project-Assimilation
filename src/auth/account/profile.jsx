@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { getApiDataForUsersMe } from './api.js';
+import { useState, useEffect } from "react";
+import { getApiDataForUsersMe } from "./api.js";
 import DisplayAccount from "./displayUser";
 import DisplayCustomer from "./displayCustomer";
 import DisplayOrders from "./displayOrders";
+import "./User.css";
 
 export default function Profile() {
   const [userData, setUserData] = useState(null);
