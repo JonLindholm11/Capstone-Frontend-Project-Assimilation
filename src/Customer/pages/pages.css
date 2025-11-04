@@ -11,27 +11,57 @@
   display: block;
   object-fit: cover;
   border-radius: 10px;
+  margin-top: 5px;
 }
 
 /* sub nav */
 .subNav {
   display: flex;
   justify-content: space-evenly;
-  border-bottom: 10px solid white;
+  align-items: center;
+  border-bottom: 8px solid #d4a055;
+  padding: 15px 20px;
 }
+
 .subNav a {
   text-decoration: none;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.subNav a:hover {
+  transform: translateY(-2px);
+}
+
+.subNav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background-color: #d4a055;
 }
 
 .subNav h3 {
-  color: white;
+  color: #d4a055;
   text-decoration: none;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
 }
 .head {
   display: flex;
   justify-content: center; /* centered horizontally */
   align-items: center;
   margin: 20px 0;
+  color: #d4a055;
 }
 
 .landing {

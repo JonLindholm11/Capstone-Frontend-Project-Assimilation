@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react';
-import { getApiDataForUsersMe } from './api.js';
+import { useState, useEffect } from "react";
+import { getApiDataForUsersMe } from "./api.js";
 import DisplayAccount from "./displayUser";
 import DisplayCustomer from "./displayCustomer";
 import DisplayOrders from "./displayOrders";
+import "./User.css";
 import CreateCustomer from './accountSetup.jsx';
 
 export default function Profile() {
@@ -67,8 +68,7 @@ export default function Profile() {
         />
       )}
     </div>
-    
-    <DisplayOrders orders={userData.orders} />
-  </div>
+      <DisplayOrders orders={userData.orders} />
+    </div>
 );
 }

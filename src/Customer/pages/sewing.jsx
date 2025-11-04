@@ -4,7 +4,7 @@ import "./pages.css";
 export default function Sewing() {
   return (
     <div>
-      <h1 className="head"> Sewing Notions </h1>
+      {/* <h1 className="head"> Sewing Notions </h1> */}
 
       <div className="hero-section">
         <img
