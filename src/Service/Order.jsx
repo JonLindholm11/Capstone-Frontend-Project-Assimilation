@@ -1,6 +1,4 @@
 import { useEffect, useState } from "react";
-
-
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
@@ -10,16 +8,14 @@ export default function OrdersPage() {
   const [filterDate, setFilterDate] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState(null);
 
+  // Supported statuses
+  const statusOptions = ["pending", "active", "shipping", "issue"];
+
   // Fetch Orders
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch(` http://localhost:3000/orders`);
-      if (res.ok) {
-        const data = await res.json();
-        setOrders(data);
-      } else {
-        console.error("Failed to load orders");
-      }
+      const res = await fetch("http://localhost:3000/orders");
+      if (res.ok) setOrders(await res.json());
     }
     fetchOrders();
   }, []);
@@ -27,13 +23,8 @@ export default function OrdersPage() {
   // Fetch Order Items
   useEffect(() => {
     async function fetchOrderItems() {
-      const res = await fetch(` http://localhost:3000/order_items`);
-      if (res.ok) {
-        const data = await res.json();
-        setOrderItems(data);
-      } else {
-        console.error("Failed to load order items");
-      }
+      const res = await fetch("http://localhost:3000/order_items");
+      if (res.ok) setOrderItems(await res.json());
     }
     fetchOrderItems();
   }, []);
@@ -41,13 +32,8 @@ export default function OrdersPage() {
   // Fetch Customers
   useEffect(() => {
     async function fetchCustomers() {
-      const res = await fetch(`http://localhost:3000/customers`);
-      if (res.ok) {
-        const data = await res.json();
-        setCustomers(data);
-      } else {
-        console.error("Failed to load customers");
-      }
+      const res = await fetch("http://localhost:3000/customers");
+      if (res.ok) setCustomers(await res.json());
     }
     fetchCustomers();
   }, []);
@@ -55,13 +41,8 @@ export default function OrdersPage() {
   // Fetch Products
   useEffect(() => {
     async function fetchProducts() {
-      const res = await fetch(`http://localhost:3000/products`);
-      if (res.ok) {
-        const data = await res.json();
-        setProducts(data);
-      } else {
-        console.error("Failed to load products");
-      }
+      const res = await fetch("http://localhost:3000/products");
+      if (res.ok) setProducts(await res.json());
     }
     fetchProducts();
   }, []);
@@ -69,55 +50,52 @@ export default function OrdersPage() {
   // Fetch Users
   useEffect(() => {
     async function fetchUsers() {
-      const res = await fetch(``);
-      if (res.ok) {
-        const data = await res.json();
-        setUsers(data);
-      } else {
-        console.error("Failed to load users");
-      }
+      const res = await fetch("http://localhost:3000/users");
+      if (res.ok) setUsers(await res.json());
     }
     fetchUsers();
   }, []);
 
-  
-  const getCompanyName = (id) =>{
-    const customer = customers.find((c) => c.id === id);
-    if (customer) {
-      return customer.company_name;
+  //  Save order status via POST
+  async function saveOrderStatus(order) {
+    const payload = {
+      customer_id: order.customer_id,
+      order_date: order.order_date,
+      total_amount: order.total_amount,
+      order_status: order.order_status,
+      assigned_service_rep: order.assigned_service_rep,
+      created_date: order.created_date
+    };
+
+    const res = await fetch(`http://localhost:3000/orders/:id/status`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+
+    if (res.ok) {
+      alert("Order status updated!");
     } else {
-      return "Unknown";
+      alert("Failed to update order.");
     }
   }
 
-  const getRepEmail=(id)=>{
-    const rep = users.find((u) => u.id === id);
-    if (rep) {
-      return rep.email;
-    } else {
-      return "Not Assigned";
-    }
-  }
+  const getCompanyName = (id) =>
+    customers.find((c) => c.id === id)?.company_name ?? "Unknown";
 
-  const getProductName=(id) => {
-    const product = products.find((p) => p.id === id);
-    if (product) {
-      return product.product_name;
-    } else {
-      return `Product #${id}`;
-    }
-  }
+  const getRepEmail = (id) =>
+    users.find((u) => u.id === id)?.email ?? "Not Assigned";
+
+  const getProductName = (id) =>
+    products.find((p) => p.id === id)?.product_name ?? `Product #${id}`;
 
   const uniqueDates = [...new Set(orders.map((o) => o.order_date))];
-
-  const filteredOrders =
-    filterDate === "" ? orders : orders.filter((o) => o.order_date === filterDate);
-
+  const filteredOrders = filterDate ? orders.filter((o) => o.order_date === filterDate) : orders;
   const selectedItems = orderItems.filter((i) => i.order_id === selectedOrderId);
 
   return (
     <div style={{ padding: "20px" }}>
-      <h1>Check Your Order</h1>
+      <h1>Customer Service Order Dashboard</h1>
 
       <label>Filter by Date:</label>
       <select value={filterDate} onChange={(e) => setFilterDate(e.target.value)}>
@@ -136,6 +114,7 @@ export default function OrdersPage() {
             <th>Date</th>
             <th>Total</th>
             <th>Status</th>
+            <th>Save</th>
             <th>Service Rep</th>
           </tr>
         </thead>
@@ -153,7 +132,32 @@ export default function OrdersPage() {
               <td>{getCompanyName(o.customer_id)}</td>
               <td>{o.order_date}</td>
               <td>${o.total_amount}</td>
-              <td>{o.order_status}</td>
+
+              {/* ✅ Dropdown updates state immediately */}
+              <td>
+                <select
+                  value={o.order_status}
+                  onChange={(e) =>
+                    setOrders((prev) =>
+                      prev.map((ord) =>
+                        ord.id === o.id ? { ...ord, order_status: e.target.value } : ord
+                      )
+                    )
+                  }
+                >
+                  {statusOptions.map((status) => (
+                    <option key={status} value={status}>{status}</option>
+                  ))}
+                </select>
+              </td>
+
+              {/* ✅ Save button triggers POST */}
+              <td>
+                <button onClick={(e) => { e.stopPropagation(); saveOrderStatus(o); }}>
+                  Save
+                </button>
+              </td>
+
               <td>{getRepEmail(o.assigned_service_rep)}</td>
             </tr>
           ))}
@@ -184,4 +188,3 @@ export default function OrdersPage() {
     </div>
   );
 }
-
