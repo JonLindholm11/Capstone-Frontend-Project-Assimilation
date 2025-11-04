@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useCart } from "./CartContext";
 import { postApiDataForCustomers } from "./api";
 import "./Cart.css";
