@@ -12,7 +12,7 @@ export default function ProductDetail() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const { addToCart } = useCart();
-//   const navigate = useNavigate();
+  //   const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchProduct() {
@@ -42,7 +42,9 @@ export default function ProductDetail() {
           <h2>{product.product_name}</h2>
           <p className="price">
             $
-            {Number(product.basic_price ?? product.customer_price).toLocaleString("en-US", {
+            {Number(
+              product.basic_price ?? product.customer_price
+            ).toLocaleString("en-US", {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })}
@@ -61,7 +63,15 @@ export default function ProductDetail() {
                 price: product.basic_price,
                 img: product.product_img,
               });
-              toast.success("Added to cart!");
+              toast.success("Added to cart!", {
+                position: "bottom-center",
+                style: {
+                  minWidth: "250px",
+                  minHeight: "60px",
+                  fontSize: "16px",
+                  padding: "16px",
+                },
+              });
             }}
           >
             Add to Cart
