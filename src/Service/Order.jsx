@@ -4,9 +4,13 @@ export default function OrdersPage() {
   const [orderItems, setOrderItems] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [users, ] = useState([]);
   const [filterDate, setFilterDate] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [ setMessage] = useState("");
+  
+  
+  
 
   // Supported statuses
   const statusOptions = ["pending", "active", "shipping", "issue"];
@@ -47,38 +51,37 @@ export default function OrdersPage() {
     fetchProducts();
   }, []);
 
-  // Fetch Users
-  useEffect(() => {
-    async function fetchUsers() {
-      const res = await fetch("http://localhost:3000/users");
-      if (res.ok) setUsers(await res.json());
-    }
-    fetchUsers();
-  }, []);
+  // Fetch Users 
+  // useEffect(() => {
+  //   async function fetchUsers() {
+  //     const res = await fetch("http://localhost:3000/users");
+  //     if (res.ok) setUsers(await res.json());
+  //   }
+  //   fetchUsers();
+  // }, []);
 
   //  Save order status via POST
+  
   async function saveOrderStatus(order) {
-    const payload = {
-      customer_id: order.customer_id,
-      order_date: order.order_date,
-      total_amount: order.total_amount,
-      order_status: order.order_status,
-      assigned_service_rep: order.assigned_service_rep,
-      created_date: order.created_date
-    };
+    try {
+      const res = await fetch(`http://localhost:3000/orders/${order.id}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ order_status: order.order_status })
+      });
 
-    const res = await fetch(`http://localhost:3000/orders/:id/status`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+      const data = await res.json();
 
-    if (res.ok) {
-      alert("Order status updated!");
-    } else {
-      alert("Failed to update order.");
+      if (!res.ok) throw new Error(data.error || "Failed to update");
+      setMessage(` Order #${order.id} status updated to ${order.order_status}`);
+    } catch (err) {
+      setMessage(` ${err.message}`);
     }
   }
+
+  
 
   const getCompanyName = (id) =>
     customers.find((c) => c.id === id)?.company_name ?? "Unknown";
@@ -119,28 +122,28 @@ export default function OrdersPage() {
           </tr>
         </thead>
         <tbody>
-          {filteredOrders.map((o) => (
+          {filteredOrders.map((orders) => (
             <tr
-              key={o.id}
-              onClick={() => setSelectedOrderId(o.id)}
+              key={orders.id}
+              onClick={() => setSelectedOrderId(orders.id)}
               style={{
                 cursor: "pointer",
-                background: selectedOrderId === o.id ? "#f1f1f1" : "",
+                background: selectedOrderId === orders.id ? "#f1f1f1" : "",
               }}
             >
-              <td>{o.id}</td>
-              <td>{getCompanyName(o.customer_id)}</td>
-              <td>{o.order_date}</td>
-              <td>${o.total_amount}</td>
+              <td>{orders.id}</td>
+              <td>{getCompanyName(orders.customer_id)}</td>
+              <td>{orders.order_date}</td>
+              <td>${orders.total_amount}</td>
 
-              {/* ✅ Dropdown updates state immediately */}
+              {/* Dropdown updates state immediately */}
               <td>
                 <select
-                  value={o.order_status}
+                  value={orders.order_status}
                   onChange={(e) =>
                     setOrders((prev) =>
-                      prev.map((ord) =>
-                        ord.id === o.id ? { ...ord, order_status: e.target.value } : ord
+                      prev.map((order) =>
+                        order.id === orders.id ? { ...order, order_status: e.target.value } : order
                       )
                     )
                   }
@@ -151,14 +154,14 @@ export default function OrdersPage() {
                 </select>
               </td>
 
-              {/* ✅ Save button triggers POST */}
+              {/* Save button triggers POST */}
               <td>
-                <button onClick={(e) => { e.stopPropagation(); saveOrderStatus(o); }}>
+                <button onClick={(e) => { e.stopPropagation(); saveOrderStatus(orders); }}>
                   Save
                 </button>
               </td>
 
-              <td>{getRepEmail(o.assigned_service_rep)}</td>
+              <td>{getRepEmail(orders.assigned_service_rep)}</td>
             </tr>
           ))}
         </tbody>
@@ -187,4 +190,4 @@ export default function OrdersPage() {
       )}
     </div>
   );
-}
+  }
