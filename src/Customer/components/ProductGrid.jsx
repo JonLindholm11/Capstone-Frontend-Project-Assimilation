@@ -46,7 +46,11 @@ export default function ProductsGrid({ category, limit, children }) {
           <img src={p.product_img} alt={p.product_name} />
           <h3>{p.product_name}</h3>
           <p className="price">
-            ${Number(p.basic_price).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+            $
+            {Number(p.basic_price).toLocaleString("en-US", {
+              minimumFractionDigits: 2,
+              maximumFractionDigits: 2,
+            })}
           </p>
           <p className="description">{p.product_description}</p>
           <button
@@ -62,7 +66,15 @@ export default function ProductsGrid({ category, limit, children }) {
                 price: p.basic_price,
                 img: p.product_img,
               });
-              toast.success("Added to cart!");
+              toast.success("Added to cart!", {
+                position: "bottom-center",
+                style: {
+                  minWidth: "250px",
+                  minHeight: "60px",
+                  fontSize: "16px",
+                  padding: "16px",
+                },
+              });
             }}
           >
             Add to Cart
