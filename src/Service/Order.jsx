@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "./order.css";
+
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
@@ -96,103 +98,105 @@ export default function OrdersPage() {
   );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Customer Service Order Dashboard</h1>
+    <div className="container">
+      <h1 className="title">Order Dashboard</h1>
 
-
-
-      <h2 style={{ marginTop: "20px" }}>Orders</h2>
-      <table
-        border="1"
-        cellPadding="6"
-        style={{ width: "100%", marginBottom: "20px" }}
-      >
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Company or Contact</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Save</th>
-            <th>Current Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.map((orders) => (
-            <tr
-              key={orders.id}
-              onClick={() => setSelectedOrderId(orders.id)}
-              style={{
-                cursor: "pointer",
-                background: selectedOrderId === orders.id ? "#f1f1f1" : "",
-              }}
-            >
-              <td>{orders.id}</td>
-              <td>{getCompanyOrContactName(orders.customer_id)}</td>
-              <td>${orders.total_amount}</td>
-
-              {/* Dropdown updates state immediately */}
-              <td>
-                <select
-                  value={orders.order_status}
-                  onChange={(e) =>
-                    setOrders((prev) =>
-                      prev.map((order) =>
-                        order.id === orders.id
-                          ? { ...order, order_status: e.target.value }
-                          : order
-                      )
-                    )
-                  }
-                >
-                  {statusOptions.map((status) => (
-                    <option key={status} value={status}>
-                      {status}
-                    </option>
-                  ))}
-                </select>
-              </td>
-
-              {/* Save button triggers POST */}
-              <td>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    saveOrderStatus(orders);
-                  }}
-                >
-                  Save
-                </button>
-              </td>
-              <td>
-                  {orders.order_status}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {selectedOrderId && (
-        <>
-          <h3>Order #{selectedOrderId} Items</h3>
-          <table border="1" cellPadding="6" style={{ width: "100%" }}>
+      <div className="orders">
+        <div className="orderList">
+          <h2 className="subtitle">Orders</h2>
+          <table className="orderTable">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Qty</th>
+                <th>Order #</th>
+                <th>Company or Contact</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Save</th>
+                <th>Current Status</th>
               </tr>
             </thead>
             <tbody>
-              {selectedItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{getProductName(item.product_id)}</td>
-                  <td>{item.quantity}</td>
+              {filteredOrders.map((orders) => (
+                <tr
+                  key={orders.id}
+                  onClick={() => setSelectedOrderId(orders.id)}
+                  className={selectedOrderId === orders.id ? "selected" : ""}
+                >
+                  <td>{orders.id}</td>
+                  <td>{getCompanyOrContactName(orders.customer_id)}</td>
+                  <td>${orders.total_amount}</td>
+
+                  {/* Dropdown updates state immediately */}
+                  <td>
+                    <select
+                      value={orders.order_status}
+                      onChange={(e) =>
+                        setOrders((prev) =>
+                          prev.map((order) =>
+                            order.id === orders.id
+                              ? { ...order, order_status: e.target.value }
+                              : order
+                          )
+                        )
+                      }
+                    >
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+
+                  {/* Save button triggers POST */}
+                  <td>
+                    <button
+                      className="saveBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        saveOrderStatus(orders);
+                      }}
+                    >
+                      Save
+                    </button>
+                  </td>
+                  <td>
+                      {orders.order_status}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </>
-      )}
+        </div>
+
+        <div className="details">
+          {selectedOrderId ? (
+            <>
+              <h3 className="subtitle">Order #{selectedOrderId} Items</h3>
+              <table className="orderTable">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedItems.map((item) => (
+                    <tr key={item.id}>
+                      <td>{getProductName(item.product_id)}</td>
+                      <td>{item.quantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div className="placeholder">
+              <p>Select an order to view details</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
