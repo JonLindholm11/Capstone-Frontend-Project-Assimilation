@@ -4,13 +4,9 @@ export default function OrdersPage() {
   const [orderItems, setOrderItems] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
-  const [users, ] = useState([]);
-  const [filterDate, setFilterDate] = useState("");
+  const [filterDate,] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState(null);
-  const [ setMessage] = useState("");
-  
-  
-  
+  const [setMessage] = useState("");
 
   // Supported statuses
   const statusOptions = ["pending", "active", "shipping", "issue"];
@@ -51,26 +47,21 @@ export default function OrdersPage() {
     fetchProducts();
   }, []);
 
-  // Fetch Users 
-  // useEffect(() => {
-  //   async function fetchUsers() {
-  //     const res = await fetch("http://localhost:3000/users");
-  //     if (res.ok) setUsers(await res.json());
-  //   }
-  //   fetchUsers();
-  // }, []);
-
-  //  Save order status via POST
-  
   async function saveOrderStatus(order) {
+    const token = sessionStorage.getItem("token");
+
     try {
-      const res = await fetch(`http://localhost:3000/orders/${order.id}/status`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ order_status: order.order_status })
-      });
+      const res = await fetch(
+        `http://localhost:3000/orders/${order.id}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ order_status: order.order_status }),
+        }
+      );
 
       const data = await res.json();
 
@@ -81,44 +72,49 @@ export default function OrdersPage() {
     }
   }
 
-  
+  const getCompanyOrContactName = (id) => {
+    const customer = customers.find((c) => c.id === id);
 
-  const getCompanyName = (id) =>
-    customers.find((c) => c.id === id)?.company_name ?? "Unknown";
+    if (customer?.company_name) {
+      return customer.company_name;
+    } else if (customer?.contact_name) {
+      return customer.contact_name;
+    } else {
+      return "No information provided";
+    }
+  };
 
-  const getRepEmail = (id) =>
-    users.find((u) => u.id === id)?.email ?? "Not Assigned";
+  const getProductName = (id) => {
+    return products.find((p) => p.id === id)?.product_name ?? `Product #${id}`;
+  };
 
-  const getProductName = (id) =>
-    products.find((p) => p.id === id)?.product_name ?? `Product #${id}`;
-
-  const uniqueDates = [...new Set(orders.map((o) => o.order_date))];
-  const filteredOrders = filterDate ? orders.filter((o) => o.order_date === filterDate) : orders;
-  const selectedItems = orderItems.filter((i) => i.order_id === selectedOrderId);
+  const filteredOrders = filterDate
+    ? orders.filter((o) => o.order_date === filterDate)
+    : orders;
+  const selectedItems = orderItems.filter(
+    (i) => i.order_id === selectedOrderId
+  );
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>Customer Service Order Dashboard</h1>
 
-      <label>Filter by Date:</label>
-      <select value={filterDate} onChange={(e) => setFilterDate(e.target.value)}>
-        <option value="">All Dates</option>
-        {uniqueDates.map((date) => (
-          <option key={date} value={date}>{date}</option>
-        ))}
-      </select>
+
 
       <h2 style={{ marginTop: "20px" }}>Orders</h2>
-      <table border="1" cellPadding="6" style={{ width: "100%", marginBottom: "20px" }}>
+      <table
+        border="1"
+        cellPadding="6"
+        style={{ width: "100%", marginBottom: "20px" }}
+      >
         <thead>
           <tr>
             <th>Order #</th>
-            <th>Company</th>
-            <th>Date</th>
+            <th>Company or Contact</th>
             <th>Total</th>
             <th>Status</th>
             <th>Save</th>
-            <th>Service Rep</th>
+            <th>Current Status</th>
           </tr>
         </thead>
         <tbody>
@@ -132,8 +128,7 @@ export default function OrdersPage() {
               }}
             >
               <td>{orders.id}</td>
-              <td>{getCompanyName(orders.customer_id)}</td>
-              <td>{orders.order_date}</td>
+              <td>{getCompanyOrContactName(orders.customer_id)}</td>
               <td>${orders.total_amount}</td>
 
               {/* Dropdown updates state immediately */}
@@ -143,25 +138,35 @@ export default function OrdersPage() {
                   onChange={(e) =>
                     setOrders((prev) =>
                       prev.map((order) =>
-                        order.id === orders.id ? { ...order, order_status: e.target.value } : order
+                        order.id === orders.id
+                          ? { ...order, order_status: e.target.value }
+                          : order
                       )
                     )
                   }
                 >
                   {statusOptions.map((status) => (
-                    <option key={status} value={status}>{status}</option>
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
                   ))}
                 </select>
               </td>
 
               {/* Save button triggers POST */}
               <td>
-                <button onClick={(e) => { e.stopPropagation(); saveOrderStatus(orders); }}>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    saveOrderStatus(orders);
+                  }}
+                >
                   Save
                 </button>
               </td>
-
-              <td>{getRepEmail(orders.assigned_service_rep)}</td>
+              <td>
+                  {orders.order_status}
+              </td>
             </tr>
           ))}
         </tbody>
@@ -190,4 +195,4 @@ export default function OrdersPage() {
       )}
     </div>
   );
-  }
+}
