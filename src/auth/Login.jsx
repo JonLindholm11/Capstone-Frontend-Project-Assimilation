@@ -36,9 +36,9 @@ export default function Login() {
         } else if (payload.role_id === 2) {
           navigate("/sales");
         } else if (payload.role_id === 3) {
-          navigate("/service");
+          navigate("/ServicePage");
         } else if (payload.role_id === 4) {
-          navigate("/products");  // Customers go to products page
+          navigate("/products"); // Customers go to products page
         } else {
           navigate("/"); // Default fallback for any other roles
         }
