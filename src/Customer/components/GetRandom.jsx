@@ -56,7 +56,15 @@ export default function GetRandom({ limit = 4 }) {
                   price: product.basic_price,
                   img: product.product_img,
                 });
-                toast.success("Added to cart!");
+                toast.success("Added to cart!", {
+                  position: "bottom-center",
+                  style: {
+                    minWidth: "250px",
+                    minHeight: "60px",
+                    fontSize: "16px",
+                    padding: "16px",
+                  },
+                });
               }}
             >
               Add to Cart
