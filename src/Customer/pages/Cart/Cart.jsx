@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
-import { postApiDataForCustomers } from "./api";
+import { postApiDataForCustomers, getApiDataForUsersMe } from "./api";
 import "./Cart.css";
 
 export default function Cart() {
@@ -15,48 +15,52 @@ export default function Cart() {
   });
 
   const handleCheckout = async () => {
-    if (cartItems.length === 0) {
-      
-      return <p>Cart empty</p>
+  if (cartItems.length === 0) {
+    return;
+  }
+
+  setIsProcessing(true);
+
+  try {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      navigate("/login");
+      return;
     }
 
-    setIsProcessing(true);
-
-    try {
-      const token = sessionStorage.getItem('token');
-      if (!token) {
-        navigate("/login");
-        return;
-      }
-
-      const payload = JSON.parse(atob(token.split(".")[1]));
-      const customer_id = payload.customer_id || payload.id;
-
-      const cart = cartItems.map(item => ({
-        product_id: item.id,
-        quantity: item.quantity,
-        unit_price: item.price
-      }));
-
-      const orderData = {
-        customer_id,
-        cart
-      };
-
-      const result = await postApiDataForCustomers(orderData);
-      console.log(result)
-
-      clearCart();
-
-
-      navigate("/");
-    } catch (error) {
-      console.error("❌ Checkout error:", error);
-      alert(`Failed to create order: ${error.message}`);
-    } finally {
-      setIsProcessing(false);
+    const userData = await getApiDataForUsersMe();
+    console.log("🔍 User data:", userData);
+    
+    if (!userData.customer || !userData.customer.id) {
+      alert("Please set up your customer profile before placing an order");
+      navigate("/profile");
+      return;
     }
-  };
+
+    const customer_id = userData.customer.id;
+
+    const cart = cartItems.map(item => ({
+      product_id: item.id,
+      quantity: item.quantity,
+      unit_price: item.price
+    }));
+
+    const orderData = {
+      customer_id,
+      cart
+    };
+
+    const result = await postApiDataForCustomers(orderData);
+
+    clearCart();
+    navigate("/");
+  } catch (error) {
+    console.error("❌ Checkout error:", error);
+    alert(`Failed to create order: ${error.message}`);
+  } finally {
+    setIsProcessing(false);
+  }
+};
 
   return (
     <div className="cart-page">
