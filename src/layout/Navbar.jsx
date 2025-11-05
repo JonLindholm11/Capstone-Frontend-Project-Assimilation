@@ -44,10 +44,10 @@ export default function Navbar() {
                   Log out
                 </button>
               </div>
-              <NavLink to="/products/cart">
-                <FaCartShopping />
-              </NavLink>
             </div>
+            <NavLink to="/products/cart">
+              <FaCartShopping />
+            </NavLink>
           </>
         ) : (
           <>
