@@ -2,6 +2,7 @@ import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../auth/AuthContext";
 import { GoPersonFill } from "react-icons/go";
 import { FaHome } from "react-icons/fa";
+import { FaCartShopping } from "react-icons/fa6";
 import "./Navbar.css";
 import Brand from "./Brand";
 // import { FaHome, FaUser, FaChartBar, FaCog } from "react-icons/fa";
@@ -43,6 +44,9 @@ export default function Navbar() {
                   Log out
                 </button>
               </div>
+              <NavLink to="/products/cart">
+                <FaCartShopping />
+              </NavLink>
             </div>
           </>
         ) : (
