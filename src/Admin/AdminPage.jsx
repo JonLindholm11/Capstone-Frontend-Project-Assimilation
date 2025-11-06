@@ -134,7 +134,6 @@ function AdminPage() {
                 <option value="1">Admin</option>
                 <option value="2">Salesman</option>
                 <option value="3">Customer Service</option>
-                <option value="4">Customer</option>
               </select>
             </div>
 

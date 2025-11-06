@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
+import "./order.css";
+
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
   const [customers, setCustomers] = useState([]);
   const [products, setProducts] = useState([]);
-  const [users, setUsers] = useState([]);
-  const [filterDate, setFilterDate] = useState("");
+  const [filterDate,] = useState("");
   const [selectedOrderId, setSelectedOrderId] = useState(null);
+  const [setMessage] = useState("");
 
   // Supported statuses
   const statusOptions = ["pending", "active", "shipping", "issue"];
@@ -47,144 +49,154 @@ export default function OrdersPage() {
     fetchProducts();
   }, []);
 
-  // Fetch Users
-  useEffect(() => {
-    async function fetchUsers() {
-      const res = await fetch("http://localhost:3000/users");
-      if (res.ok) setUsers(await res.json());
-    }
-    fetchUsers();
-  }, []);
-
-  //  Save order status via POST
   async function saveOrderStatus(order) {
-    const payload = {
-      customer_id: order.customer_id,
-      order_date: order.order_date,
-      total_amount: order.total_amount,
-      order_status: order.order_status,
-      assigned_service_rep: order.assigned_service_rep,
-      created_date: order.created_date
-    };
+    const token = sessionStorage.getItem("token");
 
-    const res = await fetch(`http://localhost:3000/orders/:id/status`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
+    try {
+      const res = await fetch(
+        `http://localhost:3000/orders/${order.id}/status`,
+        {
+          method: "PATCH",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ order_status: order.order_status }),
+        }
+      );
 
-    if (res.ok) {
-      alert("Order status updated!");
-    } else {
-      alert("Failed to update order.");
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.error || "Failed to update");
+      setMessage(` Order #${order.id} status updated to ${order.order_status}`);
+    } catch (err) {
+      setMessage(` ${err.message}`);
     }
   }
 
-  const getCompanyName = (id) =>
-    customers.find((c) => c.id === id)?.company_name ?? "Unknown";
+  const getCompanyOrContactName = (id) => {
+    const customer = customers.find((c) => c.id === id);
 
-  const getRepEmail = (id) =>
-    users.find((u) => u.id === id)?.email ?? "Not Assigned";
+    if (customer?.company_name) {
+      return customer.company_name;
+    } else if (customer?.contact_name) {
+      return customer.contact_name;
+    } else {
+      return "No information provided";
+    }
+  };
 
-  const getProductName = (id) =>
-    products.find((p) => p.id === id)?.product_name ?? `Product #${id}`;
+  const getProductName = (id) => {
+    return products.find((p) => p.id === id)?.product_name ?? `Product #${id}`;
+  };
 
-  const uniqueDates = [...new Set(orders.map((o) => o.order_date))];
-  const filteredOrders = filterDate ? orders.filter((o) => o.order_date === filterDate) : orders;
-  const selectedItems = orderItems.filter((i) => i.order_id === selectedOrderId);
+  const filteredOrders = filterDate
+    ? orders.filter((o) => o.order_date === filterDate)
+    : orders;
+  const selectedItems = orderItems.filter(
+    (i) => i.order_id === selectedOrderId
+  );
 
   return (
-    <div style={{ padding: "20px" }}>
-      <h1>Customer Service Order Dashboard</h1>
+    <div className="container">
+      <h1 className="title">Order Dashboard</h1>
 
-      <label>Filter by Date:</label>
-      <select value={filterDate} onChange={(e) => setFilterDate(e.target.value)}>
-        <option value="">All Dates</option>
-        {uniqueDates.map((date) => (
-          <option key={date} value={date}>{date}</option>
-        ))}
-      </select>
-
-      <h2 style={{ marginTop: "20px" }}>Orders</h2>
-      <table border="1" cellPadding="6" style={{ width: "100%", marginBottom: "20px" }}>
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Company</th>
-            <th>Date</th>
-            <th>Total</th>
-            <th>Status</th>
-            <th>Save</th>
-            <th>Service Rep</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredOrders.map((o) => (
-            <tr
-              key={o.id}
-              onClick={() => setSelectedOrderId(o.id)}
-              style={{
-                cursor: "pointer",
-                background: selectedOrderId === o.id ? "#f1f1f1" : "",
-              }}
-            >
-              <td>{o.id}</td>
-              <td>{getCompanyName(o.customer_id)}</td>
-              <td>{o.order_date}</td>
-              <td>${o.total_amount}</td>
-
-              {/* ✅ Dropdown updates state immediately */}
-              <td>
-                <select
-                  value={o.order_status}
-                  onChange={(e) =>
-                    setOrders((prev) =>
-                      prev.map((ord) =>
-                        ord.id === o.id ? { ...ord, order_status: e.target.value } : ord
-                      )
-                    )
-                  }
-                >
-                  {statusOptions.map((status) => (
-                    <option key={status} value={status}>{status}</option>
-                  ))}
-                </select>
-              </td>
-
-              {/* ✅ Save button triggers POST */}
-              <td>
-                <button onClick={(e) => { e.stopPropagation(); saveOrderStatus(o); }}>
-                  Save
-                </button>
-              </td>
-
-              <td>{getRepEmail(o.assigned_service_rep)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {selectedOrderId && (
-        <>
-          <h3>Order #{selectedOrderId} Items</h3>
-          <table border="1" cellPadding="6" style={{ width: "100%" }}>
+      <div className="orders">
+        <div className="orderList">
+          <h2 className="subtitle">Orders</h2>
+          <table className="orderTable">
             <thead>
               <tr>
-                <th>Product</th>
-                <th>Qty</th>
+                <th>Order #</th>
+                <th>Company or Contact</th>
+                <th>Total</th>
+                <th>Status</th>
+                <th>Save</th>
+                <th>Current Status</th>
               </tr>
             </thead>
             <tbody>
-              {selectedItems.map((item) => (
-                <tr key={item.id}>
-                  <td>{getProductName(item.product_id)}</td>
-                  <td>{item.quantity}</td>
+              {filteredOrders.map((orders) => (
+                <tr
+                  key={orders.id}
+                  onClick={() => setSelectedOrderId(orders.id)}
+                  className={selectedOrderId === orders.id ? "selected" : ""}
+                >
+                  <td>{orders.id}</td>
+                  <td>{getCompanyOrContactName(orders.customer_id)}</td>
+                  <td>${orders.total_amount}</td>
+
+                  {/* Dropdown updates state immediately */}
+                  <td>
+                    <select
+                      value={orders.order_status}
+                      onChange={(e) =>
+                        setOrders((prev) =>
+                          prev.map((order) =>
+                            order.id === orders.id
+                              ? { ...order, order_status: e.target.value }
+                              : order
+                          )
+                        )
+                      }
+                    >
+                      {statusOptions.map((status) => (
+                        <option key={status} value={status}>
+                          {status}
+                        </option>
+                      ))}
+                    </select>
+                  </td>
+
+                  {/* Save button triggers POST */}
+                  <td>
+                    <button
+                      className="saveBtn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        saveOrderStatus(orders);
+                      }}
+                    >
+                      Save
+                    </button>
+                  </td>
+                  <td>
+                      {orders.order_status}
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
-        </>
-      )}
+        </div>
+
+        <div className="details">
+          {selectedOrderId ? (
+            <>
+              <h3 className="subtitle">Order #{selectedOrderId} Items</h3>
+              <table className="orderTable">
+                <thead>
+                  <tr>
+                    <th>Product</th>
+                    <th>Qty</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedItems.map((item) => (
+                    <tr key={item.id}>
+                      <td>{getProductName(item.product_id)}</td>
+                      <td>{item.quantity}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </>
+          ) : (
+            <div className="placeholder">
+              <p>Select an order to view details</p>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

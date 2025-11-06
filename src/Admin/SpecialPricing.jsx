@@ -167,7 +167,7 @@ function SpecialPricing({ token, currentUser }) {
       </form>
 
       <div className="special-pricing-list">
-        <h3>Current Active Specials</h3>
+        <h3>Active / Inactive Specials</h3>
         {specialPricing.length === 0 ? (
           <p>No active special pricing found.</p>
         ) : (
@@ -184,7 +184,7 @@ function SpecialPricing({ token, currentUser }) {
             <tbody>
               {specialPricing.map(pricing => (
                 <tr key={pricing.id}>
-                  <td>{pricing.product_id}</td>
+                  <td>{pricing.product_name}</td>
                   <td>${parseFloat(pricing.special_price).toFixed(2)}</td>
                   <td>{new Date(pricing.start_date).toLocaleDateString()}</td>
                   <td>{new Date(pricing.end_date).toLocaleDateString()}</td>

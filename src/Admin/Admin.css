@@ -193,6 +193,30 @@
   background-color: #c82333;
 }
 
+/* Refresh Button */
+.refresh-btn {
+  margin-bottom: 15px;
+  padding: 10px 20px;
+  background-color: #667eea;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.refresh-btn:hover {
+  background-color: #5568d3;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.refresh-btn:active {
+  transform: scale(0.98);
+}
+
 /* Messages */
 .success-message {
   margin-top: 1rem;

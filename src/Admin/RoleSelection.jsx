@@ -23,9 +23,9 @@ function RoleSelection({ token, refreshTrigger }) {
       });
 
       if (response.ok) {
-        const allUsers = await response.json();
+        const allEmployees = await response.json();
         // Filter users with role_id 3 or above (Customer Service and Customers)
-        setUsers(allUsers);
+        setUsers(allEmployees);
       } else {
         setError("Failed to fetch users");
       }
@@ -50,8 +50,9 @@ function RoleSelection({ token, refreshTrigger }) {
           Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
-          role_id: parseInt(newRoleId),
-        }),
+          id: parseInt(userId),
+          role_id: parseInt(newRoleId)
+        })
       });
 
       const contentType = response.headers.get("content-type");
