@@ -119,11 +119,13 @@ function SpecialPricing({ token, currentUser }) {
           <label htmlFor="product_id">Product</label>
           <select id="product_id" name="product_id" required>
             <option value="">Select a product...</option>
-            {products.map(product => (
-              <option key={product.id} value={product.id}>
-                {product.product_name}
-              </option>
-            ))}
+            {products
+              .sort((a, b) => a.product_name.localeCompare(b.product_name))
+              .map(product => (
+                <option key={product.id} value={product.id}>
+                  {product.product_name}
+                </option>
+              ))}
           </select>
         </div>
 

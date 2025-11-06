@@ -64,21 +64,20 @@ function SalesmanPage() {
     fetchCustomers();
   }, [token, salesman]);
 
-const handleSavePricing = async (pricingData) => {
-  try {
-    if (pricingData.pricing_id) {
-      await patchApiDataForCustomerPricing(
-        pricingData.pricing_id, 
-        pricingData
-      );
-    } else {
-      await saveCustomerPricing(pricingData);
+  const handleSavePricing = async (pricingData) => {
+    try {
+      if (pricingData.pricing_id) {
+        await patchApiDataForCustomerPricing(
+          pricingData.pricing_id,
+          pricingData
+        );
+      } else {
+        await saveCustomerPricing(pricingData);
+      }
+    } catch (err) {
+      console.error("Error message:", err.message);
     }
-  } catch (err) {
-    console.error("Error message:", err.message);
-  }
-};
-
+  };
 
   if (loading) return <p className="loading">Loading customers...</p>;
   if (error) return <p className="error">{error}</p>;
