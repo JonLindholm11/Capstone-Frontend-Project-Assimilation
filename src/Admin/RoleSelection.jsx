@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
-function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
+function RoleSelection({ token, refreshTrigger }) {
+  //  Add refreshTrigger prop
   const [users, setUsers] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -17,8 +18,8 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
       // Backend: GET /users/employees (admin only)
       const response = await fetch(`${API}/users/employees`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
@@ -46,7 +47,7 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           id: parseInt(userId),
@@ -56,7 +57,7 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
 
       const contentType = response.headers.get("content-type");
       let result;
-      
+
       if (contentType && contentType.includes("application/json")) {
         result = await response.json();
       } else {
@@ -77,12 +78,17 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
   };
 
   const getRoleName = (roleId) => {
-    switch(roleId) {
-      case 1: return "Admin";
-      case 2: return "Salesman";
-      case 3: return "Customer Service";
-      case 4: return "Customer";
-      default: return "Unknown";
+    switch (roleId) {
+      case 1:
+        return "Admin";
+      case 2:
+        return "Salesman";
+      case 3:
+        return "Customer Service";
+      case 4:
+        return "Customer";
+      default:
+        return "Unknown";
     }
   };
 
@@ -112,12 +118,12 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
               </tr>
             </thead>
             <tbody>
-              {users.map(user => (
+              {users.map((user) => (
                 <tr key={user.id}>
                   <td>{user.email}</td>
                   <td>{getRoleName(user.role_id)}</td>
                   <td>
-                    <select 
+                    <select
                       id={`role-${user.id}`}
                       defaultValue={user.role_id}
                       className="role-select"
@@ -129,9 +135,11 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
                     </select>
                   </td>
                   <td>
-                    <button 
+                    <button
                       onClick={() => {
-                        const newRole = document.getElementById(`role-${user.id}`).value;
+                        const newRole = document.getElementById(
+                          `role-${user.id}`
+                        ).value;
                         handleRoleChange(user.id, newRole);
                       }}
                       className="save-btn"
