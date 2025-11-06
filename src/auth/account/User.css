@@ -83,6 +83,9 @@
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .orders h2 {
@@ -97,6 +100,7 @@
   list-style: none;
   padding: 0;
   margin: 0;
+  width: 100%;
 }
 
 .orders > ul > li {
@@ -199,6 +203,7 @@
 /* Customer Section */
 .customer-section {
   background-color: #ffffff;
+  color: #6c757d;
   border: 1px solid #dee2e6;
   border-radius: 8px;
   padding: 1.5rem;
@@ -297,7 +302,8 @@
 }
 
 /* Loading and Error States */
-.profile-page > div:not(.user):not(.customer-section):not(.customer-info):not(.orders) {
+.profile-page
+  > div:not(.user):not(.customer-section):not(.customer-info):not(.orders) {
   text-align: center;
   padding: 2rem;
   font-size: 1.2rem;
