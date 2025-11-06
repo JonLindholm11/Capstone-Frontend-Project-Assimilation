@@ -38,13 +38,6 @@ body {
   border-radius: 6px;
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  /* text-decoration: none; */
-}
-
 /* deep ocean navbar */
 .sticky-header {
   background-color: #0a1128;

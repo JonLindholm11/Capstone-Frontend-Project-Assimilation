@@ -10,9 +10,10 @@
   font-weight: bold;
   margin-bottom: 20px;
   text-transform: capitalize;
+  color: #d4a055;
 }
 
-.orders {
+.order-dashboard-layout {
   display: flex;
   gap: 30px;
   align-items: flex-start;
@@ -28,7 +29,7 @@
   font-weight: bold;
   margin-bottom: 15px;
   margin-top: 20px;
-  color: #333;
+  color: white;
   border-bottom: 2px solid #0047ab;
   padding-bottom: 10px;
 }
