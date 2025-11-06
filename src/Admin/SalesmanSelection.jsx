@@ -2,41 +2,43 @@ import { useState, useEffect } from "react";
 
 const API = import.meta.env.VITE_API;
 
-function SalesmanSelection({ token, refreshTrigger }) {
+function SalesmanSelection({ token }) {
   const [customers, setCustomers] = useState([]);
   const [salesmen, setSalesmen] = useState([]);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+  const [salesmanSelections, setSalesmanSelections] = useState({});
+
+  useEffect(() => {
+    const initialSelections = {};
+    customers.forEach((customer) => {
+      initialSelections[customer.id] = customer.assigned_salesman_id || "";
+    });
+    setSalesmanSelections(initialSelections);
+  }, [customers]);
 
   useEffect(() => {
     fetchCustomers();
     fetchSalesmen();
-    
-    const interval = setInterval(() => {
-      fetchCustomers();
-      fetchSalesmen();
-    }, 10000);
-    
-    return () => clearInterval(interval);
-  }, [refreshTrigger]);
+  }, []);
 
   const fetchCustomers = async () => {
     try {
-      console.log('🔍 Fetching customers from:', `${API}/customers`);
+      console.log("🔍 Fetching customers from:", `${API}/customers`);
       const response = await fetch(`${API}/customers`);
 
       if (response.ok) {
         const data = await response.json();
-        console.log(' Customers received:', data);
-        console.log(' Number of customers:', data.length);
+        console.log(" Customers received:", data);
+        console.log(" Number of customers:", data.length);
         setCustomers(data);
       } else {
-        console.log('Failed response:', response.status);
+        console.log("Failed response:", response.status);
         setError("Failed to fetch customers");
       }
     } catch (err) {
-      console.log('Error:', err);
+      console.log("Error:", err);
       setError("Error connecting to server");
       console.error(err);
     }
@@ -46,13 +48,13 @@ function SalesmanSelection({ token, refreshTrigger }) {
     try {
       const response = await fetch(`${API}/users/employees`, {
         headers: {
-          "Authorization": `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.ok) {
         const data = await response.json();
-        const salesmenOnly = data.filter(user => user.role_id === 2);
+        const salesmenOnly = data.filter((user) => user.role_id === 2);
         setSalesmen(salesmenOnly);
       } else {
         setError("Failed to fetch salesmen");
@@ -72,32 +74,34 @@ function SalesmanSelection({ token, refreshTrigger }) {
     setTimeout(() => setMessage(""), 2000);
   };
 
-  const handleSalesmanAssignment = async (customerId) => {
+  const handleSalesmanAssignment = async (id) => {
     setMessage("");
     setError("");
 
-    const selectedSalesmanId = document.getElementById(`salesman-${customerId}`).value;
+    const selectedSalesmanId = document.getElementById(`salesman-${id}`).value;
 
     if (!selectedSalesmanId) {
       setError("Please select a salesman");
       return;
     }
 
+    const payload = {
+      assigned_salesman_id: parseInt(selectedSalesmanId, 10),
+    };
+
     try {
-      const response = await fetch(`${API}/customers/${customerId}`, {
+      const response = await fetch(`${API}/customers/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          assigned_salesman_id: parseInt(selectedSalesmanId)
-        })
+        body: JSON.stringify(payload),
       });
 
       const contentType = response.headers.get("content-type");
       let result;
-      
+
       if (contentType && contentType.includes("application/json")) {
         result = await response.json();
       } else {
@@ -118,7 +122,7 @@ function SalesmanSelection({ token, refreshTrigger }) {
   };
 
   const getSalesmanName = (salesmanId) => {
-    const salesman = salesmen.find(s => s.id === salesmanId);
+    const salesman = salesmen.find((s) => s.id === salesmanId);
     return salesman ? salesman.email : "Not assigned";
   };
 
@@ -131,10 +135,7 @@ function SalesmanSelection({ token, refreshTrigger }) {
       <h2>Salesman Selection for Customers</h2>
       <p>Assign salesmen to manage customer accounts</p>
 
-      <button 
-        onClick={handleManualRefresh}
-        className="refresh-btn"
-      >
+      <button onClick={handleManualRefresh} className="refresh-btn">
         Refresh List
       </button>
 
@@ -157,20 +158,30 @@ function SalesmanSelection({ token, refreshTrigger }) {
               </tr>
             </thead>
             <tbody>
-              {customers.map(customer => (
+              {customers.map((customer) => (
                 <tr key={customer.id}>
                   <td>{customer.company_name || "N/A"}</td>
                   <td>{customer.contact_name || "N/A"}</td>
                   <td>{customer.email}</td>
                   <td>{getSalesmanName(customer.assigned_salesman_id)}</td>
                   <td>
-                    <select 
+                    <select
                       id={`salesman-${customer.id}`}
-                      defaultValue={customer.assigned_salesman_id || ""}
+                      value={
+                        salesmanSelections[customer.id] ||
+                        customer.assigned_salesman_id ||
+                        ""
+                      }
+                      onChange={(e) =>
+                        setSalesmanSelections({
+                          ...salesmanSelections,
+                          [customer.id]: e.target.value,
+                        })
+                      }
                       className="salesman-select"
                     >
                       <option value="">Select a salesman...</option>
-                      {salesmen.map(salesman => (
+                      {salesmen.map((salesman) => (
                         <option key={salesman.id} value={salesman.id}>
                           {salesman.email}
                         </option>
@@ -178,7 +189,7 @@ function SalesmanSelection({ token, refreshTrigger }) {
                     </select>
                   </td>
                   <td>
-                    <button 
+                    <button
                       onClick={() => handleSalesmanAssignment(customer.id)}
                       className="save-btn"
                     >
