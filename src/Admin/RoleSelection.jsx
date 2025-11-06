@@ -22,10 +22,9 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
       });
 
       if (response.ok) {
-        const allUsers = await response.json();
+        const allEmployees = await response.json();
         // Filter users with role_id 3 or above (Customer Service and Customers)
-        const filteredUsers = allUsers.filter(user => user.role_id >= 3);
-        setUsers(filteredUsers);
+        setUsers(allEmployees);
       } else {
         setError("Failed to fetch users");
       }
@@ -50,6 +49,7 @@ function RoleSelection({ token, refreshTrigger }) { //  Add refreshTrigger prop
           "Authorization": `Bearer ${token}`
         },
         body: JSON.stringify({
+          id: parseInt(userId),
           role_id: parseInt(newRoleId)
         })
       });
