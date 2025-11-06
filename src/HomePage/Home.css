@@ -4,8 +4,8 @@
   color: white;
 }
 
-.container img {
-  width: 98%;
+.container > img {
+  width: 100%;
   height: 500px;
   border-radius: 20px;
   margin: 0 auto;
@@ -15,8 +15,8 @@
 
 .top-left {
   position: absolute;
-  top: 16px;
-  left: 32px;
+  top: 25px;
+  left: 40px;
   color: #d4a055;
   /* color: white; */
   font-size: 100px;

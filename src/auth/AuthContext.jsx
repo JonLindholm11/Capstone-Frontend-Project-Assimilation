@@ -9,7 +9,7 @@ function decodeToken(token) {
   if (!token) return null;
   try {
     const payload = JSON.parse(atob(token.split(".")[1]));
-    return payload.role_id;
+    return Number(payload.role_id);
   } catch (error) {
     console.error("Error decoding token:", error);
     return null;

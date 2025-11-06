@@ -101,7 +101,7 @@ export default function OrdersPage() {
     <div className="container">
       <h1 className="title">Order Dashboard</h1>
 
-      <div className="orders">
+      <div className="order-dashboard-layout">
         <div className="orderList">
           <h2 className="subtitle">Orders</h2>
           <table className="orderTable">
