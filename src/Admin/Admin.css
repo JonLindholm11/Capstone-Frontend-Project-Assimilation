@@ -1,64 +1,68 @@
 /* Admin Page Main Styles */
 .admin-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: Arial, sans-serif;
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 20px;
 }
 
 .admin-loading {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  color: white;
+  text-align: center;
+  padding: 2rem;
   font-size: 1.2rem;
+  color: #6c757d;
 }
 
 /* Admin Header */
 .admin-header {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  padding: 30px;
-  border-radius: 15px;
-  margin-bottom: 30px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
   text-align: center;
-  color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .admin-header h1 {
-  margin: 0 0 10px 0;
-  font-size: 2.5rem;
+  font-size: 2rem;
+  color: #d4a055;
+  margin-bottom: 0.5rem;
   font-weight: 700;
+  border-bottom: 3px solid #007bff;
+  padding-bottom: 0.5rem;
+  display: inline-block;
 }
 
 .admin-header p {
-  margin: 5px 0;
-  font-size: 1.1rem;
-  opacity: 0.9;
+  margin: 0.5rem 0;
+  font-size: 1rem;
+  color: #6c757d;
 }
 
 .user-info {
-  margin-top: 15px;
-  padding-top: 15px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 2px solid #dee2e6;
   font-size: 1rem;
+  color: #495057;
 }
 
 /* Navigation */
 .admin-navigation {
   display: flex;
-  gap: 15px;
-  margin-bottom: 30px;
+  gap: 1rem;
+  margin-bottom: 2rem;
   flex-wrap: wrap;
   justify-content: center;
 }
 
 .admin-navigation button {
-  padding: 12px 24px;
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
+  padding: 0.75rem 1.5rem;
+  background-color: #f8f9fa;
+  color: #495057;
+  border: 1px solid #dee2e6;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
@@ -66,22 +70,25 @@
 }
 
 .admin-navigation button:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
   transform: translateY(-2px);
 }
 
 .admin-navigation button.nav-active {
-  background: white;
-  color: #667eea;
-  border-color: white;
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }
 
 /* Content Area */
 .admin-content-area {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 30px;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 /* Section Styles */
@@ -89,121 +96,121 @@
 .role-selection-section,
 .special-pricing-section,
 .salesman-selection-section {
-  color: #333;
+  color: #495057;
 }
 
 .register-employee-section h2,
 .role-selection-section h2,
 .special-pricing-section h2,
 .salesman-selection-section h2 {
-  margin: 0 0 10px 0;
-  color: #667eea;
-  font-size: 2rem;
+  font-size: 1.5rem;
+  color: #495057;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 0.5rem;
 }
 
 .register-employee-section p,
 .role-selection-section p,
 .special-pricing-section p,
 .salesman-selection-section p {
-  margin: 0 0 30px 0;
-  color: #666;
+  margin: 0 0 1.5rem 0;
+  color: #6c757d;
   font-size: 1rem;
 }
 
 /* Form Styles */
 .admin-form {
-  background: #f8f9fa;
-  padding: 25px;
-  border-radius: 10px;
-  margin-bottom: 30px;
+  background-color: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
 }
 
 .form-group {
-  margin-bottom: 20px;
+  margin-bottom: 1.5rem;
 }
 
 .form-group label {
-  display: block;
-  margin-bottom: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
   font-weight: 600;
-  color: #333;
-  font-size: 0.95rem;
+  color: #495057;
+  font-size: 1rem;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 12px;
-  border: 2px solid #ddd;
-  border-radius: 8px;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   box-sizing: border-box;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* Buttons */
 .submit-btn,
 .save-btn {
-  padding: 12px 30px;
-  background: #667eea;
+  padding: 0.75rem 1.5rem;
+  background-color: #007bff;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 1rem;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .submit-btn:hover,
 .save-btn:hover {
-  background: #5568d3;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+  background-color: #0056b3;
 }
 
 .delete-btn {
-  padding: 8px 16px;
-  background: #dc3545;
+  padding: 0.5rem 1rem;
+  background-color: #dc3545;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 4px;
   cursor: pointer;
   font-size: 0.9rem;
   font-weight: 600;
-  transition: all 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .delete-btn:hover {
-  background: #c82333;
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+  background-color: #c82333;
 }
 
 /* Messages */
 .success-message {
-  margin-top: 15px;
-  padding: 12px;
-  background: #d4edda;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #d4edda;
   color: #155724;
   border: 1px solid #c3e6cb;
-  border-radius: 6px;
+  border-radius: 4px;
   font-weight: 500;
 }
 
 .error-message {
-  margin-top: 15px;
-  padding: 12px;
-  background: #f8d7da;
+  margin-top: 1rem;
+  padding: 0.75rem;
+  background-color: #f8d7da;
   color: #721c24;
   border: 1px solid #f5c6cb;
-  border-radius: 6px;
+  border-radius: 4px;
   font-weight: 500;
 }
 
@@ -213,41 +220,41 @@
 .pricing-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-  background: white;
+  margin-top: 1rem;
+  background-color: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .users-table thead,
 .customers-table thead,
 .pricing-table thead {
-  background: #667eea;
+  background-color: #007bff;
   color: white;
 }
 
 .users-table th,
 .customers-table th,
 .pricing-table th {
-  padding: 15px;
+  padding: 1rem;
   text-align: left;
   font-weight: 600;
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .users-table td,
 .customers-table td,
 .pricing-table td {
-  padding: 15px;
-  border-bottom: 1px solid #f0f0f0;
-  color: #333;
+  padding: 1rem;
+  border-bottom: 1px solid #dee2e6;
+  color: #495057;
 }
 
-.users-table tr:hover,
-.customers-table tr:hover,
-.pricing-table tr:hover {
-  background: #f8f9fa;
+.users-table tbody tr:hover,
+.customers-table tbody tr:hover,
+.pricing-table tbody tr:hover {
+  background-color: #f8f9fa;
 }
 
 .users-table tbody tr:last-child td,
@@ -259,13 +266,13 @@
 /* Select Dropdowns in Tables */
 .role-select,
 .salesman-select {
-  padding: 8px 12px;
-  border: 2px solid #ddd;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  background: white;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  font-size: 1rem;
+  background-color: white;
   cursor: pointer;
-  transition: border-color 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   width: auto;
   min-width: 150px;
 }
@@ -273,47 +280,60 @@
 .role-select:focus,
 .salesman-select:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: #007bff;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
 /* Special Pricing List */
 .special-pricing-list {
-  margin-top: 40px;
+  margin-top: 2rem;
 }
 
 .special-pricing-list h3 {
-  color: #667eea;
-  margin-bottom: 20px;
-  font-size: 1.5rem;
+  color: #495057;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  border-bottom: 2px solid #dee2e6;
+  padding-bottom: 0.5rem;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .admin-page {
+    padding: 1rem;
+  }
+
   .admin-navigation {
     flex-direction: column;
   }
-  
+
   .admin-navigation button {
     width: 100%;
   }
-  
+
   .admin-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
   }
-  
+
+  .admin-header,
+  .admin-content-area,
+  .admin-form {
+    padding: 1rem;
+  }
+
   .users-table,
   .customers-table,
   .pricing-table {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
-  
+
   .users-table th,
   .customers-table th,
   .pricing-table th,
   .users-table td,
   .customers-table td,
   .pricing-table td {
-    padding: 10px;
+    padding: 0.75rem;
   }
 }
 
@@ -321,14 +341,14 @@
 .users-list,
 .customers-list,
 .special-pricing-list {
-  color: #333;
+  color: #495057;
 }
 
 .users-list p,
 .customers-list p,
 .special-pricing-list p {
   text-align: center;
-  color: #666;
+  color: #6c757d;
   font-size: 1rem;
-  padding: 20px;
+  padding: 1.5rem;
 }
