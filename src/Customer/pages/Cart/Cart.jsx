@@ -15,52 +15,51 @@ export default function Cart() {
   });
 
   const handleCheckout = async () => {
-  if (cartItems.length === 0) {
-    return;
-  }
-
-  setIsProcessing(true);
-
-  try {
-    const token = sessionStorage.getItem('token');
-    if (!token) {
-      navigate("/login");
+    if (cartItems.length === 0) {
       return;
     }
 
-    const userData = await getApiDataForUsersMe();
-    console.log("🔍 User data:", userData);
-    
-    if (!userData.customer || !userData.customer.id) {
-      alert("Please set up your customer profile before placing an order");
-      navigate("/profile");
-      return;
+    setIsProcessing(true);
+
+    try {
+      const token = sessionStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
+
+      const userData = await getApiDataForUsersMe();
+
+      if (!userData.customer || !userData.customer.id) {
+        alert("Please set up your customer profile before placing an order");
+        navigate("/profile");
+        return;
+      }
+
+      const customer_id = userData.customer.id;
+
+      const cart = cartItems.map((item) => ({
+        product_id: item.id,
+        quantity: item.quantity,
+        unit_price: item.price,
+      }));
+
+      const orderData = {
+        customer_id,
+        cart,
+      };
+
+      const result = await postApiDataForCustomers(orderData);
+
+      clearCart();
+      navigate("/");
+    } catch (error) {
+      console.error("Checkout error:", error);
+      alert(`Failed to create order: ${error.message}`);
+    } finally {
+      setIsProcessing(false);
     }
-
-    const customer_id = userData.customer.id;
-
-    const cart = cartItems.map(item => ({
-      product_id: item.id,
-      quantity: item.quantity,
-      unit_price: item.price
-    }));
-
-    const orderData = {
-      customer_id,
-      cart
-    };
-
-    const result = await postApiDataForCustomers(orderData);
-
-    clearCart();
-    navigate("/");
-  } catch (error) {
-    console.error("❌ Checkout error:", error);
-    alert(`Failed to create order: ${error.message}`);
-  } finally {
-    setIsProcessing(false);
-  }
-};
+  };
 
   return (
     <div className="cart-page">
@@ -102,8 +101,8 @@ export default function Cart() {
 
           <div className="cart-total-container">
             <span>Total: ${total.toFixed(2)}</span>
-            <button 
-              className="checkout-btn" 
+            <button
+              className="checkout-btn"
               onClick={handleCheckout}
               disabled={isProcessing}
             >

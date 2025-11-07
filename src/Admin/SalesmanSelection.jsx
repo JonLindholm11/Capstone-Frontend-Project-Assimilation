@@ -25,16 +25,13 @@ function SalesmanSelection({ token }) {
 
   const fetchCustomers = async () => {
     try {
-      console.log("🔍 Fetching customers from:", `${API}/customers`);
+
       const response = await fetch(`${API}/customers`);
 
       if (response.ok) {
         const data = await response.json();
-        console.log(" Customers received:", data);
-        console.log(" Number of customers:", data.length);
         setCustomers(data);
       } else {
-        console.log("Failed response:", response.status);
         setError("Failed to fetch customers");
       }
     } catch (err) {

@@ -1,5 +1,4 @@
 import { FaHome } from "react-icons/fa";
-// import { FaCartShopping } from "react-icons/fa6";
 import { NavLink } from "react-router";
 export default function SubNav() {
   return (
@@ -24,11 +23,6 @@ export default function SubNav() {
       <NavLink to="/products/food">
         <h3>Food</h3>
       </NavLink>
-      {/* <NavLink to="/products/cart">
-        <h3>
-          <FaCartShopping /> Cart
-        </h3>
-      </NavLink> */}
     </nav>
   );
 }

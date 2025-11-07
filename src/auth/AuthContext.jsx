@@ -4,7 +4,6 @@ const API = import.meta.env.VITE_API;
 
 const AuthContext = createContext();
 
-// Helper function to decode JWT and extract role
 function decodeToken(token) {
   if (!token) return null;
   try {
@@ -22,7 +21,6 @@ export function AuthProvider({ children }) {
     decodeToken(sessionStorage.getItem("token"))
   );
 
-  // Sync role whenever token changes
   useEffect(() => {
     const newRole = decodeToken(token);
     setRole(newRole);

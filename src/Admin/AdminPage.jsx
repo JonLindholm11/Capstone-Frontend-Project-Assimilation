@@ -1,50 +1,44 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
-import { useAuth } from '../auth/AuthContext';
-import './Admin.css'; 
-import RoleSelection from './RoleSelection';
-import SpecialPricing from './SpecialPricing';
-import SalesmanSelection from './SalesmanSelection';
+import { useAuth } from "../auth/AuthContext";
+import "./Admin.css";
+import RoleSelection from "./RoleSelection";
+import SpecialPricing from "./SpecialPricing";
+import SalesmanSelection from "./SalesmanSelection";
 
 const API = import.meta.env.VITE_API;
 
 function AdminPage() {
   const { token } = useAuth();
   const navigate = useNavigate();
-  const [activeSection, setActiveSection] = useState('register');
+  const [activeSection, setActiveSection] = useState("register");
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [refreshTrigger, setRefreshTrigger] = useState(0); //  Add refresh trigger
-  
-  // Register Employee form states
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
+
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
-    // Redirect to login if no token
     if (!token) {
-      console.log('No token found, redirecting to login');
-      navigate('/login');
+      navigate("/login");
       return;
     }
 
-    // Decode token and verify admin access
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      console.log('Decoded token payload:', payload);
-      
-      // Only admin (role_id = 1) can access admin panel
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
       if (payload.role_id !== 1) {
-        alert('Access Denied! Only administrators can access this panel.');
-        navigate('/');
+        alert("Access Denied! Only administrators can access this panel.");
+        navigate("/");
         return;
       }
 
       setCurrentUser(payload);
       setLoading(false);
     } catch (error) {
-      console.error('Error decoding token:', error);
-      navigate('/login');
+      console.error("Error decoding token:", error);
+      navigate("/login");
     }
   }, [token, navigate]);
 
@@ -59,24 +53,22 @@ function AdminPage() {
     const role_id = formData.get("role_id");
 
     try {
-      // Backend: POST /users/register/admin () admin only)
       const response = await fetch(`${API}/users/register/admin`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           email: email,
           password: password,
-          role_id: parseInt(role_id)
-        })
+          role_id: parseInt(role_id),
+        }),
       });
 
-      // Handle both JSON and text responses
       const contentType = response.headers.get("content-type");
       let result;
-      
+
       if (contentType && contentType.includes("application/json")) {
         result = await response.json();
       } else {
@@ -87,7 +79,7 @@ function AdminPage() {
       if (response.ok) {
         setMessage(result.message || "User registered successfully!");
         e.target.reset();
-        setRefreshTrigger(prev => prev + 1); //Trigger refresh in child components
+        setRefreshTrigger((prev) => prev + 1);
       } else {
         setError(result.error || result.message || "Failed to register user");
       }
@@ -98,7 +90,7 @@ function AdminPage() {
   };
 
   const renderSection = () => {
-    if (activeSection === 'register') {
+    if (activeSection === "register") {
       return (
         <div className="register-employee-section">
           <h2>Register New Employee</h2>
@@ -107,22 +99,22 @@ function AdminPage() {
           <form onSubmit={handleRegisterSubmit} className="admin-form">
             <div className="form-group">
               <label htmlFor="email">Email</label>
-              <input 
-                type="email" 
-                id="email" 
-                name="email" 
-                required 
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
                 placeholder="employee@company.com"
               />
             </div>
 
             <div className="form-group">
               <label htmlFor="password">Password</label>
-              <input 
-                type="password" 
-                id="password" 
-                name="password" 
-                required 
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
                 placeholder="Enter password"
               />
             </div>
@@ -137,24 +129,27 @@ function AdminPage() {
               </select>
             </div>
 
-            <button type="submit" className="submit-btn">Register Employee</button>
+            <button type="submit" className="submit-btn">
+              Register Employee
+            </button>
 
             {message && <div className="success-message">{message}</div>}
             {error && <div className="error-message">{error}</div>}
           </form>
         </div>
       );
-    } else if (activeSection === 'roles') {
+    } else if (activeSection === "roles") {
       return <RoleSelection token={token} refreshTrigger={refreshTrigger} />;
-    } else if (activeSection === 'specials') {
+    } else if (activeSection === "specials") {
       return <SpecialPricing token={token} currentUser={currentUser} />;
-    } else if (activeSection === 'salesmen') {
-      return <SalesmanSelection token={token} refreshTrigger={refreshTrigger} />;
+    } else if (activeSection === "salesmen") {
+      return (
+        <SalesmanSelection token={token} refreshTrigger={refreshTrigger} />
+      );
     }
   };
 
   const handleSectionChange = (section) => {
-    console.log('Switching to:', section);
     setActiveSection(section);
     setMessage("");
     setError("");
@@ -179,38 +174,36 @@ function AdminPage() {
       </div>
 
       <div className="admin-navigation">
-        <button 
-          className={activeSection === 'register' ? 'nav-active' : ''}
-          onClick={() => handleSectionChange('register')}
+        <button
+          className={activeSection === "register" ? "nav-active" : ""}
+          onClick={() => handleSectionChange("register")}
         >
           Register Employee
         </button>
 
-        <button 
-          className={activeSection === 'roles' ? 'nav-active' : ''}
-          onClick={() => handleSectionChange('roles')}
+        <button
+          className={activeSection === "roles" ? "nav-active" : ""}
+          onClick={() => handleSectionChange("roles")}
         >
           Role Management
         </button>
 
-        <button 
-          className={activeSection === 'specials' ? 'nav-active' : ''}
-          onClick={() => handleSectionChange('specials')}
+        <button
+          className={activeSection === "specials" ? "nav-active" : ""}
+          onClick={() => handleSectionChange("specials")}
         >
           Special Pricing
         </button>
 
-        <button 
-          className={activeSection === 'salesmen' ? 'nav-active' : ''}
-          onClick={() => handleSectionChange('salesmen')}
+        <button
+          className={activeSection === "salesmen" ? "nav-active" : ""}
+          onClick={() => handleSectionChange("salesmen")}
         >
           Salesman Selection
         </button>
       </div>
 
-      <div className="admin-content-area">
-        {renderSection()}
-      </div>
+      <div className="admin-content-area">{renderSection()}</div>
     </div>
   );
 }

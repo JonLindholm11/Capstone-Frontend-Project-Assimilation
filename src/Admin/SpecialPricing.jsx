@@ -80,7 +80,6 @@ function SpecialPricing({ token, currentUser }) {
           created_by_user_id: currentUser.id
         })
       });
-      // change here to handle both JSON and text responses
       const contentType = response.headers.get("content-type");
       let result;
       
@@ -96,7 +95,6 @@ function SpecialPricing({ token, currentUser }) {
         e.target.reset();
         fetchSpecialPricing();
       } else {
-        //this line changed to handle both text and json error messages
         setError(result.error || result.message || "Failed to create special pricing");
       }
     } catch (err) {

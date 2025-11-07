@@ -12,10 +12,8 @@ export default function OrdersPage() {
   const [selectedOrderId, setSelectedOrderId] = useState(null);
   const [setMessage] = useState("");
 
-  // Supported statuses
   const statusOptions = ["pending", "active", "shipping", "issue"];
 
-  // Fetch Orders
   useEffect(() => {
     async function fetchOrders() {
       const res = await fetch(`${API}/orders`);
@@ -24,7 +22,6 @@ export default function OrdersPage() {
     fetchOrders();
   }, []);
 
-  // Fetch Order Items
   useEffect(() => {
     async function fetchOrderItems() {
       const res = await fetch(`${API}/order_items`);
@@ -33,7 +30,6 @@ export default function OrdersPage() {
     fetchOrderItems();
   }, []);
 
-  // Fetch Customers
   useEffect(() => {
     async function fetchCustomers() {
       const res = await fetch(`${API}/customers`);
@@ -42,7 +38,6 @@ export default function OrdersPage() {
     fetchCustomers();
   }, []);
 
-  // Fetch Products
   useEffect(() => {
     async function fetchProducts() {
       const res = await fetch(`${API}/products`);
@@ -128,7 +123,6 @@ export default function OrdersPage() {
                   <td>{getCompanyOrContactName(orders.customer_id)}</td>
                   <td>${orders.total_amount}</td>
 
-                  {/* Dropdown updates state immediately */}
                   <td>
                     <select
                       value={orders.order_status}
@@ -150,7 +144,6 @@ export default function OrdersPage() {
                     </select>
                   </td>
 
-                  {/* Save button triggers POST */}
                   <td>
                     <button
                       className="saveBtn"
