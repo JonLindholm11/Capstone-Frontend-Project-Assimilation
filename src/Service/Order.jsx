@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import "./order.css";
 
+const API = import.meta.env.VITE_API_URL || "http://localhost:3000";
+
 export default function OrdersPage() {
   const [orders, setOrders] = useState([]);
   const [orderItems, setOrderItems] = useState([]);
@@ -16,7 +18,7 @@ export default function OrdersPage() {
   // Fetch Orders
   useEffect(() => {
     async function fetchOrders() {
-      const res = await fetch("http://localhost:3000/orders");
+      const res = await fetch(`${API}/orders`);
       if (res.ok) setOrders(await res.json());
     }
     fetchOrders();
@@ -25,7 +27,7 @@ export default function OrdersPage() {
   // Fetch Order Items
   useEffect(() => {
     async function fetchOrderItems() {
-      const res = await fetch("http://localhost:3000/order_items");
+      const res = await fetch(`${API}/order_items`);
       if (res.ok) setOrderItems(await res.json());
     }
     fetchOrderItems();
@@ -34,7 +36,7 @@ export default function OrdersPage() {
   // Fetch Customers
   useEffect(() => {
     async function fetchCustomers() {
-      const res = await fetch("http://localhost:3000/customers");
+      const res = await fetch(`${API}/customers`);
       if (res.ok) setCustomers(await res.json());
     }
     fetchCustomers();
@@ -43,7 +45,7 @@ export default function OrdersPage() {
   // Fetch Products
   useEffect(() => {
     async function fetchProducts() {
-      const res = await fetch("http://localhost:3000/products");
+      const res = await fetch(`${API}/products`);
       if (res.ok) setProducts(await res.json());
     }
     fetchProducts();
@@ -54,7 +56,7 @@ export default function OrdersPage() {
 
     try {
       const res = await fetch(
-        `http://localhost:3000/orders/${order.id}/status`,
+        `${API}/orders/${order.id}/status`,
         {
           method: "PATCH",
           headers: {
