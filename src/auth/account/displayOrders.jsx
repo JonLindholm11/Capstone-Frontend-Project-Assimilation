@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DisplayOrdersDetails from "./DisplayOrdersDetails";
+import DisplayOrdersDetails from "./DisplayOrdersDetails.jsx";
 
 export default function DisplayOrders({ orders }) {
   const [selectedOrderId, setSelectedOrderId] = useState(null);
