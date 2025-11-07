@@ -32,8 +32,6 @@ export default function ProductsGrid({ category, limit, children }) {
   if (error) return <p role="alert">{error}</p>;
 
   const list = limit ? products.slice(0, limit) : products;
-  //this si so i can limit the number of items
-  //<ProductsGrid category="sewing notions" limit={3} />
 
   return (
     <ul className="product-grid">
@@ -82,7 +80,6 @@ export default function ProductsGrid({ category, limit, children }) {
         </li>
       ))}
       {children}
-      {/* ^for the more card to show up and not break but also not show up on the page with the products */}
     </ul>
   );
 }

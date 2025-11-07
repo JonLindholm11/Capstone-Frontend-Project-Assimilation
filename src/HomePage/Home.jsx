@@ -7,15 +7,8 @@ export default function ProductLanding() {
   return (
     <div>
       <div className="container">
-        {/* <p>
-        Our Mission: Built on the belief that creation is an act of courage, we
-        unite food, fabric, steel, and circuit alike under one roof. Here, every
-        hand that builds, stitches, or shapes is honored — because every venture
-        is a noble one.
-      </p> */}
         <img
           src="https://images.pexels.com/photos/14716179/pexels-photo-14716179.jpeg"
-          // src="https://images.pexels.com/photos/375889/pexels-photo-375889.jpeg"
           alt="two people hiking along the mountain side overlooking a beach"
         />
         <div className="top-left">
@@ -29,7 +22,6 @@ export default function ProductLanding() {
 
       <section className="membership-section">
         <h2>Membership Options & Pricing</h2>
-        {/* <p className="section-subtitle">Choose the plan that fits your needs</p> */}
         <div className="bulk-pricing-banner">
           All members receive special pricing on bulk orders!
         </div>

@@ -58,7 +58,7 @@
 }
 .head {
   display: flex;
-  justify-content: center; /* centered horizontally */
+  justify-content: center;
   align-items: center;
   margin: 20px 0;
   color: #d4a055;

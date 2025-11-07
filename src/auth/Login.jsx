@@ -17,8 +17,7 @@ export default function Login() {
 
     try {
       await login({ email, password });
-      // Jodson - Login and Redirect based on role_id and working
-      // Waiting a moment for state to update
+
       setTimeout(() => {
         const token = sessionStorage.getItem("token");
 
@@ -27,10 +26,8 @@ export default function Login() {
           return;
         }
 
-        // This decodes the token to get role_id
         const payload = JSON.parse(atob(token.split(".")[1]));
 
-        // The Routes are based on role_id
         if (payload.role_id === 1) {
           navigate("/admin");
         } else if (payload.role_id === 2) {
@@ -38,16 +35,16 @@ export default function Login() {
         } else if (payload.role_id === 3) {
           navigate("/ServicePage");
         } else if (payload.role_id === 4) {
-          navigate("/products"); // Customers go to products page
+          navigate("/products"); 
         } else {
-          navigate("/"); // Default fallback for any other roles
+          navigate("/"); 
         }
-      }, 100); // 100ms delay to let state update
+      }, 100); 
     } catch (err) {
       setError(err.message);
     }
   };
-  // JSX for the login form
+ 
   return (
     <div className="login-page">
       <div className="login-card">

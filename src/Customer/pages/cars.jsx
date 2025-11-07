@@ -3,8 +3,6 @@ import "./pages.css";
 export default function Cars() {
   return (
     <div>
-      {/* <h1 className="head"> Vehicles </h1> */}
-
       <div className="hero-section">
         <img
           className="hero-image"

@@ -5,7 +5,6 @@ import { FaHome } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import "./Navbar.css";
 import Brand from "./Brand";
-// import { FaHome, FaUser, FaChartBar, FaCog } from "react-icons/fa";
 
 export default function Navbar() {
   const { token, role, logout } = useAuth();
@@ -62,7 +61,6 @@ export default function Navbar() {
               <div className="dropdown-content">
                 <NavLink to="/login">Login</NavLink>
                 <NavLink to="/register">Register</NavLink>
-                {/* <NavLink to="/admin"> Admin Login </NavLink> */}
               </div>
             </div>
           </>
