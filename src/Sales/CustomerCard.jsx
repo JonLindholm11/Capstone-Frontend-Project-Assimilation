@@ -76,9 +76,6 @@ export default function CustomerCard({ customer, onSave }) {
           <strong>Email:</strong> {customer.email}
         </p>
         <p>
-          <strong>Phone:</strong> {customer.phone || "N/A"}
-        </p>
-        <p>
           <strong>Status:</strong>{" "}
           <span className="status">{customer.account_status}</span>
         </p>
